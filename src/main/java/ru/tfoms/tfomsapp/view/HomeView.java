@@ -13,6 +13,7 @@ public class HomeView extends Div {
 
     @Autowired
     public HomeView(){
-        add(new H1("Домашняя страница"));
+        add(new H1("Домашняя страница!"));
+
     }
 }

@@ -75,11 +75,16 @@ public class MainView extends AppLayout {
         tabs.setId("tabs");
         if (CheckRole().contains("USER")) {
             tabs.add(createTab("Home", HomeView.class));
-            tabs.add(createTab("Logout", LogoutView.class));
+            tabs.add(createTab("loadcsv", LoadCSVView.class));
+            tabs.add(createTab("loadxml", LoadXMLView.class));
         }
         if (CheckRole().contains("ADMIN")) {
             tabs.add(createTab("Admin", AdminView.class));
         }
+        if (CheckRole().contains("USER")){
+            tabs.add(createTab("Logout", LogoutView.class));
+        }
+
         return tabs;
     }
 

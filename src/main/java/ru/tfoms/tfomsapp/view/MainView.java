@@ -62,7 +62,7 @@ public class MainView extends AppLayout {
         HorizontalLayout logoLayout = new HorizontalLayout();
         logoLayout.setId("logo");
         logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
-        logoLayout.add(new H1("Техмонитор"));
+        logoLayout.add(new H1("ТФОМС по РСО-Алания"));
 
         layout.add(logoLayout, menu);
         return layout;
@@ -74,9 +74,9 @@ public class MainView extends AppLayout {
         tabs.addThemeVariants(TabsVariant.LUMO_MINIMAL);
         tabs.setId("tabs");
         if (CheckRole().contains("USER")) {
-            tabs.add(createTab("Home", HomeView.class));
-            tabs.add(createTab("loadcsv", LoadCSVView.class));
-            tabs.add(createTab("loadxml", LoadXMLView.class));
+            tabs.add(createTab("Домой", HomeView.class));
+            tabs.add(createTab("Загрузка *.csv", LoadCSVView.class));
+            tabs.add(createTab("Загрузка *.xml", LoadXMLView.class));
         }
         if (CheckRole().contains("ADMIN")) {
             tabs.add(createTab("Admin", AdminView.class));

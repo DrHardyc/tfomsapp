@@ -25,9 +25,9 @@ public class RegisterView extends Composite {
 
     @Override
     protected Component initContent() {
-        TextField username = new TextField("Username");
-        PasswordField password1 = new PasswordField("Password");
-        PasswordField password2 = new PasswordField("Confirm password");
+        TextField username = new TextField("Имя пользователя");
+        PasswordField password1 = new PasswordField("Пароль");
+        PasswordField password2 = new PasswordField("Повторите пароль");
         return new VerticalLayout(
                 new H2("Регистрация"),
                 username,

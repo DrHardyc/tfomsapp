@@ -1,20 +1,39 @@
 package ru.tfoms.tfomsapp.view;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+import ru.tfoms.tfomsapp.DAO.KMS.PlatelDAO;
+import ru.tfoms.tfomsapp.DAO.KMS.PlatelDAOImpl;
+import ru.tfoms.tfomsapp.domain.Platel;
+import ru.tfoms.tfomsapp.service.DBService;
 
 import javax.annotation.security.PermitAll;
+import java.sql.SQLException;
 
 @Route("home")
 @PermitAll
 public class HomeView extends Div {
+
+    private Grid<Platel> grid = new Grid<>();
+
     public HomeView() {
+        grid.addColumn(Platel::getNamef).setHeader("Полное наименование").setFrozen(true)
+                .setResizable(true).setFlexGrow(0).setSortable(true);
+        grid.addColumn(Platel::getNamesc).setHeader("Короткое наименовение").setResizable(true).setSortable(true);
+        grid.addColumn(Platel::getInn).setHeader("ИНН").setResizable(true).setSortable(true);
+        grid.addColumn(Platel::getKpp).setHeader("КПП").setResizable(true).setSortable(true);
+        grid.addColumn(Platel::getOgrn).setHeader("ОГРН").setResizable(true).setSortable(true);
+        grid.addColumn(Platel::getAddrss).setHeader("Адрес").setResizable(true).setSortable(true);
+        grid.addColumn(Platel::getStatus).setHeader("Статус").setResizable(true).setSortable(true);
+
         Dialog dialog = new Dialog();
         dialog.getElement().setAttribute("aria-label", "Employee list");
 
@@ -23,8 +42,18 @@ public class HomeView extends Div {
         dialog.setDraggable(true);
         dialog.setResizable(true);
 
+
+
         Button button = new Button("Show dialog", e -> dialog.open());
-        add(dialog, button);
+        Button btnLoadToGird = new Button("Load to Grid", e -> {
+            try {
+                LoadToGrid();
+                UI.getCurrent().getPage().executeJs( "print();" );
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+        add(dialog, button, btnLoadToGird, grid);
     }
 
     private static VerticalLayout createDialogLayout(Dialog dialog) {
@@ -32,9 +61,10 @@ public class HomeView extends Div {
         headline.getStyle().set("margin", "var(--lumo-space-m) 0 0 0")
                 .set("font-size", "1.5em").set("font-weight", "bold");
 
+
         Label label = new Label("Какой-то текст");
         Button button1 = new Button("test");
-        button1.addClickListener(e ->  dialog.close());
+        button1.addClickListener(e -> dialog.close());
 
         VerticalLayout dialogLayout = new VerticalLayout(headline, label, button1);
         dialogLayout.setPadding(false);
@@ -43,5 +73,12 @@ public class HomeView extends Div {
                 .set("max-width", "100%").set("height", "100%");
 
         return dialogLayout;
+    }
+
+    private void LoadToGrid() throws SQLException {
+        PlatelDAO platelDAO = new PlatelDAOImpl();
+        platelDAO.setDataSource(new DBService().ConnectToKMS());
+        var platel = platelDAO.listPlatels();
+        grid.setItems(platel);
     }
 }

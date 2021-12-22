@@ -1,4 +1,4 @@
-package ru.tfoms.tfomsapp.repo;
+package ru.tfoms.tfomsapp.DAO.repoUser;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.tfoms.tfomsapp.domain.User;

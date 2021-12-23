@@ -13,6 +13,7 @@ import com.vaadin.flow.router.Route;
 import ru.tfoms.tfomsapp.DAO.KMS.PlatelDAO;
 import ru.tfoms.tfomsapp.DAO.KMS.PlatelDAOImpl;
 import ru.tfoms.tfomsapp.domain.Platel;
+import ru.tfoms.tfomsapp.domain.TfomsMenu;
 import ru.tfoms.tfomsapp.service.DBService;
 
 import javax.annotation.security.PermitAll;
@@ -41,8 +42,7 @@ public class HomeView extends Div {
         dialog.add(dialogLayout);
         dialog.setDraggable(true);
         dialog.setResizable(true);
-
-
+        dialog.setCloseOnOutsideClick(false);
 
         Button button = new Button("Show dialog", e -> dialog.open());
         Button btnLoadToGird = new Button("Load to Grid", e -> {
@@ -53,14 +53,14 @@ public class HomeView extends Div {
                 throwables.printStackTrace();
             }
         });
-        add(dialog, button, btnLoadToGird, grid);
+
+        add(new TfomsMenu().createMenu(), dialog, button, btnLoadToGird, grid);
     }
 
     private static VerticalLayout createDialogLayout(Dialog dialog) {
         H2 headline = new H2("Employee list");
         headline.getStyle().set("margin", "var(--lumo-space-m) 0 0 0")
                 .set("font-size", "1.5em").set("font-weight", "bold");
-
 
         Label label = new Label("Какой-то текст");
         Button button1 = new Button("test");

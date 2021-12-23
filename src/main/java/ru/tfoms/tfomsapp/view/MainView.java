@@ -15,6 +15,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import ru.tfoms.tfomsapp.domain.TfomsMenu;
 
 import javax.annotation.security.PermitAll;
 import java.util.ArrayList;
@@ -23,14 +24,12 @@ import java.util.List;
 @Route("")
 @PermitAll
 public class MainView extends AppLayout {
-    private final Tabs menu;
     private H1 viewTitle;
 
     public MainView() {
         setPrimarySection(Section.DRAWER);
         addToNavbar(true, createHeaderContent());
-        menu = createMenu();
-        addToDrawer(createDrawerContent(menu));
+        addToDrawer(createDrawerContent(new TfomsMenu().createMenu()));
     }
 
     private Component createHeaderContent() {
@@ -66,45 +65,6 @@ public class MainView extends AppLayout {
 
         layout.add(logoLayout, menu);
         return layout;
-    }
-
-    private Tabs createMenu() {
-        final Tabs tabs = new Tabs();
-        tabs.setOrientation(Tabs.Orientation.VERTICAL);
-        tabs.addThemeVariants(TabsVariant.LUMO_MINIMAL);
-        tabs.setId("tabs");
-        if (CheckRole().contains("USER")) {
-            tabs.add(createTab("Домой", HomeView.class));
-            tabs.add(createTab("Загрузка *.csv", LoadCSVView.class));
-            tabs.add(createTab("Загрузка *.xml", LoadXMLView.class));
-        }
-        if (CheckRole().contains("ADMIN")) {
-            tabs.add(createTab("Admin", AdminView.class));
-        }
-        if (CheckRole().contains("USER")){
-            tabs.add(createTab("Logout", LogoutView.class));
-        }
-
-        return tabs;
-    }
-
-    private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
-        final Tab tab = new Tab();
-        tab.add(new RouterLink(text, navigationTarget));
-        ComponentUtil.setData(tab, Class.class, navigationTarget);
-        return tab;
-    }
-
-    public List<String> CheckRole() {
-        List<String> result = new ArrayList();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_USER"))) {
-            result.add("USER");
-        }
-        if (auth.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"))) {
-            result.add("ADMIN");
-        }
-        return result;
     }
 }
 

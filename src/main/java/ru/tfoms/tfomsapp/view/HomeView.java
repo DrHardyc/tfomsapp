@@ -1,6 +1,5 @@
 package ru.tfoms.tfomsapp.view;
 
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
@@ -10,14 +9,15 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import ru.tfoms.tfomsapp.DAO.KMS.PlatelDAO;
-import ru.tfoms.tfomsapp.DAO.KMS.PlatelDAOImpl;
-import ru.tfoms.tfomsapp.domain.Platel;
+import org.springframework.beans.factory.annotation.Autowired;
+import ru.tfoms.tfomsapp.repo.KMS.PlatelRepo;
+import ru.tfoms.tfomsapp.annotation.EbanaCarebana;
+import ru.tfoms.tfomsapp.domain.KMS.Platel;
 import ru.tfoms.tfomsapp.domain.TfomsMenu;
-import ru.tfoms.tfomsapp.service.DBService;
 
 import javax.annotation.security.PermitAll;
 import java.sql.SQLException;
+import java.util.List;
 
 @Route("home")
 @PermitAll
@@ -25,6 +25,11 @@ public class HomeView extends Div {
 
     private Grid<Platel> grid = new Grid<>();
 
+    @Autowired
+    private PlatelRepo platelRepo;
+
+
+    @EbanaCarebana
     public HomeView() {
         grid.addColumn(Platel::getNamef).setHeader("Полное наименование").setFrozen(true)
                 .setResizable(true).setFlexGrow(0).setSortable(true);
@@ -48,7 +53,7 @@ public class HomeView extends Div {
         Button btnLoadToGird = new Button("Load to Grid", e -> {
             try {
                 LoadToGrid();
-                UI.getCurrent().getPage().executeJs( "print();" );
+                //UI.getCurrent().getPage().executeJs( "print();" );
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -76,9 +81,10 @@ public class HomeView extends Div {
     }
 
     private void LoadToGrid() throws SQLException {
-        PlatelDAO platelDAO = new PlatelDAOImpl();
-        platelDAO.setDataSource(new DBService().ConnectToKMS());
-        var platel = platelDAO.listPlatels();
+        List<Platel> platel = platelRepo.findAll();
+//        PlatelDAO platelDAO = new PlatelDAOImpl();
+//        platelDAO.setDataSource(new DBConfig().ConnectToKMS());
+        //var platel = platelDAO.listPlatels();
         grid.setItems(platel);
     }
 }

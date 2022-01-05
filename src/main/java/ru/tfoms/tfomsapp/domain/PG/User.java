@@ -20,21 +20,12 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String email;
-    private String activationCode;
     private boolean active;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
-
-    public String getActivationCode(){
-        return this.activationCode = RandomStringUtils.randomAlphanumeric(32);
-    }
-
-    public void setActivationCode(String activationCode){
-        this.activationCode = activationCode;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

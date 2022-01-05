@@ -1,7 +1,7 @@
 package ru.tfoms.tfomsapp.DAO.KMS;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import ru.tfoms.tfomsapp.domain.Platel;
+import ru.tfoms.tfomsapp.domain.KMS.Platel;
 import ru.tfoms.tfomsapp.service.PlatelMapper;
 
 import javax.sql.DataSource;

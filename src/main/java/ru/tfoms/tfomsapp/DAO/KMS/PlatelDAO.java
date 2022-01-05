@@ -1,6 +1,6 @@
 package ru.tfoms.tfomsapp.DAO.KMS;
 
-import ru.tfoms.tfomsapp.domain.Platel;
+import ru.tfoms.tfomsapp.domain.KMS.Platel;
 
 import javax.sql.DataSource;
 import java.util.List;

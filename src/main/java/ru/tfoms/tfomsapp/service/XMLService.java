@@ -1,6 +1,5 @@
 package ru.tfoms.tfomsapp.service;
 
-import com.vaadin.flow.component.UI;
 import nu.xom.*;
 import org.springframework.stereotype.Service;
 import ru.tfoms.tfomsapp.domain.MEK.Pacient;
@@ -16,47 +15,49 @@ public class XMLService {
     private final ServiceUtil su = new ServiceUtil();
     private final SluchService sluchService = new SluchService();
     private final ZappacientService zappacientService = new ZappacientService();
+    private int countZap;
 
-    public ArrayList LoadZap(InputStream resourceAsStream, LoadXMLView loadXMLView, UI ui) throws ParsingException, IOException, InterruptedException {
+    public ArrayList LoadZap(InputStream resourceAsStream, LoadXMLView loadXMLView) throws ParsingException, IOException, InterruptedException {
         ArrayList<Zap> listZap = new ArrayList<>();
         Document doc;
         Builder parser = new Builder(false);
         doc = parser.build(resourceAsStream);
         Element html = doc.getRootElement();
 
-
         Element head = html.getFirstChildElement("ZAP");
         if (head != null){
             Elements zl_lists = html.getChildElements();
-            int i = 0;
-            for (Element zl_list : zl_lists){
-                if (zl_list.getLocalName().equals("ZGLV")){
-                    Elements zglvs = zl_list.getChildElements();
-                    for (Element zglv : zglvs){
-                        if (zglv.getLocalName().equals("SD_Z")){
-                            loadXMLView.progressBar.setMax(Double.parseDouble(zglv.getValue()));
+            countZap = 0;
+            new Thread(() -> {
+                for (Element zl_list : zl_lists){
+                    if (zl_list.getLocalName().equals("ZGLV")){
+                        Elements zglvs = zl_list.getChildElements();
+                        for (Element zglv : zglvs){
+                            if (zglv.getLocalName().equals("SD_Z")){
+                                loadXMLView.progressBar.setMax(Double.parseDouble(zglv.getValue()));
+                            }
                         }
+                        countZap++;
                     }
-                    i++;
-                }
-                int finalI = i;
-                ui.access(() -> loadXMLView.progress.setText(String.valueOf(finalI)));
-                //TimeUnit.SECONDS.sleep(1);
-                if (zl_list.getLocalName().equals("ZAP")){
-                    Elements zaps = zl_list.getChildElements();
-                    Zap essZap = new Zap();
-                    for (Element zap : zaps){
-                        switch (zap.getLocalName()) {
-                            case "N_ZAP" -> essZap.setNzap(Integer.parseInt(su.getChildValueByName(zap, "N_ZAP")));
-                            case "PR_NOV" -> essZap.setPrnov(Integer.parseInt(su.getChildValueByName(zap, "PR_NOV")));
-                            case "PACIENT" -> essZap.setZapPcient(zappacientService.LoadZappacient(zap));
-                            case "SLUCH" -> essZap.setSluch(sluchService.LoadSluch(zap));
+                    loadXMLView.getUI().get().access(() -> loadXMLView.progress.setText(String.valueOf(countZap)));
+                    loadXMLView.getUI().get().access(() -> loadXMLView.progressBar.setValue(countZap));
+                    //TimeUnit.SECONDS.sleep(1);
+                    if (zl_list.getLocalName().equals("ZAP")){
+                        Elements zaps = zl_list.getChildElements();
+                        Zap essZap = new Zap();
+                        for (Element zap : zaps){
+                            switch (zap.getLocalName()) {
+                                case "N_ZAP" -> essZap.setNzap(Integer.parseInt(su.getChildValueByName(zap, "N_ZAP")));
+                                case "PR_NOV" -> essZap.setPrnov(Integer.parseInt(su.getChildValueByName(zap, "PR_NOV")));
+                                case "PACIENT" -> essZap.setZapPcient(zappacientService.LoadZappacient(zap));
+                                case "SLUCH" -> essZap.setSluch(sluchService.LoadSluch(zap));
+                            }
                         }
+                        countZap++;
+                        listZap.add(essZap);
                     }
-                    i++;
-                    listZap.add(essZap);
                 }
-            }
+            }).start();
         }
         return listZap;
     }

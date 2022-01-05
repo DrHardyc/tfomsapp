@@ -10,10 +10,9 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.tfoms.tfomsapp.repo.KMS.PlatelRepo;
-import ru.tfoms.tfomsapp.annotation.EbanaCarebana;
 import ru.tfoms.tfomsapp.domain.KMS.Platel;
 import ru.tfoms.tfomsapp.domain.TfomsMenu;
+import ru.tfoms.tfomsapp.repo.KMS.PlatelRepo;
 
 import javax.annotation.security.PermitAll;
 import java.sql.SQLException;
@@ -29,7 +28,6 @@ public class HomeView extends Div {
     private PlatelRepo platelRepo;
 
 
-    @EbanaCarebana
     public HomeView() {
         grid.addColumn(Platel::getNamef).setHeader("Полное наименование").setFrozen(true)
                 .setResizable(true).setFlexGrow(0).setSortable(true);

@@ -1,7 +1,7 @@
 package ru.tfoms.tfomsapp.service;
 
 import org.springframework.jdbc.core.RowMapper;
-import ru.tfoms.tfomsapp.domain.Platel;
+import ru.tfoms.tfomsapp.domain.KMS.Platel;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +29,7 @@ public class PlatelMapper  implements RowMapper<Platel> {
         platel.setPf(rs.getString("pf"));
         platel.setRegnfss(rs.getString("regnfss"));
         platel.setFss(rs.getString("fss"));
-        platel.setRegnforms(rs.getString("regnfoms"));
+        platel.setRegnfoms(rs.getString("regnfoms"));
         platel.setFoms(rs.getString("foms"));
         platel.setFilen(rs.getString("filen"));
         platel.setDtpris(rs.getString("dtpris"));

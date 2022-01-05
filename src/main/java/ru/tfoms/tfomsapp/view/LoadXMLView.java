@@ -33,7 +33,7 @@ public class LoadXMLView extends VerticalLayout {
         upload.setAcceptedFileTypes(".xml");
         upload.addSucceededListener(e -> {
             try {
-                xmlService.LoadZap(buffer.getInputStream(), this, ui);
+                xmlService.LoadZap(buffer.getInputStream(), this);
             } catch (ParsingException | IOException | InterruptedException parsingException) {
                 parsingException.printStackTrace();
             }

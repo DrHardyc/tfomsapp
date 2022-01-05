@@ -51,12 +51,10 @@ public class UserService implements UserDetailsService {
 
     public boolean addUser(String username, String password) {
         User user = new User();
-        String activationCode = user.getActivationCode();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
         user.setRoles(Collections.singleton(Role.ROLE_USER));
         user.setActive(true);
-        user.setActivationCode(activationCode);
 
         User userFromDb = userRepo.findByUsername(username);
         if (userFromDb != null) {
@@ -66,16 +64,4 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
         return true;
     }
-
-    public void activate(String activationCode) throws AuthException {
-        User user = userRepo.getByActivationCode(activationCode);
-        if (user != null) {
-            user.setActive(true);
-            userRepo.save(user);
-        } else {
-            throw new AuthException();
-        }
-    }
-
-
 }

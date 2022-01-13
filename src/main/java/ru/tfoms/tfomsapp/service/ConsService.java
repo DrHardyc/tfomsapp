@@ -7,11 +7,12 @@ import ru.tfoms.tfomsapp.domain.MEK.Cons;
 
 @Service
 public class ConsService {
-    private final Cons essCons = new Cons();
+
     private final ServiceUtil su = new ServiceUtil();
 
     public Cons LoadCons(Element cons){
         Elements childs = cons.getChildElements();
+        Cons essCons = new Cons();
         for (Element child : childs){
             switch (child.getLocalName()){
                 case "PR_CONS" -> essCons.setPrcons(su.getChildValueByName(child, "PR_CONS"));

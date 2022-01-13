@@ -10,11 +10,11 @@ import ru.tfoms.tfomsapp.domain.MEK.Lekpr;
 @Service
 public class LekprService {
 
-    private final Lekpr essLekpr = new Lekpr();
     private final ServiceUtil su = new ServiceUtil();
 
     public Lekpr LoadLekpr(Element lekpr){
         Elements childLekpr = lekpr.getChildElements();
+        Lekpr essLekpr = new Lekpr();
         for (Element child : childLekpr){
             switch (child.getLocalName()){
                 case "REGNUM" -> essLekpr.setRegnum(su.getChildValueByName(child, "REG_NUM"));

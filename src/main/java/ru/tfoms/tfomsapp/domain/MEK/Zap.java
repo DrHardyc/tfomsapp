@@ -6,6 +6,6 @@ import lombok.Data;
 public class Zap {
     private int nzap;
     private int prnov;
-    private ZapPcient zapPcient;
+    private ZapPacient zapPacient;
     private Sluch sluch;
 }

@@ -3,7 +3,7 @@ package ru.tfoms.tfomsapp.domain.MEK;
 import lombok.Data;
 
 @Data
-public class ZapPcient {
+public class ZapPacient {
     private String idpac;
     private String vpolis;
     private String spolis;

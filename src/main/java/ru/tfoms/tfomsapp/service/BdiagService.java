@@ -7,12 +7,12 @@ import ru.tfoms.tfomsapp.domain.MEK.Bdiag;
 
 @Service
 public class BdiagService {
-    private final Bdiag essBdiag = new Bdiag();
+
     private final ServiceUtil su = new ServiceUtil();
 
     public Bdiag LoadBdiag(Element bdiag){
-
         Elements childBdiags = bdiag.getChildElements();
+        Bdiag essBdiag = new Bdiag();
         for (Element child : childBdiags){
             switch (child.getLocalName()){
                 case "DIAG_DATE" -> essBdiag.setDiagdate(su.getChildValueByName(child, "DIAG_DATE"));

@@ -9,12 +9,12 @@ import ru.tfoms.tfomsapp.domain.MEK.Onkusl;
 @Service
 public class OnkuslService {
 
-    private final Onkusl essOnkusl = new Onkusl();
     private final ServiceUtil su = new ServiceUtil();
     private final LekprService lekprService = new LekprService();
 
     public Onkusl LoadOnkusl(Element onkusl){
         Elements childOnkusls = onkusl.getChildElements();
+        Onkusl essOnkusl = new Onkusl();
         for (Element child : childOnkusls){
             switch (child.getLocalName()){
                 case "USL_TIP" -> essOnkusl.setUsltip(su.getChildValueByName(child, "USL_TIP"));

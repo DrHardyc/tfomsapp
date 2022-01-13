@@ -8,11 +8,11 @@ import ru.tfoms.tfomsapp.domain.MEK.Napr;
 @Service
 public class NaprService {
 
-    private final Napr essNapr = new Napr();
     private final ServiceUtil su = new ServiceUtil();
 
     public Napr LoadNapr(Element napr){
         Elements childs = napr.getChildElements();
+        Napr essNapr = new Napr();
         for (Element child : childs){
             switch (child.getLocalName()){
                 case "NAPR_DATE" -> essNapr.setNaprdate(su.getChildValueByName(child, "NAPR_DATE"));

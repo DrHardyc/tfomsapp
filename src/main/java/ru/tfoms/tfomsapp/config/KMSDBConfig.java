@@ -12,7 +12,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
-import java.sql.SQLException;
 import java.util.HashMap;
 
 @Configuration
@@ -50,8 +49,7 @@ public class KMSDBConfig {
     }
 
     @Bean
-    public PlatformTransactionManager KMSTransactionManager() throws SQLException {
-
+    public PlatformTransactionManager KMSTransactionManager() {
         JpaTransactionManager transactionManager
                 = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(

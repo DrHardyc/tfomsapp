@@ -8,11 +8,11 @@ import ru.tfoms.tfomsapp.domain.MEK.Usl;
 @Service
 public class UslService {
 
-    private final Usl essUsl = new Usl();
     private final ServiceUtil su = new ServiceUtil();
 
     public Usl LoadUsl(Element usl){
         Elements childs = usl.getChildElements();
+        Usl essUsl = new Usl();
         for (Element child : childs){
             switch (child.getLocalName()){
                 case "IDSERV" -> essUsl.setIdserv(su.getChildValueByName(child, "IDSERV"));

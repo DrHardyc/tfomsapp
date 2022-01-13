@@ -9,11 +9,11 @@ import ru.tfoms.tfomsapp.domain.MEK.Bprot;
 @Service
 public class BprotService {
 
-    private final Bprot essBprot = new Bprot();
     private final ServiceUtil su = new ServiceUtil();
 
     public Bprot LoadBprot(Element bprot){
         Elements childBprot = bprot.getChildElements();
+        Bprot essBprot = new Bprot();
         for (Element child : childBprot){
             switch (child.getLocalName()){
                 case "PROT" -> essBprot.setProt(su.getChildValueByName(child, "PROT"));

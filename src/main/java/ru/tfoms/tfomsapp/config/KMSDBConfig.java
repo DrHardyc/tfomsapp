@@ -14,11 +14,11 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.sql.DataSource;
 import java.util.HashMap;
 
-@Configuration
-@EnableJpaRepositories(
-        basePackages = "ru.tfoms.tfomsapp.repo.KMS",
-        entityManagerFactoryRef = "KMSEntityManager",
-        transactionManagerRef = "KMSTransactionManager")
+//@Configuration
+//@EnableJpaRepositories(
+//        basePackages = "ru.tfoms.tfomsapp.repo.KMS",
+//        entityManagerFactoryRef = "KMSEntityManager",
+//        transactionManagerRef = "KMSTransactionManager")
 public class KMSDBConfig {
 
     @Autowired
@@ -32,7 +32,7 @@ public class KMSDBConfig {
     public LocalContainerEntityManagerFactoryBean KMSEntityManager()  {
         LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(KMSDataSource());
+        //em.setDataSource(KMSDataSource());
         em.setPackagesToScan(
                 new String[] { "ru.tfoms.tfomsapp.domain.KMS" });
 
@@ -48,14 +48,14 @@ public class KMSDBConfig {
         return em;
     }
 
-    @Bean
-    public PlatformTransactionManager KMSTransactionManager() {
-        JpaTransactionManager transactionManager
-                = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(
-                KMSEntityManager().getObject());
-        return transactionManager;
-    }
+//    @Bean
+//    public PlatformTransactionManager KMSTransactionManager() {
+//        JpaTransactionManager transactionManager
+//                = new JpaTransactionManager();
+//        transactionManager.setEntityManagerFactory(
+//                KMSEntityManager().getObject());
+//        return transactionManager;
+//    }
 
     private DataSource ConnectDB() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();

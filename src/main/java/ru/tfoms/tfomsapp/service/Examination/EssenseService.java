@@ -1,4 +1,4 @@
-package ru.tfoms.tfomsapp.service;
+package ru.tfoms.tfomsapp.service.Examination;
 
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.progressbar.ProgressBar;

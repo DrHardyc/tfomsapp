@@ -1,9 +1,9 @@
-package ru.tfoms.tfomsapp.domain.MEK;
+package ru.tfoms.tfomsapp.domain.MEK.MP;
 
 import lombok.Data;
 
 @Data
-public class Slkoef {
+public class MPSlkoef {
     private String idsl;
     private String zsl;
 }

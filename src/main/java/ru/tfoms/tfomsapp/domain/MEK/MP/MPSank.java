@@ -1,17 +1,19 @@
-package ru.tfoms.tfomsapp.domain.MEK;
+package ru.tfoms.tfomsapp.domain.MEK.MP;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
-public class Sank {
+public class MPSank {
     private String scode;
     private String ssum;
     private String stip;
-    private String slid;
+    private List<String> slid;
     private String sosn;
     private String dateact;
     private String numact;
-    private String codeexp;
+    private List<String> codeexp;
     private String scom;
     private String sist;
 }

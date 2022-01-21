@@ -1,13 +1,10 @@
 package ru.tfoms.tfomsapp.service.Examination;
 
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.progressbar.ProgressBar;
-import nu.xom.*;
 import org.springframework.stereotype.Service;
+import ru.tfoms.tfomsapp.domain.MEK.Pacient;
+import ru.tfoms.tfomsapp.domain.MEK.MP.MPZap;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class EssenseService {
@@ -18,98 +15,81 @@ public class EssenseService {
     private final int [] RSLT331 = {105, 106};
     private final int [] RSLT341 = {205, 206};
     private final int [] RSLT361 = {405, 406};
+    private final int [] VIDPOM290 = {2, 21, 22, 23};
+    private final int [] VIDPOM300 = {1, 2, 11, 12, 13, 4, 14};
+    private final int [] VIDPOM310 = {12, 13, 14, 31, 32, 33};
+    private final int [] VIDPOM320 = {3, 21, 31, 32, 33};
 
-    public void ExamEssense(InputStream resourceAsStream, ProgressBar progressBar){
-        Document doc = null;
-        try {
-            Builder parser = new Builder(false);
-            doc = parser.build(resourceAsStream);
-            Element html = doc.getRootElement();
-            Element head = html.getFirstChildElement("Документ");
-            if (head != null){
-                String docCount = html.getAttributeValue("КолДок");
-                return;
-            }
-            head = html.getFirstChildElement("ZGLV");
-            if (head != null){
-                Elements zl_lists = html.getChildElements();
-                for (Element zl_list : zl_lists){
-                    if (zl_list.getLocalName().equals("ZGLV")){
-                        progressBar.setMax(Double.parseDouble(getChildByName(zl_list, "SD_Z").getValue()));
-                    }
-                    if (zl_list.getLocalName().equals("ZAP")){
-                        String nomZap = getChildByName(zl_list, "N_ZAP").getValue();
-                        progressBar.setValue(Double.parseDouble(nomZap));
-                        Elements zaps = zl_list.getChildElements();
-                        for (Element zap : zaps){
-                            if (zap.getLocalName().equals("SLUCH")){
-                                int rslt = Integer.parseInt(getChildByName(zap, "RSLT").getValue());
-                                int ishod = Integer.parseInt(getChildByName(zap, "ISHOD").getValue());
-                                //RLST
-                                if (Arrays.binarySearch(RSLT200, rslt) > -1 && (ishod != 402)){
-                                    System.out.println("Ошбика! Номер записи: " + nomZap +
-                                            ".\nПравило 003K.00.0200.\nRSLT = " + rslt +
-                                            "\nISHOD = " + ishod);
-                                }
-                                if (Arrays.binarySearch(RSLT220, rslt) > -1 && (ishod == 201)){
-                                    System.out.println("Ошбика! Номер записи: " + nomZap +
-                                            ".\nПравило 003K.00.0220.\nRSLT = " + rslt +
-                                            "\nISHOD = " + ishod);
-                                }
-                                if (Arrays.binarySearch(RSLT211, rslt) > -1 && (ishod == 101)){
-                                    System.out.println("Ошбика! Номер записи: " + nomZap +
-                                            ".\nПравило 003K.00.0211.\nRSLT = " + rslt +
-                                            "\nISHOD = " + ishod);
-                                }
-                                if (Arrays.binarySearch(RSLT331, rslt) > -1 && (ishod != 104)){
-                                    System.out.println("Ошбика! Номер записи: " + nomZap +
-                                            ".\nПравило 003K.00.0331.\nRSLT = " + rslt +
-                                            "\nISHOD = " + ishod);
-                                }
-                                if (Arrays.binarySearch(RSLT341, rslt) > -1 && (ishod != 204)){
-                                    System.out.println("Ошбика! Номер записи: " + nomZap +
-                                            ".\nПравило 003K.00.0341.\nRSLT = " + rslt +
-                                            "\nISHOD = " + ishod);
-                                }
-                                if (rslt == 313 && (ishod != 305)){
-                                    System.out.println("Ошбика! Номер записи: " + nomZap +
-                                            ".\nПравило 003K.00.0305.\nRSLT = " + rslt +
-                                            "\nISHOD = " + ishod);
-                                }
-                                if (Arrays.binarySearch(RSLT361, rslt) > -1 && (ishod != 403)){
-                                    System.out.println("Ошбика! Номер записи: " + nomZap +
-                                            ".\nПравило 003K.00.0361.\nRSLT = " + rslt +
-                                            "\nISHOD = " + ishod);
-                                }
-                                //USL_OK
-
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        catch (ValidityException ex) {
-            Notification.show("Cafe con Leche is invalid today. (Somewhat embarrassing.)");
-        }
-        catch (ParsingException ex) {
-            Notification.show("Cafe con Leche is malformed today. (How embarrassing!)");
-        }
-        catch (IOException ex) {
-            Notification.show("Could not connect to Cafe con Leche. The site may be down.");
-        }
-        int test = 0;
+    public void ExamEssense(List<Pacient> pacients) {
+//        for (Pacient pacient : pacients){
+//            //Q016
+//            //ZL_LIST/ZAP/Z_SL/VIDPOM
+//            List<MPZap> MPZaps = pacient.getMPZap();
+//            for (MPZap MPZap : MPZaps){
+//                switch (MPZap.getSluch().getUslok()){
+//                    case "4" -> {
+//                        if(!searchInArray(VIDPOM290, MPZap.getSluch().getVidpom())){
+//                            System.out.println("Ошибка в " + VIDPOM290.getClass().getSimpleName());
+//                        }
+//                    }
+//                    case "3" -> {
+//                        if (!searchInArray(VIDPOM300, MPZap.getSluch().getVidpom())){
+//                            System.out.println("Ошибка в " + VIDPOM300.getClass().getSimpleName());
+//                        }
+//                    }
+//                    case "2" -> {
+//                        if (!searchInArray(VIDPOM310, MPZap.getSluch().getVidpom())){
+//                            System.out.println("Ошибка в " + VIDPOM310.getClass().getSimpleName());
+//                        }
+//                    }
+//                    case "1" -> {
+//                        if (!searchInArray(VIDPOM320, MPZap.getSluch().getVidpom())){
+//                            System.out.println("Ошибка в " + VIDPOM320.getClass().getSimpleName());
+//                        }
+//                    }
+//                }
+//                //ZL_LIST/ZAP/Z_SL/SUMV
+//                if(MPZap.getSluch().getPotk().equals("1")){
+//                    if(!MPZap.getSluch().getSumv().equals("0")){
+//                        System.out.println("Неверное значение суммы, выставленной к оплате | SUMV");
+//                    }
+//                }
+//                //ZL_LIST/ZAP/Z_SL/SUMP
+//                if(!MPZap.getSluch().getSump().isEmpty()){
+//                    if(!MPZap.getSluch().getSump().equals(MPZap.getSluch().getSumv())){
+//                        System.out.println("Сумма, принятая к оплате по законченному случаю, не соответствует сумме, выставленной к оплате по законченному случаю, с учетом санкций | SUMP");
+//                    }
+//                }
+//                switch (MPZap.getSluch().getSump()){
+//                    case "3" -> {
+//                        if(!(MPZap.getSluch().getSump().equals(MPZap.getSluch().getSumv())&&Double.parseDouble(MPZap.getSluch().getSump()) > 0)){
+//                            System.out.println("Взаимное несоответствие типа оплаты, суммы, выставленной к оплате, суммы санкций и суммы, принятой к оплате | SUMP");
+//                        }
+//                    }
+//                    case "2" -> {
+//                        if(Double.parseDouble(MPZap.getSluch().getSump()) != 0){
+//                            System.out.println("Взаимное несоответствие типа оплаты, суммы, выставленной к оплате, суммы санкций и суммы, принятой к оплате | SUMP");
+//                        }
+//                    }
+////                    case "1" -> {
+////                        if(Double.parseDouble(zap.getSluch().getSump()) != 0){
+////                            System.out.println("Взаимное несоответствие типа оплаты, суммы, выставленной к оплате, суммы санкций и суммы, принятой к оплате | SUMP");
+////                        }
+////                    }
+//                }
+//
+//            }
+//
+//        }
     }
 
-    private Element getChildByName(Element element, String name) {
-        Element returnElement = null;
-        Elements children = element.getChildElements();
-        for (int i = 0; i < children.size();  i++) {
-            if (children.get(i).getLocalName().equals(name)){
-                returnElement = children.get(i);
+
+    private boolean searchInArray(int[] array, String strSearch){
+        for(int i = 0; i < array.length; i++){
+            if(array[i] == Integer.parseInt(strSearch)){
+                return true;
             }
         }
-        return returnElement;
+        return false;
     }
-
 }

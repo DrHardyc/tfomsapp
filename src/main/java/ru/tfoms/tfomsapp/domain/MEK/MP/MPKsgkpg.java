@@ -1,19 +1,22 @@
-package ru.tfoms.tfomsapp.domain.MEK;
+package ru.tfoms.tfomsapp.domain.MEK.MP;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
-public class Ksgkpg {
+public class MPKsgkpg {
     private String nksg;
-    private String varksg;
+    private String verksg;
     private String ksgpg;
+    private String nkpg;
     private String koefz;
     private String koefup;
     private String bztsz;
     private String koefd;
     private String koefu;
-    private String crit;
+    private List<String> crit;
     private String slk;
     private String itsl;
-    private Slkoef slkoef;
+    private List<MPSlkoef> slkoef;
 }

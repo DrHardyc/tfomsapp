@@ -1,5 +1,6 @@
 package ru.tfoms.tfomsapp.service;
 
+import com.vaadin.flow.component.notification.Notification;
 import nu.xom.Element;
 import org.springframework.stereotype.Service;
 
@@ -11,5 +12,10 @@ public class ServiceUtil {
             return element.getValue();
         }
         return "";
+    }
+
+    public void showMessagesEx(String str){
+        System.out.println(str);
+        Notification.show(str);
     }
 }

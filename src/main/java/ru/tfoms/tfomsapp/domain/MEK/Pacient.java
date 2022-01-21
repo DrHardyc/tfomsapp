@@ -2,6 +2,8 @@ package ru.tfoms.tfomsapp.domain.MEK;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Pacient {
     private String idpack;
@@ -28,5 +30,5 @@ public class Pacient {
     private String worker;
     private String lpup;
     private String tel;
-    private Zap zap;
+    private List<ru.tfoms.tfomsapp.domain.MEK.MP.MPZap> MPZap;
 }

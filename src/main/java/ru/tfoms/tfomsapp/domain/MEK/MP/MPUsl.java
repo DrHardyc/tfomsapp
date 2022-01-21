@@ -1,12 +1,14 @@
-package ru.tfoms.tfomsapp.domain.MEK;
+package ru.tfoms.tfomsapp.domain.MEK.MP;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
-public class Usl {
+public class MPUsl {
     private String idserv;
     private String lpu;
-    private String kodtp;
+    private String lpu1;
     private String podr;
     private String profil;
     private String vidvme;
@@ -16,14 +18,10 @@ public class Usl {
     private String ds;
     private String codeusl;
     private String kolusl;
-    private String tarifusl;
+    private String tarif;
     private String sumvusl;
-    private String prvs;
-    private String codemd;
-    private String fzub;
-    private String viszub;
-    private String comentu;
     private String npl;
-    private String potk;
-    private String pranast;
+    private String comentu;
+    private List<MPMeddev> meddev;
+    private List<MPMrusln> mrusLn;
 }

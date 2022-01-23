@@ -1,17 +1,17 @@
-package ru.tfoms.tfomsapp.service.MedPom;
+package ru.tfoms.tfomsapp.service.MP;
 
 import nu.xom.Element;
 import nu.xom.Elements;
 import org.springframework.stereotype.Service;
-import ru.tfoms.tfomsapp.domain.MEK.MP.MPZglv;
+import ru.tfoms.tfomsapp.domain.MEK.Zglv;
 
 
 
 @Service
 public class MPZglvService {
 
-    public MPZglv loadMpZglv(Element element){
-        MPZglv essZglv = new MPZglv();
+    public Zglv loadMpZglv(Element element){
+        Zglv essZglv = new Zglv();
         Elements childs = element.getChildElements();
         for (Element attribute : childs){
             switch (attribute.getLocalName()){

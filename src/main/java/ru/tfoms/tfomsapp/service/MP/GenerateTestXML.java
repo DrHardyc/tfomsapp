@@ -1,4 +1,4 @@
-package ru.tfoms.tfomsapp.service.MedPom;
+package ru.tfoms.tfomsapp.service.MP;
 
 import nu.xom.Document;
 import nu.xom.Element;
@@ -527,7 +527,7 @@ public class GenerateTestXML {
 
         try {
 //            Files.write(Paths.get("C:\\test.xml"), Collections.singleton(doc.toXML()));
-            PrintWriter out = new PrintWriter("C:\\test.xml");
+            PrintWriter out = new PrintWriter("C:\\Users\\dr_ha\\Documents\\test.xml");
             out.println(doc.toXML());
             out.close();
         } catch (IOException e) {

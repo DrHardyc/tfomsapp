@@ -1,9 +1,9 @@
-package ru.tfoms.tfomsapp.domain.MEK.MP;
+package ru.tfoms.tfomsapp.domain.MEK;
 
 import lombok.Data;
 
 @Data
-public class MPZglv {
+public class Zglv {
     public String version;
     public String data;
     public String filename;

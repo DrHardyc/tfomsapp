@@ -1,4 +1,4 @@
-package ru.tfoms.tfomsapp.service.MedPom;
+package ru.tfoms.tfomsapp.service.MP;
 
 import nu.xom.Element;
 import nu.xom.Elements;

@@ -1,15 +1,15 @@
-package ru.tfoms.tfomsapp.service.MedPom;
+package ru.tfoms.tfomsapp.service.MP;
 
 import nu.xom.Element;
 import nu.xom.Elements;
 import org.springframework.stereotype.Service;
-import ru.tfoms.tfomsapp.domain.MEK.MP.MPSchet;
+import ru.tfoms.tfomsapp.domain.MEK.Schet;
 
 @Service
 public class MPSchetService {
 
-    public MPSchet loadMpSchet(Element element){
-        MPSchet essSchet = new MPSchet();
+    public Schet loadMpSchet(Element element){
+        Schet essSchet = new Schet();
         Elements childs = element.getChildElements();
         for (Element child : childs){
             switch (child.getLocalName()){

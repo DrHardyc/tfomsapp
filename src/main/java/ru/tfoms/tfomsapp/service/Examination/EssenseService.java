@@ -2,7 +2,6 @@ package ru.tfoms.tfomsapp.service.Examination;
 
 import org.springframework.stereotype.Service;
 import ru.tfoms.tfomsapp.domain.MEK.Pacient;
-import ru.tfoms.tfomsapp.domain.MEK.MP.MPZap;
 
 import java.util.List;
 
@@ -24,50 +23,50 @@ public class EssenseService {
 //        for (Pacient pacient : pacients){
 //            //Q016
 //            //ZL_LIST/ZAP/Z_SL/VIDPOM
-//            List<MPZap> MPZaps = pacient.getMPZap();
-//            for (MPZap MPZap : MPZaps){
-//                switch (MPZap.getSluch().getUslok()){
+//            List<Zap> MPZaps = pacient.getMPZap();
+//            for (Zap Zap : MPZaps){
+//                switch (Zap.getSluch().getUslok()){
 //                    case "4" -> {
-//                        if(!searchInArray(VIDPOM290, MPZap.getSluch().getVidpom())){
+//                        if(!searchInArray(VIDPOM290, Zap.getSluch().getVidpom())){
 //                            System.out.println("Ошибка в " + VIDPOM290.getClass().getSimpleName());
 //                        }
 //                    }
 //                    case "3" -> {
-//                        if (!searchInArray(VIDPOM300, MPZap.getSluch().getVidpom())){
+//                        if (!searchInArray(VIDPOM300, Zap.getSluch().getVidpom())){
 //                            System.out.println("Ошибка в " + VIDPOM300.getClass().getSimpleName());
 //                        }
 //                    }
 //                    case "2" -> {
-//                        if (!searchInArray(VIDPOM310, MPZap.getSluch().getVidpom())){
+//                        if (!searchInArray(VIDPOM310, Zap.getSluch().getVidpom())){
 //                            System.out.println("Ошибка в " + VIDPOM310.getClass().getSimpleName());
 //                        }
 //                    }
 //                    case "1" -> {
-//                        if (!searchInArray(VIDPOM320, MPZap.getSluch().getVidpom())){
+//                        if (!searchInArray(VIDPOM320, Zap.getSluch().getVidpom())){
 //                            System.out.println("Ошибка в " + VIDPOM320.getClass().getSimpleName());
 //                        }
 //                    }
 //                }
 //                //ZL_LIST/ZAP/Z_SL/SUMV
-//                if(MPZap.getSluch().getPotk().equals("1")){
-//                    if(!MPZap.getSluch().getSumv().equals("0")){
+//                if(Zap.getSluch().getPotk().equals("1")){
+//                    if(!Zap.getSluch().getSumv().equals("0")){
 //                        System.out.println("Неверное значение суммы, выставленной к оплате | SUMV");
 //                    }
 //                }
 //                //ZL_LIST/ZAP/Z_SL/SUMP
-//                if(!MPZap.getSluch().getSump().isEmpty()){
-//                    if(!MPZap.getSluch().getSump().equals(MPZap.getSluch().getSumv())){
+//                if(!Zap.getSluch().getSump().isEmpty()){
+//                    if(!Zap.getSluch().getSump().equals(Zap.getSluch().getSumv())){
 //                        System.out.println("Сумма, принятая к оплате по законченному случаю, не соответствует сумме, выставленной к оплате по законченному случаю, с учетом санкций | SUMP");
 //                    }
 //                }
-//                switch (MPZap.getSluch().getSump()){
+//                switch (Zap.getSluch().getSump()){
 //                    case "3" -> {
-//                        if(!(MPZap.getSluch().getSump().equals(MPZap.getSluch().getSumv())&&Double.parseDouble(MPZap.getSluch().getSump()) > 0)){
+//                        if(!(Zap.getSluch().getSump().equals(Zap.getSluch().getSumv())&&Double.parseDouble(Zap.getSluch().getSump()) > 0)){
 //                            System.out.println("Взаимное несоответствие типа оплаты, суммы, выставленной к оплате, суммы санкций и суммы, принятой к оплате | SUMP");
 //                        }
 //                    }
 //                    case "2" -> {
-//                        if(Double.parseDouble(MPZap.getSluch().getSump()) != 0){
+//                        if(Double.parseDouble(Zap.getSluch().getSump()) != 0){
 //                            System.out.println("Взаимное несоответствие типа оплаты, суммы, выставленной к оплате, суммы санкций и суммы, принятой к оплате | SUMP");
 //                        }
 //                    }

@@ -12,11 +12,11 @@ import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
 import com.vaadin.flow.router.Route;
 import ru.tfoms.tfomsapp.domain.HandBook.HBQ018;
-import ru.tfoms.tfomsapp.domain.MEK.MP.MPZllist;
 import ru.tfoms.tfomsapp.domain.MEK.Pacient;
-import ru.tfoms.tfomsapp.domain.MEK.MP.MPZap;
-import ru.tfoms.tfomsapp.service.MedPom.GenerateTestXML;
-import ru.tfoms.tfomsapp.service.MedPom.MPZllistService;
+import ru.tfoms.tfomsapp.domain.MEK.Zllist;
+import ru.tfoms.tfomsapp.domain.MEK.Zap;
+import ru.tfoms.tfomsapp.service.MP.GenerateTestXML;
+import ru.tfoms.tfomsapp.service.MP.MPZllistService;
 
 import javax.annotation.security.PermitAll;
 import java.io.BufferedReader;
@@ -34,7 +34,7 @@ import java.util.List;
 public class LoadXMLView extends VerticalLayout {
 
     private int filesCounter = 0;
-    private ArrayList<MPZap> listMPZaps = new ArrayList<>();
+    private ArrayList<Zap> listZaps = new ArrayList<>();
     private ArrayList<Pacient> listPacients = new ArrayList<>();
     private List<Pacient> newPacient = new ArrayList<>();
 
@@ -99,14 +99,14 @@ public class LoadXMLView extends VerticalLayout {
         syncZlList = false;
         new Thread(() -> {
             MPZllistService mpZllistService = new MPZllistService();
-            MPZllist mpZllist = mpZllistService.loadMpZllist(multiFileMemoryBuffer.getInputStream(fileName[0]));
+            Zllist zllist = mpZllistService.loadMpZllist(multiFileMemoryBuffer.getInputStream(fileName[0]));
             syncZlList = true;
         }).start();
 
         while (!syncZlList){
             this.getUI().get().push();
         }
-//        listMPZaps = MPZapService.listMPZap;
+//        listZaps = MPZapService.listMPZap;
 //        listPacients = pacientService.listPacient;
         dialog.close();
     }

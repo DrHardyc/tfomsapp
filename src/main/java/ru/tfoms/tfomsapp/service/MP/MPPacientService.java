@@ -1,13 +1,14 @@
-package ru.tfoms.tfomsapp.service.MedPom;
+package ru.tfoms.tfomsapp.service.MP;
 
 import nu.xom.Element;
 import nu.xom.Elements;
 import org.springframework.stereotype.Service;
 import ru.tfoms.tfomsapp.domain.MEK.MP.MPPacient;
+import ru.tfoms.tfomsapp.domain.MEK.Pacient;
 
 @Service
 public class MPPacientService {
-    public MPPacient mpPacient(Element element){
+    public Pacient mpPacient(Element element){
         MPPacient essPacient = new MPPacient();
 
         Elements childs = element.getChildElements();

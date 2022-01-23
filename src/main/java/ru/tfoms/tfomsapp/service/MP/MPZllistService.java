@@ -1,9 +1,9 @@
-package ru.tfoms.tfomsapp.service.MedPom;
+package ru.tfoms.tfomsapp.service.MP;
 
 import nu.xom.*;
 import org.springframework.stereotype.Service;
-import ru.tfoms.tfomsapp.domain.MEK.MP.MPZap;
-import ru.tfoms.tfomsapp.domain.MEK.MP.MPZllist;
+import ru.tfoms.tfomsapp.domain.MEK.Zap;
+import ru.tfoms.tfomsapp.domain.MEK.Zllist;
 import ru.tfoms.tfomsapp.service.ServiceUtil;
 
 import java.io.IOException;
@@ -18,9 +18,9 @@ public class MPZllistService {
     private final MPSchetService mpSchetService = new MPSchetService();
     private final MPZapService mpZapService = new MPZapService();
 
-    public MPZllist loadMpZllist(InputStream inputStream){
+    public Zllist loadMpZllist(InputStream inputStream){
 
-        MPZllist mpZllist = new MPZllist();
+        Zllist mpZllist = new Zllist();
         Document doc = null;
         Builder parser = new Builder(false);
         try {
@@ -34,16 +34,16 @@ public class MPZllistService {
         }
         Element zllist = doc.getRootElement();
         Elements childs = zllist.getChildElements();
-        List<MPZap> mpZaps = new ArrayList<>();
+        List<Zap> zaps = new ArrayList<>();
         for (Element child : childs){
             switch (child.getLocalName()){
                 case "ZGLV" -> mpZllist.setZglv(mpZglvService.loadMpZglv(child));
                 case "SCHET" -> mpZllist.setSchet(mpSchetService.loadMpSchet(child));
-                case "ZAP" -> mpZaps.add(mpZapService.loadMpZap(child));
+                case "ZAP" -> zaps.add(mpZapService.loadMpZap(child));
 
             }
         }
-        mpZllist.setZap(mpZaps);
+        mpZllist.setZap(zaps);
         return mpZllist;
     }
 }

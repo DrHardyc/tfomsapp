@@ -1,18 +1,17 @@
-package ru.tfoms.tfomsapp.service.MedPom;
+package ru.tfoms.tfomsapp.service.MP;
 
 import nu.xom.Element;
 import nu.xom.Elements;
 import org.springframework.stereotype.Service;
-import ru.tfoms.tfomsapp.domain.MEK.MP.MPPacient;
-import ru.tfoms.tfomsapp.domain.MEK.MP.MPZap;
+import ru.tfoms.tfomsapp.domain.MEK.Zap;
 
 @Service
 public class MPZapService {
     private final MPPacientService mpPacientService = new MPPacientService();
     private final MPZslService mpZslService = new MPZslService();
 
-    public MPZap loadMpZap(Element element) {
-        MPZap essZap = new MPZap();
+    public Zap loadMpZap(Element element) {
+        Zap essZap = new Zap();
 
         Elements childs = element.getChildElements();
 

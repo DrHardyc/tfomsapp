@@ -1,9 +1,9 @@
-package ru.tfoms.tfomsapp.domain.MEK.MP;
+package ru.tfoms.tfomsapp.domain.MEK;
 
 import lombok.Data;
 
 @Data
-public class MPSchet {
+public class Schet {
     private String code;
     private String codemo;
     private String year;

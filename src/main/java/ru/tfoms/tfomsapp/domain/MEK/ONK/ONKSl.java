@@ -22,6 +22,7 @@ public class ONKSl {
     private String date2;
     private String kd;
     private String ds0;
+    private String ds1;
     private List<String> ds2;
     private List<String> ds3;
     private String czab;
@@ -34,6 +35,7 @@ public class ONKSl {
     private List<ONKOnksl> onksl;
     private Ksgkpg ksgkpg;
     private String reab;
+    private String prvs;
     private String versspec;
     private String iddokt;
     private String edcol;

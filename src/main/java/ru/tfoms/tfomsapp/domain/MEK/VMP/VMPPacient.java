@@ -10,7 +10,7 @@ import ru.tfoms.tfomsapp.domain.MEK.Pacient;
 public class VMPPacient extends Pacient {
     private String idpac;
     private String vpolis;
-    private String spolos;
+    private String spolis;
     private String npolis;
     private String stokato;
     private String smo;

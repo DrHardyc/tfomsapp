@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class MPDDs2n {
     private String ds2;
-    private String ds2_pr;
+    private String ds2pr;
     private String prds2n;
 }

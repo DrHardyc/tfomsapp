@@ -14,6 +14,7 @@ public class VMPUsl{
     private String datein;
     private String dateout;
     private String ds;
+    private String codeusl;
     private String kolusl;
     private String tarif;
     private String sumvusl;

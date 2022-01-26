@@ -15,7 +15,7 @@ public class ONKZsl extends Zsl {
     private String vidpom;
     private String forpom;
     private String nprmo;
-    private String mprdate;
+    private String nprdate;
     private String lpu;
     private String datez1;
     private String datez2;

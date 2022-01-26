@@ -12,11 +12,9 @@ import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
 import com.vaadin.flow.router.Route;
 import ru.tfoms.tfomsapp.domain.HandBook.HBQ018;
-import ru.tfoms.tfomsapp.domain.MEK.Pacient;
-import ru.tfoms.tfomsapp.domain.MEK.Zllist;
-import ru.tfoms.tfomsapp.domain.MEK.Zap;
-import ru.tfoms.tfomsapp.service.MP.GenerateTestXML;
-import ru.tfoms.tfomsapp.service.MP.MPZllistService;
+import ru.tfoms.tfomsapp.domain.MEK.*;
+import ru.tfoms.tfomsapp.service.MEK.GenerateTestXML;
+import ru.tfoms.tfomsapp.service.MEK.ZllistService;
 
 import javax.annotation.security.PermitAll;
 import java.io.BufferedReader;
@@ -26,7 +24,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 
 @Route("loadxml")
@@ -35,8 +32,6 @@ public class LoadXMLView extends VerticalLayout {
 
     private int filesCounter = 0;
     private ArrayList<Zap> listZaps = new ArrayList<>();
-    private ArrayList<Pacient> listPacients = new ArrayList<>();
-    private List<Pacient> newPacient = new ArrayList<>();
 
     public boolean syncZlList;
     public boolean syncZap;
@@ -75,7 +70,10 @@ public class LoadXMLView extends VerticalLayout {
         String[] fileName = new String[]{"", ""};
         multiFileUpload.setAcceptedFileTypes(".xml");
         multiFileUpload.addSucceededListener(event -> {
-            loadXMLFiles(dialog, multiFileMemoryBuffer, fileName, event);
+            ZllistService zllistService = new ZllistService();
+            Zllist zllist = zllistService.loadZllist(multiFileMemoryBuffer.getInputStream(event.getFileName()), "MP");
+            System.out.println("Загрузка успешно завершена");
+            //loadXMLFiles(dialog, multiFileMemoryBuffer, fileName, event);
         });
 
         button.addClickListener(event -> {
@@ -87,7 +85,7 @@ public class LoadXMLView extends VerticalLayout {
 
     }
 
-        private void loadXMLFiles(Dialog dialog, MultiFileMemoryBuffer multiFileMemoryBuffer, String[] fileName, SucceededEvent event) {
+    private void loadXMLFiles(Dialog dialog, MultiFileMemoryBuffer multiFileMemoryBuffer, String[] fileName, SucceededEvent event) {
         filesCounter = multiFileMemoryBuffer.getFiles().size();
         if (event.getFileName().substring(0, 2).contains("HM"))
             fileName[0] = event.getFileName();
@@ -98,8 +96,8 @@ public class LoadXMLView extends VerticalLayout {
 
         syncZlList = false;
         new Thread(() -> {
-            MPZllistService mpZllistService = new MPZllistService();
-            Zllist zllist = mpZllistService.loadMpZllist(multiFileMemoryBuffer.getInputStream(fileName[0]));
+
+
             syncZlList = true;
         }).start();
 

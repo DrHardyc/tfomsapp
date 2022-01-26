@@ -1,4 +1,4 @@
-package ru.tfoms.tfomsapp.service.MP;
+package ru.tfoms.tfomsapp.service.MEK;
 
 import nu.xom.Document;
 import nu.xom.Element;
@@ -25,6 +25,7 @@ public class GenerateTestXML {
         zglv.appendChild(filename);
         zglv.appendChild(data);
         zglv.appendChild(version);
+        zglv.appendChild(sdz);
         zlList.appendChild(zglv);
 
         Element schet = new Element("SCHET");
@@ -135,9 +136,9 @@ public class GenerateTestXML {
             Element rslt = new Element("RSLT");
             Element ishod = new Element("ISHOD");
             //OS_SLUCH
-            for (int iSluch = 0; i < 2; i++){
+            for (int iSluch = 0; iSluch < 2; iSluch++){
                 Element ossluch = new Element("OS_SLUCH");
-                ossluch.appendChild("vnov | " + random.nextInt(30));
+                ossluch.appendChild("osluch | " + random.nextInt(30));
                 zsl.appendChild(ossluch);
             }
             //!OS_SLUCH
@@ -148,7 +149,7 @@ public class GenerateTestXML {
                 Element slid = new Element("SL_ID");
                 Element lpu1 = new Element("LPU_1");
                 Element podr = new Element("PODR");
-                Element profil = new Element("PRFIL");
+                Element profil = new Element("PROFIL");
                 Element profilk = new Element("PROFIL_K");
                 Element det = new Element("DET");
                 Element pcel = new Element("P_CEL");
@@ -211,7 +212,7 @@ public class GenerateTestXML {
                         ksgkpg.appendChild(slkoef);
                     }
                     //!SL_KOEF
-                    nkpg.appendChild("nkpg  | " + random.nextInt(99));
+                    nksg.appendChild("nksg  | " + random.nextInt(99));
                     verksg.appendChild("verksg | " + random.nextInt(999999));
                     ksgpg.appendChild("ksgpg | " + random.nextInt(1));
                     nkpg.appendChild("nkpg | " + random.nextInt(9999));
@@ -250,14 +251,14 @@ public class GenerateTestXML {
                 //LEK_PR
                 for (int iLekpr = 0; iLekpr < 2; iLekpr++){
                     Element lekpr = new Element("LEK_PR");
-                    Element datainj = new Element("DATA_INJ");
+                    Element datainj = new Element("DATE_INJ");
                     Element codesh = new Element("CODE_SH");
                     Element regnum = new Element("REGNUM");
                     Element codemark = new Element("COD_MARK");
                     //LEK_DOSE
                     Element lekdose = new Element("LEK_DOSE");
                     Element edizm = new Element("ED_IZM");
-                    Element doseinj = new Element("DASE_INJ");
+                    Element doseinj = new Element("DOSE_INJ");
                     Element methodinj = new Element("METHOD_INJ");
                     Element colinj = new Element("COL_INJ");
                     edizm.appendChild("edizm | " + generateRandomString(3));
@@ -302,7 +303,7 @@ public class GenerateTestXML {
                     for (int iMeddev = 0; iMeddev < 2; iMeddev++) {
                         Element meddev = new Element("MED_DEV");
                         Element datemed = new Element("DATE_MED");
-                        Element codemeddev = new Element("CODE_MED_DEV");
+                        Element codemeddev = new Element("CODE_MEDDEV");
                         Element numberser = new Element("NUMBER_SER");
                         datemed.appendChild("datemed | " + random.nextInt(999999));
                         codemeddev.appendChild("codemeddev | " + random.nextInt(999999));
@@ -527,7 +528,7 @@ public class GenerateTestXML {
 
         try {
 //            Files.write(Paths.get("C:\\test.xml"), Collections.singleton(doc.toXML()));
-            PrintWriter out = new PrintWriter("C:\\Users\\dr_ha\\Documents\\test.xml");
+            PrintWriter out = new PrintWriter("C:\\test.xml");
             out.println(doc.toXML());
             out.close();
         } catch (IOException e) {

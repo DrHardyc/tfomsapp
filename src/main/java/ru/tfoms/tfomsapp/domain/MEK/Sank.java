@@ -1,11 +1,11 @@
-package ru.tfoms.tfomsapp.domain.MEK.MP;
+package ru.tfoms.tfomsapp.domain.MEK;
 
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class MPSank {
+public class Sank {
     private String scode;
     private String ssum;
     private String stip;

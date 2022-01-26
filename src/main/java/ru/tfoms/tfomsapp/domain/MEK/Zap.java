@@ -7,5 +7,5 @@ public class Zap {
     private String nzap;
     private String prnov;
     private Pacient pacient;
-    private ru.tfoms.tfomsapp.domain.MEK.MP.MPZsl MPZsl;
+    private Zsl zsl;
 }

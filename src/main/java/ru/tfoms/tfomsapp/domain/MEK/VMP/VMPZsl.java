@@ -1,4 +1,4 @@
-package ru.tfoms.tfomsapp.domain.MEK.MP;
+package ru.tfoms.tfomsapp.domain.MEK.VMP;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MPZsl extends Zsl {
+public class VMPZsl extends Zsl {
     private String idcase;
     private String uslok;
     private String vidpom;
@@ -24,13 +24,11 @@ public class MPZsl extends Zsl {
     private String rslt;
     private String ishod;
     private List<String> ossluch;
-    private String vbp;
-    private List<MPSl> sl;
+    private List<VMPSl> sl;
     private String idsp;
     private String sumv;
     private String oplata;
     private String sump;
-    private List<Sank> sank;
+    private List<Sank> sanks;
     private String sankit;
-
 }

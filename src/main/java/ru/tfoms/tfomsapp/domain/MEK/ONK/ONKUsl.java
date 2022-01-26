@@ -1,13 +1,9 @@
-package ru.tfoms.tfomsapp.domain.MEK.MP;
+package ru.tfoms.tfomsapp.domain.MEK.ONK;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import ru.tfoms.tfomsapp.domain.MEK.Mrusln;
-
-import java.util.List;
 
 @Data
-public class MPUsl{
+public class ONKUsl {
     private String idserv;
     private String lpu;
     private String lpu1;
@@ -22,8 +18,8 @@ public class MPUsl{
     private String kolusl;
     private String tarif;
     private String sumvusl;
-    private List<MPMeddev> meddev;
-    private List<Mrusln> mruslns;
+    private String prvs;
+    private String codemd;
     private String npl;
     private String comentu;
 }

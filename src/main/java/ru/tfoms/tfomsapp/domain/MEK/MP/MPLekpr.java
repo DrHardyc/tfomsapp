@@ -8,5 +8,5 @@ public class MPLekpr {
     private String codesh;
     private String regnum;
     private String codmark;
-    private MPLekdose MPLekdose;
+    private MPLekdose lekdose;
 }

@@ -1,4 +1,4 @@
-package ru.tfoms.tfomsapp.service.MP;
+package ru.tfoms.tfomsapp.service.MEK;
 
 import nu.xom.*;
 import org.springframework.stereotype.Service;
@@ -12,15 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class MPZllistService {
+public class ZllistService {
     private final ServiceUtil su = new ServiceUtil();
-    private final MPZglvService mpZglvService = new MPZglvService();
-    private final MPSchetService mpSchetService = new MPSchetService();
-    private final MPZapService mpZapService = new MPZapService();
+    private final ZglvService zglvService = new ZglvService();
+    private final SchetService schetService = new SchetService();
+    private final ZapService zapService = new ZapService();
 
-    public Zllist loadMpZllist(InputStream inputStream){
-
-        Zllist mpZllist = new Zllist();
+    public Zllist loadZllist(InputStream inputStream, String fileStructureName){
+        Zllist essZllist = new Zllist();
         Document doc = null;
         Builder parser = new Builder(false);
         try {
@@ -32,18 +31,18 @@ public class MPZllistService {
             su.showMessagesEx("Документ не загружен." + doc.getClass().getName());
             return null;
         }
-        Element zllist = doc.getRootElement();
-        Elements childs = zllist.getChildElements();
+        Element zl = doc.getRootElement();
+        Elements childs = zl.getChildElements();
         List<Zap> zaps = new ArrayList<>();
         for (Element child : childs){
             switch (child.getLocalName()){
-                case "ZGLV" -> mpZllist.setZglv(mpZglvService.loadMpZglv(child));
-                case "SCHET" -> mpZllist.setSchet(mpSchetService.loadMpSchet(child));
-                case "ZAP" -> zaps.add(mpZapService.loadMpZap(child));
-
+                case "ZGLV" -> essZllist.setZglv(zglvService.loadZglv(child));
+                case "SCHET" -> essZllist.setSchet(schetService.loadSchet(child));
+                case "ZAP" -> zaps.add(zapService.loadZap(child, fileStructureName));
             }
         }
-        mpZllist.setZap(zaps);
-        return mpZllist;
+        essZllist.setZaps(zaps);
+        return essZllist;
     }
+
 }

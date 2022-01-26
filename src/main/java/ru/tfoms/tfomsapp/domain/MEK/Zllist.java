@@ -8,5 +8,5 @@ import java.util.List;
 public class Zllist {
     private Zglv zglv;
     private Schet schet;
-    private List<Zap> zap;
+    private List<Zap> zaps;
 }

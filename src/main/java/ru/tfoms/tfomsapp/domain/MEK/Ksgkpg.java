@@ -1,14 +1,14 @@
-package ru.tfoms.tfomsapp.domain.MEK.MP;
+package ru.tfoms.tfomsapp.domain.MEK;
 
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class MPKsgkpg {
+public class Ksgkpg {
     private String nksg;
     private String verksg;
-    private String ksgpg;
+    private String kdgpg;
     private String nkpg;
     private String koefz;
     private String koefup;
@@ -18,5 +18,5 @@ public class MPKsgkpg {
     private List<String> crit;
     private String slk;
     private String itsl;
-    private List<MPSlkoef> slkoef;
+    private List<Slkoef> slkoef;
 }

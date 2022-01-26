@@ -1,28 +1,27 @@
-package ru.tfoms.tfomsapp.service.MP;
+package ru.tfoms.tfomsapp.service.MEK;
 
 import nu.xom.Element;
 import nu.xom.Elements;
 import org.springframework.stereotype.Service;
-import ru.tfoms.tfomsapp.domain.MEK.MP.MPKsgkpg;
-import ru.tfoms.tfomsapp.domain.MEK.MP.MPSlkoef;
+import ru.tfoms.tfomsapp.domain.MEK.Ksgkpg;
+import ru.tfoms.tfomsapp.domain.MEK.Slkoef;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class MPKsgkpgService {
-    private final MPSlkoefService mpSlkoefService = new MPSlkoefService();
-
-    public MPKsgkpg loadMPKsgkpg(Element element){
-        MPKsgkpg essKsgkpg = new MPKsgkpg();
-        List<String> crits = new ArrayList<>();
-        List<MPSlkoef> mpSlkoefs = new ArrayList<>();
+public class KsgkpgService {
+    public final SlkoefService slkoefService = new SlkoefService();
+    public Ksgkpg loadKsgkpg(Element element){
+        Ksgkpg essKsgkpg = new Ksgkpg();
         Elements childs = element.getChildElements();
+        List<String> crits = new ArrayList<>();
+        List<Slkoef> slkoefs = new ArrayList<>();
         for (Element child : childs){
             switch (child.getLocalName()){
                 case "N_KSG" -> essKsgkpg.setNksg(child.getValue());
                 case "VER_KSG" -> essKsgkpg.setVerksg(child.getValue());
-                case "KSG_PG" -> essKsgkpg.setKsgpg(child.getValue());
+                case "KSG_PG" -> essKsgkpg.setKdgpg(child.getValue());
                 case "N_KPG" -> essKsgkpg.setNkpg(child.getValue());
                 case "KOEF_Z" -> essKsgkpg.setKoefz(child.getValue());
                 case "KOEF_UP" -> essKsgkpg.setKoefup(child.getValue());
@@ -32,11 +31,11 @@ public class MPKsgkpgService {
                 case "CRIT" -> crits.add(child.getValue());
                 case "SL_K" -> essKsgkpg.setSlk(child.getValue());
                 case "IT_SL" -> essKsgkpg.setItsl(child.getValue());
-                case "SL_KOEF" -> mpSlkoefs.add(mpSlkoefService.loadMPSlkoef(child));
+                case "SL_KOEF" -> slkoefs.add(slkoefService.loadSlcoef(child));
             }
         }
         essKsgkpg.setCrit(crits);
-        essKsgkpg.setSlkoef(mpSlkoefs);
+        essKsgkpg.setSlkoef(slkoefs);
         return essKsgkpg;
     }
 }

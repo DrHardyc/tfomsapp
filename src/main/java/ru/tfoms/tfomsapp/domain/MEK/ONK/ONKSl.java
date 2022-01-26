@@ -1,12 +1,14 @@
-package ru.tfoms.tfomsapp.domain.MEK.MP;
+package ru.tfoms.tfomsapp.domain.MEK.ONK;
 
 import lombok.Data;
+import ru.tfoms.tfomsapp.domain.MEK.Cons;
 import ru.tfoms.tfomsapp.domain.MEK.Ksgkpg;
+import ru.tfoms.tfomsapp.domain.MEK.Napr;
 
 import java.util.List;
 
 @Data
-public class MPSl{
+public class ONKSl {
     private String slid;
     private String lpu1;
     private String podr;
@@ -19,24 +21,24 @@ public class MPSl{
     private String date1;
     private String date2;
     private String kd;
-    private String wei;
     private String ds0;
-    private String ds1;
     private List<String> ds2;
     private List<String> ds3;
     private String czab;
+    private String dsonk;
     private String dn;
     private List<String> codemes1;
     private String codemes2;
+    private List<Napr> napr;
+    private List<Cons> cons;
+    private List<ONKOnksl> onksl;
     private Ksgkpg ksgkpg;
     private String reab;
-    private String prvs;
     private String versspec;
-    private String iddoct;
+    private String iddokt;
     private String edcol;
     private String tarif;
     private String summ;
-    private List<MPLekpr> lekpr;
-    private List<MPUsl> usl;
+    private List<ONKUsl> usl;
     private String comentsl;
 }

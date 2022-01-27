@@ -13,7 +13,8 @@ import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
 import com.vaadin.flow.router.Route;
 import ru.tfoms.tfomsapp.domain.HandBook.HBQ018;
 import ru.tfoms.tfomsapp.domain.MEK.*;
-import ru.tfoms.tfomsapp.service.MEK.GenerateTestXML;
+import ru.tfoms.tfomsapp.service.MEK.MP.GenerateMPXML;
+import ru.tfoms.tfomsapp.service.MEK.VMP.GenerateVMPXML;
 import ru.tfoms.tfomsapp.service.MEK.ZllistService;
 
 import javax.annotation.security.PermitAll;
@@ -77,8 +78,11 @@ public class LoadXMLView extends VerticalLayout {
         });
 
         button.addClickListener(event -> {
-            GenerateTestXML generateTestXML = new GenerateTestXML();
-            generateTestXML.generate();
+            GenerateMPXML generateMPXML = new GenerateMPXML();
+            generateMPXML.generate();
+
+//            GenerateVMPXML generateVMPXML = new GenerateVMPXML();
+//            generateVMPXML.generate();
         });
 
         add(multiFileUpload, button, statusLabel, statusSyncZap, statusSyncPacient, tfURL, hbq018Grid);

@@ -14,9 +14,10 @@ public class VMPUslService {
             switch (child.getLocalName()){
                 case "IDSERV" -> essVmpUsl.setIdserv(child.getValue());
                 case "LPU" -> essVmpUsl.setLpu(child.getValue());
+                case "LPU_1" -> essVmpUsl.setLpu1(child.getValue());
                 case "PODR" -> essVmpUsl.setPodr(child.getValue());
                 case "PROFIL" -> essVmpUsl.setProfil(child.getValue());
-                case "VIDVME" -> essVmpUsl.setVidvme(child.getValue());
+                case "VID_VME" -> essVmpUsl.setVidvme(child.getValue());
                 case "DET" -> essVmpUsl.setDet(child.getValue());
                 case "DATE_IN" -> essVmpUsl.setDatein(child.getValue());
                 case "DATE_OUT" -> essVmpUsl.setDateout(child.getValue());

@@ -22,7 +22,7 @@ public class MPDUslService {
                 case "DATE_OUT" -> essMpdUsl.setDateout(child.getValue());
                 case "P_OTK" -> essMpdUsl.setPotk(child.getValue());
                 case "CODE_USL" -> essMpdUsl.setCodeusl(child.getValue());
-                case "TRRIF" -> essMpdUsl.setTarif(child.getValue());
+                case "TARIF" -> essMpdUsl.setTarif(child.getValue());
                 case "SUMV_USL"-> essMpdUsl.setSumvusl(child.getValue());
                 case "MR_USL_N" -> essMpdUsl.setMrusln(mruslnService.loadMrusln(child));
                 case "COMENTU" -> essMpdUsl.setComentu(child.getValue());

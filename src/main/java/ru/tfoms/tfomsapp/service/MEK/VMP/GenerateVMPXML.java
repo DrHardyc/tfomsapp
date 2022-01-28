@@ -17,9 +17,9 @@ public class GenerateVMPXML {
         Element version = new Element("VERSION");
         version.appendChild("version | " + generateRandomString(7));
         zglv.appendChild(version);
-        Element data = new Element("DATA");
-        data.appendChild("data | " + random.nextInt(100000));
-        zglv.appendChild(data);
+        Element date = new Element("DATE");
+        date.appendChild("data | " + random.nextInt(100000));
+        zglv.appendChild(date);
         Element filename = new Element("FILENAME");
         filename.appendChild("filename | " + generateRandomString(10));
         zglv.appendChild(filename);
@@ -273,105 +273,105 @@ public class GenerateVMPXML {
                     sl.appendChild(cons);
                 }
                 Element onksl = new Element("ONK_SL");
-                Element ds1t = new Element("DS1_T");
-                ds1t.appendChild("ds1t | " + generateRandomString(10));
-                onksl.appendChild(ds1t);
-                Element stad = new Element("STAD");
-                stad.appendChild("stad | " + random.nextInt(9));
-                onksl.appendChild(stad);
-                Element onkt = new Element("ONK_T");
-                onkt.appendChild("onkt | " + random.nextInt(99));
-                onksl.appendChild(onkt);
-                Element onkn = new Element("ONK_N");
-                onkn.appendChild("onkn | " + random.nextInt(999));
-                onksl.appendChild(onkn);
-                Element onkm = new Element("ONK_M");
-                onkm.appendChild("onkm | " + generateRandomString(10));
-                onksl.appendChild(onkm);
-                Element mtstz = new Element("MTSTZ");
-                mtstz.appendChild("mtstz | " + generateRandomString(7));
-                onksl.appendChild(mtstz);
-                Element sod = new Element("SOD");
-                sod.appendChild("sod | " + random.nextInt(9999));
-                onksl.appendChild(sod);
-                Element kfr = new Element("K_FR");
-                kfr.appendChild("kfr | " + random.nextInt(9999));
-                onksl.appendChild(kfr);
-                Element weionkusl = new Element("WEI");
-                weionkusl.appendChild("wei | " + random.nextInt(99));
-                onksl.appendChild(weionkusl);
-                Element hei = new Element("HEI");
-                hei.appendChild("hei |" + random.nextInt(9999));
-                onksl.appendChild(hei);
-                Element bsa = new Element("BSA");
-                bsa.appendChild("bsa | " + random.nextInt(999));
-                onksl.appendChild(bsa);
-                for (int iBdiag = 0; iBdiag < 2; iBdiag++){
-                    Element bdiag = new Element("B_DIAG");
-                    Element diagdate = new Element("DIAG_DATE");
-                    diagdate.appendChild("diagdate | " + random.nextInt(999999));
-                    bdiag.appendChild(diagdate);
-                    Element diagtip = new Element("DIAG_TIP");
-                    diagtip.appendChild("diagtip | " + random.nextInt(9999));
-                    bdiag.appendChild(diagtip);
-                    Element diagcode = new Element("DIAG_CODE");
-                    diagcode.appendChild("diagcode | " + random.nextInt(99999));
-                    bdiag.appendChild(diagcode);
-                    Element diagrslt = new Element("DIAG_RSLT");
-                    diagrslt.appendChild("diagrslt | " + generateRandomString(12));
-                    bdiag.appendChild(diagrslt);
-                    Element recrslt = new Element("REC_RSLT");
-                    recrslt.appendChild("recrslt | " + generateRandomString(999));
-                    bdiag.appendChild(recrslt);
-                    onksl.appendChild(bdiag);
-                }
-                for (int iBprot = 0; iBprot < 2; iBprot++){
-                    Element bprot = new Element("B_PROT");
-                    Element prot = new Element("PROT");
-                    prot.appendChild("prot | " + random.nextInt(999));
-                    bprot.appendChild(prot);
-                    Element dprot = new Element("D_PROT");
-                    dprot.appendChild("dprot | " + random.nextInt(999999));
-                    bprot.appendChild(dprot);
-                    onksl.appendChild(bprot);
-                }
-                for (int iOnkusl = 0; iOnkusl < 2; iOnkusl++){
-                    Element onkusl = new Element("ONK_USL");
-                    Element usltip = new Element("USL_TIP");
-                    usltip.appendChild("usltip | " + generateRandomString(9));
-                    onkusl.appendChild(usltip);
-                    Element hirtip = new Element("HIR_TIP");
-                    hirtip.appendChild("hirtip | " + generateRandomString(8));
-                    onkusl.appendChild(hirtip);
-                    Element lektipl = new Element("LEK_TIP_L");
-                    lektipl.appendChild("lektipl | " + generateRandomString(9));
-                    onkusl.appendChild(lektipl);
-                    Element lektipv = new Element("LEK_TIP_V");
-                    lektipv.appendChild("lektipv | " + generateRandomString(12));
-                    onkusl.appendChild(lektipv);
-                    for (int iLekpr = 0; iLekpr < 2; iLekpr++){
-                        Element lekpr = new Element("LEK_PR");
-                        Element regnum = new Element("REGNUM");
-                        regnum.appendChild("regnum | " + random.nextInt(999999));
-                        lekpr.appendChild(regnum);
-                        Element codesh = new Element("CODE_SH");
-                        codesh.appendChild("codesh | " + random.nextInt(99999));
-                        lekpr.appendChild(codesh);
-                        for(int iDateinj = 0; iDateinj < 2; iDateinj++){
-                            Element dateinj = new Element("DATE_INJ");
-                            dateinj.appendChild("dateinj | " + random.nextInt(999999));
-                            lekpr.appendChild(dateinj);
-                        }
-                        onkusl.appendChild(lekpr);
+                    Element ds1t = new Element("DS1_T");
+                    ds1t.appendChild("ds1t | " + generateRandomString(10));
+                    onksl.appendChild(ds1t);
+                    Element stad = new Element("STAD");
+                    stad.appendChild("stad | " + random.nextInt(9));
+                    onksl.appendChild(stad);
+                    Element onkt = new Element("ONK_T");
+                    onkt.appendChild("onkt | " + random.nextInt(99));
+                    onksl.appendChild(onkt);
+                    Element onkn = new Element("ONK_N");
+                    onkn.appendChild("onkn | " + random.nextInt(999));
+                    onksl.appendChild(onkn);
+                    Element onkm = new Element("ONK_M");
+                    onkm.appendChild("onkm | " + generateRandomString(10));
+                    onksl.appendChild(onkm);
+                    Element mtstz = new Element("MTSTZ");
+                    mtstz.appendChild("mtstz | " + generateRandomString(7));
+                    onksl.appendChild(mtstz);
+                    Element sod = new Element("SOD");
+                    sod.appendChild("sod | " + random.nextInt(9999));
+                    onksl.appendChild(sod);
+                    Element kfr = new Element("K_FR");
+                    kfr.appendChild("kfr | " + random.nextInt(9999));
+                    onksl.appendChild(kfr);
+                    Element weionkusl = new Element("WEI");
+                    weionkusl.appendChild("wei | " + random.nextInt(99));
+                    onksl.appendChild(weionkusl);
+                    Element hei = new Element("HEI");
+                    hei.appendChild("hei |" + random.nextInt(9999));
+                    onksl.appendChild(hei);
+                    Element bsa = new Element("BSA");
+                    bsa.appendChild("bsa | " + random.nextInt(999));
+                    onksl.appendChild(bsa);
+                    for (int iBdiag = 0; iBdiag < 2; iBdiag++){
+                        Element bdiag = new Element("B_DIAG");
+                        Element diagdate = new Element("DIAG_DATE");
+                        diagdate.appendChild("diagdate | " + random.nextInt(999999));
+                        bdiag.appendChild(diagdate);
+                        Element diagtip = new Element("DIAG_TIP");
+                        diagtip.appendChild("diagtip | " + random.nextInt(9999));
+                        bdiag.appendChild(diagtip);
+                        Element diagcode = new Element("DIAG_CODE");
+                        diagcode.appendChild("diagcode | " + random.nextInt(99999));
+                        bdiag.appendChild(diagcode);
+                        Element diagrslt = new Element("DIAG_RSLT");
+                        diagrslt.appendChild("diagrslt | " + generateRandomString(12));
+                        bdiag.appendChild(diagrslt);
+                        Element recrslt = new Element("REC_RSLT");
+                        recrslt.appendChild("recrslt | " + generateRandomString(999));
+                        bdiag.appendChild(recrslt);
+                        onksl.appendChild(bdiag);
                     }
-                    Element pptr = new Element("PPTR");
-                    pptr.appendChild("pptr | " + generateRandomString(8));
-                    onkusl.appendChild(pptr);
-                    Element luchtip = new Element("LUCH_TIP");
-                    luchtip.appendChild("luchtip | " + generateRandomString(11));
-                    onkusl.appendChild(luchtip);
-                    onksl.appendChild(onkusl);
-                }
+                    for (int iBprot = 0; iBprot < 2; iBprot++){
+                        Element bprot = new Element("B_PROT");
+                        Element prot = new Element("PROT");
+                        prot.appendChild("prot | " + random.nextInt(999));
+                        bprot.appendChild(prot);
+                        Element dprot = new Element("D_PROT");
+                        dprot.appendChild("dprot | " + random.nextInt(999999));
+                        bprot.appendChild(dprot);
+                        onksl.appendChild(bprot);
+                    }
+                    for (int iOnkusl = 0; iOnkusl < 2; iOnkusl++){
+                        Element onkusl = new Element("ONK_USL");
+                        Element usltip = new Element("USL_TIP");
+                        usltip.appendChild("usltip | " + generateRandomString(9));
+                        onkusl.appendChild(usltip);
+                        Element hirtip = new Element("HIR_TIP");
+                        hirtip.appendChild("hirtip | " + generateRandomString(8));
+                        onkusl.appendChild(hirtip);
+                        Element lektipl = new Element("LEK_TIP_L");
+                        lektipl.appendChild("lektipl | " + generateRandomString(9));
+                        onkusl.appendChild(lektipl);
+                        Element lektipv = new Element("LEK_TIP_V");
+                        lektipv.appendChild("lektipv | " + generateRandomString(12));
+                        onkusl.appendChild(lektipv);
+                        for (int iLekpr = 0; iLekpr < 2; iLekpr++){
+                            Element lekpr = new Element("LEK_PR");
+                            Element regnum = new Element("REGNUM");
+                            regnum.appendChild("regnum | " + random.nextInt(999999));
+                            lekpr.appendChild(regnum);
+                            Element codesh = new Element("CODE_SH");
+                            codesh.appendChild("codesh | " + random.nextInt(99999));
+                            lekpr.appendChild(codesh);
+                            for(int iDateinj = 0; iDateinj < 2; iDateinj++){
+                                Element dateinj = new Element("DATE_INJ");
+                                dateinj.appendChild("dateinj | " + random.nextInt(999999));
+                                lekpr.appendChild(dateinj);
+                            }
+                            onkusl.appendChild(lekpr);
+                        }
+                        Element pptr = new Element("PPTR");
+                        pptr.appendChild("pptr | " + generateRandomString(8));
+                        onkusl.appendChild(pptr);
+                        Element luchtip = new Element("LUCH_TIP");
+                        luchtip.appendChild("luchtip | " + generateRandomString(11));
+                        onkusl.appendChild(luchtip);
+                        onksl.appendChild(onkusl);
+                    }
                 sl.appendChild(onksl);
                 Element prvs = new Element("PRVS");
                 prvs.appendChild("prvs | " + generateRandomString(12));

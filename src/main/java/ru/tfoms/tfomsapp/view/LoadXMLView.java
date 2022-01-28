@@ -13,7 +13,17 @@ import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
 import com.vaadin.flow.router.Route;
 import ru.tfoms.tfomsapp.domain.HandBook.HBQ018;
 import ru.tfoms.tfomsapp.domain.MEK.*;
+import ru.tfoms.tfomsapp.domain.MEK.DS.DSZllist;
+import ru.tfoms.tfomsapp.domain.MEK.DS.DSZsl;
+import ru.tfoms.tfomsapp.domain.MEK.PD.PDPerslist;
+import ru.tfoms.tfomsapp.service.MEK.DS.DSZllistService;
+import ru.tfoms.tfomsapp.service.MEK.DS.DSZslService;
+import ru.tfoms.tfomsapp.service.MEK.DS.GenerateDSXML;
 import ru.tfoms.tfomsapp.service.MEK.MP.GenerateMPXML;
+import ru.tfoms.tfomsapp.service.MEK.MPD.GenerateMPDXML;
+import ru.tfoms.tfomsapp.service.MEK.ONK.GenerateONKXML;
+import ru.tfoms.tfomsapp.service.MEK.PD.GeneratePDXML;
+import ru.tfoms.tfomsapp.service.MEK.PD.PDPerslistService;
 import ru.tfoms.tfomsapp.service.MEK.VMP.GenerateVMPXML;
 import ru.tfoms.tfomsapp.service.MEK.ZllistService;
 
@@ -71,16 +81,22 @@ public class LoadXMLView extends VerticalLayout {
         String[] fileName = new String[]{"", ""};
         multiFileUpload.setAcceptedFileTypes(".xml");
         multiFileUpload.addSucceededListener(event -> {
-            ZllistService zllistService = new ZllistService();
-            Zllist zllist = zllistService.loadZllist(multiFileMemoryBuffer.getInputStream(event.getFileName()), "MP");
+            DSZllistService dsZslService = new DSZllistService();
+            DSZllist dsZllist = dsZslService.loadDSZllist(multiFileMemoryBuffer.getInputStream(event.getFileName()));
+//            PDPerslistService pdPerslistService = new PDPerslistService();
+//            PDPerslist pdPerslist = pdPerslistService.loadPDPerslist(multiFileMemoryBuffer.getInputStream(event.getFileName()));
+//            ZllistService zllistService = new ZllistService();
+//            Zllist zllist = zllistService.loadZllist(multiFileMemoryBuffer.getInputStream(event.getFileName()), "PD");
             System.out.println("Загрузка успешно завершена");
             //loadXMLFiles(dialog, multiFileMemoryBuffer, fileName, event);
         });
 
         button.addClickListener(event -> {
-            GenerateMPXML generateMPXML = new GenerateMPXML();
-            generateMPXML.generate();
+            GenerateDSXML generateDSXML = new GenerateDSXML();
+            generateDSXML.generate();
 
+//            GeneratePDXML generatePDXML = new GeneratePDXML();
+//            generatePDXML.generate();
 //            GenerateVMPXML generateVMPXML = new GenerateVMPXML();
 //            generateVMPXML.generate();
         });

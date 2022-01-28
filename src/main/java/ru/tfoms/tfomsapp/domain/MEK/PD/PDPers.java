@@ -5,14 +5,14 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class Pers {
+public class PDPers {
     private String idpac;
     private String fam;
     private String im;
     private String ot;
     private String w;
     private String dr;
-    private String dost;
+    private List<String> dost;
     private String tel;
     private String famp;
     private String imp;

@@ -17,4 +17,5 @@ public class Schet {
     private String sankmek;
     private String sankmee;
     private String sankekmp;
+    private String disp;
 }

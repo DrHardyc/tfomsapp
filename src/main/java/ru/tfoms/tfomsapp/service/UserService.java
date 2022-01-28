@@ -9,9 +9,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import ru.tfoms.tfomsapp.domain.Role;
-import ru.tfoms.tfomsapp.domain.User;
-import ru.tfoms.tfomsapp.repo.UserRepo;
+import ru.tfoms.tfomsapp.domain.PG.Role;
+import ru.tfoms.tfomsapp.domain.PG.User;
+import ru.tfoms.tfomsapp.repo.PG.UserRepo;
 
 import javax.security.auth.message.AuthException;
 import java.util.ArrayList;
@@ -51,12 +51,10 @@ public class UserService implements UserDetailsService {
 
     public boolean addUser(String username, String password) {
         User user = new User();
-        String activationCode = user.getActivationCode();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
         user.setRoles(Collections.singleton(Role.ROLE_USER));
         user.setActive(true);
-        user.setActivationCode(activationCode);
 
         User userFromDb = userRepo.findByUsername(username);
         if (userFromDb != null) {
@@ -66,16 +64,4 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
         return true;
     }
-
-    public void activate(String activationCode) throws AuthException {
-        User user = userRepo.getByActivationCode(activationCode);
-        if (user != null) {
-            user.setActive(true);
-            userRepo.save(user);
-        } else {
-            throw new AuthException();
-        }
-    }
-
-
 }

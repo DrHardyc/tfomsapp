@@ -1,4 +1,4 @@
-package ru.tfoms.tfomsapp.domain;
+package ru.tfoms.tfomsapp.domain.PG;
 
 import lombok.Data;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -6,7 +6,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Data
@@ -19,21 +20,12 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String email;
-    private String activationCode;
     private boolean active;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
-
-    public String getActivationCode(){
-        return this.activationCode = RandomStringUtils.randomAlphanumeric(32);
-    }
-
-    public void setActivationCode(String activationCode){
-        this.activationCode = activationCode;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -1,6 +1,7 @@
 package ru.tfoms.tfomsapp.view;
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Label;
@@ -11,13 +12,17 @@ import com.vaadin.flow.component.upload.SucceededEvent;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
 import com.vaadin.flow.router.Route;
+import org.hibernate.boot.archive.spi.InputStreamAccess;
 import ru.tfoms.tfomsapp.domain.HandBook.HBQ018;
 import ru.tfoms.tfomsapp.domain.MEK.*;
+import ru.tfoms.tfomsapp.domain.MEK.DS.DSZap;
 import ru.tfoms.tfomsapp.domain.MEK.DS.DSZllist;
 import ru.tfoms.tfomsapp.domain.MEK.DS.DSZsl;
+import ru.tfoms.tfomsapp.domain.MEK.MP.MPZsl;
+import ru.tfoms.tfomsapp.domain.MEK.PD.PDPers;
 import ru.tfoms.tfomsapp.domain.MEK.PD.PDPerslist;
+import ru.tfoms.tfomsapp.domain.MEK.VMP.VMPZsl;
 import ru.tfoms.tfomsapp.service.MEK.DS.DSZllistService;
-import ru.tfoms.tfomsapp.service.MEK.DS.DSZslService;
 import ru.tfoms.tfomsapp.service.MEK.DS.GenerateDSXML;
 import ru.tfoms.tfomsapp.service.MEK.MP.GenerateMPXML;
 import ru.tfoms.tfomsapp.service.MEK.MPD.GenerateMPDXML;
@@ -30,6 +35,7 @@ import ru.tfoms.tfomsapp.service.MEK.ZllistService;
 import javax.annotation.security.PermitAll;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -42,8 +48,14 @@ import java.util.ArrayList;
 public class LoadXMLView extends VerticalLayout {
 
     private int filesCounter = 0;
-    private ArrayList<Zap> listZaps = new ArrayList<>();
+    private PDPerslist pdPerslist = new PDPerslist();
+    private DSZllist dsZllist = new DSZllist();
+    private Zllist zllMP = new Zllist();
+    private Zllist zllVMP = new Zllist();
+    private Zllist zllMPD = new Zllist();
+    private Zllist zllONK = new Zllist();
 
+    public Dialog dialog = new Dialog();
     public boolean syncZlList;
     public boolean syncZap;
     public boolean syncPacient;
@@ -52,14 +64,15 @@ public class LoadXMLView extends VerticalLayout {
     public ProgressBar progressBarPacient = new ProgressBar();
     public Label progressZap = new Label("");
     public Label progressPacient = new Label("");
-    public Button button = new Button("Test");
+    public Button btnGenFiles = new Button("Генерация файлов");
+    public Button btnMerge = new Button("Слияние");
     public Label statusLabel = new Label();
     public Label statusSyncZap = new Label();
     public Label statusSyncPacient = new Label();
     public TextField tfURL = new TextField();
 
     public LoadXMLView(){
-        Dialog dialog = new Dialog();
+        InputStream isMP;
         dialog.setCloseOnOutsideClick(false);
         dialog.setDraggable(true);
         dialog.setModal(true);
@@ -81,28 +94,114 @@ public class LoadXMLView extends VerticalLayout {
         String[] fileName = new String[]{"", ""};
         multiFileUpload.setAcceptedFileTypes(".xml");
         multiFileUpload.addSucceededListener(event -> {
-            DSZllistService dsZslService = new DSZllistService();
-            DSZllist dsZllist = dsZslService.loadDSZllist(multiFileMemoryBuffer.getInputStream(event.getFileName()));
-//            PDPerslistService pdPerslistService = new PDPerslistService();
-//            PDPerslist pdPerslist = pdPerslistService.loadPDPerslist(multiFileMemoryBuffer.getInputStream(event.getFileName()));
-//            ZllistService zllistService = new ZllistService();
-//            Zllist zllist = zllistService.loadZllist(multiFileMemoryBuffer.getInputStream(event.getFileName()), "PD");
+            ZllistService zllistService = new ZllistService();
+            switch (event.getFileName()) {
+                case "DS.xml" -> {
+                    DSZllistService dsZllistService = new DSZllistService();
+                    dsZllist = dsZllistService.loadDSZllist(multiFileMemoryBuffer.getInputStream(event.getFileName()));
+                    System.out.println("Загрузка DS успешно завершена");
+                }
+                case "MP.xml" -> {
+                    zllMP = zllistService.loadZllist(multiFileMemoryBuffer.getInputStream(event.getFileName()), "MP");
+                    System.out.println("Загрузка MP успешно завершена");
+                }
+                case "VMP.xml" -> {
+                    zllVMP = zllistService.loadZllist(multiFileMemoryBuffer.getInputStream(event.getFileName()), "VMP");
+                    System.out.println("Загрузка VMP успешно завершена");
+                }
+                case "MPD.xml" -> {
+                    zllMPD = zllistService.loadZllist(multiFileMemoryBuffer.getInputStream(event.getFileName()), "MPD");
+                    System.out.println("Загрузка MPD успешно завершена");
+                }
+                case "ONK.xml" -> {
+                    zllONK = zllistService.loadZllist(multiFileMemoryBuffer.getInputStream(event.getFileName()), "ONK");
+                    System.out.println("Загрузка ONK успешно завершена");
+                }
+                case "PD.xml" -> {
+                    PDPerslistService pdPerslistService = new PDPerslistService();
+                    pdPerslist = pdPerslistService.loadPDPerslist(multiFileMemoryBuffer.getInputStream(event.getFileName()));
+                    System.out.println("Загрузка PD успешно завершена");
+                }
+            }
             System.out.println("Загрузка успешно завершена");
-            //loadXMLFiles(dialog, multiFileMemoryBuffer, fileName, event);
+            btnMerge.setEnabled(true);
         });
 
-        button.addClickListener(event -> {
+        btnGenFiles.addClickListener(event -> {
             GenerateDSXML generateDSXML = new GenerateDSXML();
-            generateDSXML.generate();
+            generateDSXML.generate("C:\\Users\\dr_ha\\Google Диск\\ТФОМС\\genfiles\\DS.xml");
+            GeneratePDXML generatePDXML = new GeneratePDXML();
+            generatePDXML.generate("C:\\Users\\dr_ha\\Google Диск\\ТФОМС\\genfiles\\PD.xml");
+            GenerateVMPXML generateVMPXML = new GenerateVMPXML();
+            generateVMPXML.generate("C:\\Users\\dr_ha\\Google Диск\\ТФОМС\\genfiles\\VMP.xml");
+            GenerateMPXML generateMPXML = new GenerateMPXML();
+            generateMPXML.generate("C:\\Users\\dr_ha\\Google Диск\\ТФОМС\\genfiles\\MP.xml");
+            GenerateONKXML generateONKXML = new GenerateONKXML();
+            generateONKXML.generate("C:\\Users\\dr_ha\\Google Диск\\ТФОМС\\genfiles\\ONK.xml");
+            GenerateMPDXML generateMPDXML = new GenerateMPDXML();
+            generateMPDXML.generate("C:\\Users\\dr_ha\\Google Диск\\ТФОМС\\genfiles\\MPD.xml");
 
-//            GeneratePDXML generatePDXML = new GeneratePDXML();
-//            generatePDXML.generate();
-//            GenerateVMPXML generateVMPXML = new GenerateVMPXML();
-//            generateVMPXML.generate();
+        });
+        btnMerge.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        btnMerge.setEnabled(false);
+        btnMerge.addClickListener(event -> {
+            merger();
         });
 
-        add(multiFileUpload, button, statusLabel, statusSyncZap, statusSyncPacient, tfURL, hbq018Grid);
+        add(multiFileUpload, btnGenFiles, statusLabel, statusSyncZap, statusSyncPacient, tfURL, hbq018Grid, btnMerge);
 
+    }
+
+    private void merger(){
+        for (PDPers pdPers : pdPerslist.getPers()){
+            for(Zap zap : zllMP.getZaps()){
+                // Заполняем доп. свединями
+                addMoreInfo(zap, zllMP, dsZllist);
+                if (pdPers.getIdpac().equals(zap.getPacient().getIdpac())
+                        &&pdPerslist.getZglv().getFilename1().equals(zllMP.getZglv().getFilename())){
+                    pdPers.setMpZap(zap);
+                }
+            }
+            System.out.println("MP");
+            for(Zap zap : zllMPD.getZaps()){
+                // Заполняем доп. свединями
+                addMoreInfo(zap, zllMPD, dsZllist);
+                if (pdPers.getIdpac().equals(zap.getPacient().getIdpac())
+                        &&pdPerslist.getZglv().getFilename1().equals(zllMPD.getZglv().getFilename())){
+                    pdPers.setMpZap(zap);
+                }
+            }
+            System.out.println("MPD");
+            for(Zap zap : zllVMP.getZaps()){
+                // Заполняем доп. свединями
+                addMoreInfo(zap, zllVMP, dsZllist);
+                if (pdPers.getIdpac().equals(zap.getPacient().getIdpac())
+                        &&pdPerslist.getZglv().getFilename1().equals(zllVMP.getZglv().getFilename())){
+                    pdPers.setMpZap(zap);
+                }
+            }
+            System.out.println("VMP");
+            for(Zap zap : zllONK.getZaps()){
+                // Заполняем доп. свединями
+                addMoreInfo(zap, zllONK, dsZllist);
+                if (pdPers.getIdpac().equals(zap.getPacient().getIdpac())
+                        &&pdPerslist.getZglv().getFilename1().equals(zllONK.getZglv().getFilename())){
+                    pdPers.setMpZap(zap);
+                }
+            }
+            System.out.println("ONK");
+        }
+        System.out.println("Сдияние завершено.");
+    }
+
+    private void addMoreInfo(Zap zap, Zllist zllist, DSZllist dsZllist) {
+        for (DSZap dsZap : dsZllist.getZaps()){
+            for (DSZsl dsZsl : dsZap.getZsl())
+            if (dsZap.getFilename1().equals(zllist.getZglv().getFilename())
+                    &&dsZsl.getIdcase().equals(zap.getZsl().getIdcase())){
+                zap.getZsl().setDsZsl(dsZsl);
+            }
+        }
     }
 
     private void loadXMLFiles(Dialog dialog, MultiFileMemoryBuffer multiFileMemoryBuffer, String[] fileName, SucceededEvent event) {
@@ -116,7 +215,6 @@ public class LoadXMLView extends VerticalLayout {
 
         syncZlList = false;
         new Thread(() -> {
-
 
             syncZlList = true;
         }).start();
@@ -143,6 +241,5 @@ public class LoadXMLView extends VerticalLayout {
 
         return new BufferedReader(new InputStreamReader(con.getInputStream()));
     }
-
 }
 

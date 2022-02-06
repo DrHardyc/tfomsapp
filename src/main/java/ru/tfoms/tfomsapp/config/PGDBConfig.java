@@ -65,15 +65,15 @@ public class PGDBConfig {
 
     private DataSource ConnectDB() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        dataSource.setDriverClassName("org.postgresql.Driver");
-//        dataSource.setUrl("jdbc:postgresql://localhost/ukizi");
-//        dataSource.setUsername("hardy");
-//        dataSource.setPassword("Zaq1@wsx");
-
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://192.168.2.157/pg_tfomsapp");
-        dataSource.setUsername("mcherchesov");
-        dataSource.setPassword("123");
+        dataSource.setUrl("jdbc:postgresql://localhost/ukizi");
+        dataSource.setUsername("hardy");
+        dataSource.setPassword("Zaq1@wsx");
+
+//        dataSource.setDriverClassName("org.postgresql.Driver");
+//        dataSource.setUrl("jdbc:postgresql://192.168.2.157/pg_tfomsapp");
+//        dataSource.setUsername("mcherchesov");
+//        dataSource.setPassword("123");
         return dataSource;
     }
 }

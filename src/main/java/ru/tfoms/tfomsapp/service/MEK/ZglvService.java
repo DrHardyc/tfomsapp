@@ -14,7 +14,7 @@ public class ZglvService {
         for (Element child : childs){
             switch (child.getLocalName()){
                 case "VERSION" -> zglv.setVersion(child.getValue());
-                case "DATA" -> zglv.setData(child.getValue());
+                case "DATE" -> zglv.setDate(child.getValue());
                 case "FILENAME" -> zglv.setFilename(child.getValue());
                 case "SD_Z" -> zglv.setSdz(child.getValue());
             }

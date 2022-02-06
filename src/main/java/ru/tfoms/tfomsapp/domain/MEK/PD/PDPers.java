@@ -1,6 +1,7 @@
 package ru.tfoms.tfomsapp.domain.MEK.PD;
 
 import lombok.Data;
+import ru.tfoms.tfomsapp.domain.MEK.Zap;
 
 import java.util.List;
 
@@ -30,4 +31,8 @@ public class PDPers {
     private String okatog;
     private String okatop;
     private String comentp;
+    private Zap mpZap;
+    private Zap mpdZap;
+    private Zap vmpZap;
+    private Zap onkZap;
 }

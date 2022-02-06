@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class GenerateMPXML {
 
-    public void generate(){
+    public void generate(String dirName){
         Random random = new Random();
         Element zlList = new Element("ZL_LIST");
 
@@ -494,7 +494,7 @@ public class GenerateMPXML {
 
         try {
 //            Files.write(Paths.get("C:\\test.xml"), Collections.singleton(doc.toXML()));
-            PrintWriter out = new PrintWriter("C:\\MP.xml");
+            PrintWriter out = new PrintWriter(dirName);
             out.println(doc.toXML());
             out.close();
         } catch (IOException e) {

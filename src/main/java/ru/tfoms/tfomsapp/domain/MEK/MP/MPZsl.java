@@ -2,6 +2,7 @@ package ru.tfoms.tfomsapp.domain.MEK.MP;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import ru.tfoms.tfomsapp.domain.MEK.DS.DSZsl;
 import ru.tfoms.tfomsapp.domain.MEK.Sank;
 import ru.tfoms.tfomsapp.domain.MEK.Zsl;
 
@@ -32,5 +33,6 @@ public class MPZsl extends Zsl {
     private String sump;
     private List<Sank> sank;
     private String sankit;
+    private DSZsl dsZsl;
 
 }

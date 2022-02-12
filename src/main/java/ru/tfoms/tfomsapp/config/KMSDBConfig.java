@@ -14,11 +14,11 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.sql.DataSource;
 import java.util.HashMap;
 
-//@Configuration
-//@EnableJpaRepositories(
-//        basePackages = "ru.tfoms.tfomsapp.repo.KMS",
-//        entityManagerFactoryRef = "KMSEntityManager",
-//        transactionManagerRef = "KMSTransactionManager")
+@Configuration
+@EnableJpaRepositories(
+        basePackages = "ru.tfoms.tfomsapp.repo.KMS",
+        entityManagerFactoryRef = "KMSEntityManager",
+        transactionManagerRef = "KMSTransactionManager")
 public class KMSDBConfig {
 
     @Autowired
@@ -29,34 +29,34 @@ public class KMSDBConfig {
         return ConnectDB();
     }
 
-//    @Bean
-//    public LocalContainerEntityManagerFactoryBean KMSEntityManager()  {
-//        LocalContainerEntityManagerFactoryBean em
-//                = new LocalContainerEntityManagerFactoryBean();
-//        em.setDataSource(KMSDataSource());
-//        em.setPackagesToScan(
-//                new String[] { "ru.tfoms.tfomsapp.domain.KMS" });
-//
-//        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-//        em.setJpaVendorAdapter(vendorAdapter);
-//        HashMap<String, Object> properties = new HashMap<>();
-//        properties.put("hibernate.hbm2ddl.auto",
-//                env.getProperty("hibernate.hbm2ddl.auto"));
-//        properties.put("hibernate.dialect",
-//                env.getProperty("hibernate.dialect"));
-//        em.setJpaPropertyMap(properties);
-//
-//        return em;
-//    }
+    @Bean
+    public LocalContainerEntityManagerFactoryBean KMSEntityManager()  {
+        LocalContainerEntityManagerFactoryBean em
+                = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(KMSDataSource());
+        em.setPackagesToScan(
+                new String[] { "ru.tfoms.tfomsapp.domain.KMS" });
 
-//    @Bean
-//    public PlatformTransactionManager KMSTransactionManager() {
-//        JpaTransactionManager transactionManager
-//                = new JpaTransactionManager();
-//        transactionManager.setEntityManagerFactory(
-//                KMSEntityManager().getObject());
-//        return transactionManager;
-//    }
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        em.setJpaVendorAdapter(vendorAdapter);
+        HashMap<String, Object> properties = new HashMap<>();
+        properties.put("hibernate.hbm2ddl.auto",
+                env.getProperty("hibernate.hbm2ddl.auto"));
+        properties.put("hibernate.dialect",
+                env.getProperty("hibernate.dialect"));
+        em.setJpaPropertyMap(properties);
+
+        return em;
+    }
+
+    @Bean
+    public PlatformTransactionManager KMSTransactionManager() {
+        JpaTransactionManager transactionManager
+                = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(
+                KMSEntityManager().getObject());
+        return transactionManager;
+    }
 
     private DataSource ConnectDB() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();

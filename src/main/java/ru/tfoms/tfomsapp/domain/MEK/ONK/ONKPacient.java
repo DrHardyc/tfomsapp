@@ -2,11 +2,9 @@ package ru.tfoms.tfomsapp.domain.MEK.ONK;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import ru.tfoms.tfomsapp.domain.MEK.Pacient;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class ONKPacient extends Pacient {
+public class ONKPacient {
     private String idpac;
     private String vpolis;
     private String spolis;

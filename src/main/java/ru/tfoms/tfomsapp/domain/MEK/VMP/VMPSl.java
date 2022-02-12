@@ -3,6 +3,7 @@ package ru.tfoms.tfomsapp.domain.MEK.VMP;
 
 import lombok.Data;
 import ru.tfoms.tfomsapp.domain.MEK.Cons;
+import ru.tfoms.tfomsapp.domain.MEK.DS.DSSl;
 import ru.tfoms.tfomsapp.domain.MEK.Napr;
 
 import java.util.List;
@@ -42,4 +43,5 @@ public class VMPSl{
     private String summ;
     private List<VMPUsl> usl;
     private String comentsl;
+    private DSSl dsSl;
 }

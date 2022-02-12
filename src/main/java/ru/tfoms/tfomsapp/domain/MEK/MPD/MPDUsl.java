@@ -1,6 +1,7 @@
 package ru.tfoms.tfomsapp.domain.MEK.MPD;
 
 import lombok.Data;
+import ru.tfoms.tfomsapp.domain.MEK.DS.DSUsl;
 import ru.tfoms.tfomsapp.domain.MEK.Mrusln;
 
 @Data
@@ -16,4 +17,5 @@ public class MPDUsl {
     private String sumvusl;
     private Mrusln mrusln;
     private String comentu;
+    private DSUsl dsUsl;
 }

@@ -1,6 +1,7 @@
 package ru.tfoms.tfomsapp.domain.MEK.VMP;
 
 import lombok.Data;
+import ru.tfoms.tfomsapp.domain.MEK.DS.DSUsl;
 
 @Data
 public class VMPUsl{
@@ -21,4 +22,5 @@ public class VMPUsl{
     private String prvs;
     private String codemd;
     private String comentu;
+    private DSUsl dsUsl;
 }

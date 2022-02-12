@@ -1,16 +1,13 @@
 package ru.tfoms.tfomsapp.domain.MEK.MP;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import ru.tfoms.tfomsapp.domain.MEK.DS.DSZsl;
 import ru.tfoms.tfomsapp.domain.MEK.Sank;
-import ru.tfoms.tfomsapp.domain.MEK.Zsl;
 
 import java.util.List;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class MPZsl extends Zsl {
+public class MPZsl {
     private String idcase;
     private String uslok;
     private String vidpom;

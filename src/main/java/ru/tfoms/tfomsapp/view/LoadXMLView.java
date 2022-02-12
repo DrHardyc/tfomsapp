@@ -5,6 +5,7 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.progressbar.ProgressBar;
 import com.vaadin.flow.component.textfield.TextField;
@@ -12,25 +13,31 @@ import com.vaadin.flow.component.upload.SucceededEvent;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
 import com.vaadin.flow.router.Route;
-import org.hibernate.boot.archive.spi.InputStreamAccess;
+import ru.tfoms.tfomsapp.domain.HandBook.F008;
 import ru.tfoms.tfomsapp.domain.HandBook.HBQ018;
-import ru.tfoms.tfomsapp.domain.MEK.*;
-import ru.tfoms.tfomsapp.domain.MEK.DS.DSZap;
-import ru.tfoms.tfomsapp.domain.MEK.DS.DSZllist;
-import ru.tfoms.tfomsapp.domain.MEK.DS.DSZsl;
-import ru.tfoms.tfomsapp.domain.MEK.MP.MPZsl;
+import ru.tfoms.tfomsapp.domain.MEK.DS.*;
+import ru.tfoms.tfomsapp.domain.MEK.MP.*;
+import ru.tfoms.tfomsapp.domain.MEK.MPD.*;
+import ru.tfoms.tfomsapp.domain.MEK.ONK.ONKSl;
+import ru.tfoms.tfomsapp.domain.MEK.ONK.ONKUsl;
+import ru.tfoms.tfomsapp.domain.MEK.ONK.ONKZap;
+import ru.tfoms.tfomsapp.domain.MEK.ONK.ONKZllist;
 import ru.tfoms.tfomsapp.domain.MEK.PD.PDPers;
 import ru.tfoms.tfomsapp.domain.MEK.PD.PDPerslist;
-import ru.tfoms.tfomsapp.domain.MEK.VMP.VMPZsl;
+import ru.tfoms.tfomsapp.domain.MEK.VMP.*;
+import ru.tfoms.tfomsapp.service.HandBook.F008Service;
 import ru.tfoms.tfomsapp.service.MEK.DS.DSZllistService;
 import ru.tfoms.tfomsapp.service.MEK.DS.GenerateDSXML;
 import ru.tfoms.tfomsapp.service.MEK.MP.GenerateMPXML;
+import ru.tfoms.tfomsapp.service.MEK.MP.MPZLListService;
 import ru.tfoms.tfomsapp.service.MEK.MPD.GenerateMPDXML;
+import ru.tfoms.tfomsapp.service.MEK.MPD.MPDZllistService;
 import ru.tfoms.tfomsapp.service.MEK.ONK.GenerateONKXML;
+import ru.tfoms.tfomsapp.service.MEK.ONK.ONKZllistService;
 import ru.tfoms.tfomsapp.service.MEK.PD.GeneratePDXML;
 import ru.tfoms.tfomsapp.service.MEK.PD.PDPerslistService;
 import ru.tfoms.tfomsapp.service.MEK.VMP.GenerateVMPXML;
-import ru.tfoms.tfomsapp.service.MEK.ZllistService;
+import ru.tfoms.tfomsapp.service.MEK.VMP.VMPZllistService;
 
 import javax.annotation.security.PermitAll;
 import java.io.BufferedReader;
@@ -41,6 +48,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Route("loadxml")
@@ -50,10 +58,10 @@ public class LoadXMLView extends VerticalLayout {
     private int filesCounter = 0;
     private PDPerslist pdPerslist = new PDPerslist();
     private DSZllist dsZllist = new DSZllist();
-    private Zllist zllMP = new Zllist();
-    private Zllist zllVMP = new Zllist();
-    private Zllist zllMPD = new Zllist();
-    private Zllist zllONK = new Zllist();
+    private MPZllist zllMP = new MPZllist();
+    private VMPZllist zllVMP = new VMPZllist();
+    private MPDZllist zllMPD = new MPDZllist();
+    private ONKZllist zllONK = new ONKZllist();
 
     public Dialog dialog = new Dialog();
     public boolean syncZlList;
@@ -94,7 +102,6 @@ public class LoadXMLView extends VerticalLayout {
         String[] fileName = new String[]{"", ""};
         multiFileUpload.setAcceptedFileTypes(".xml");
         multiFileUpload.addSucceededListener(event -> {
-            ZllistService zllistService = new ZllistService();
             switch (event.getFileName()) {
                 case "DS.xml" -> {
                     DSZllistService dsZllistService = new DSZllistService();
@@ -102,19 +109,23 @@ public class LoadXMLView extends VerticalLayout {
                     System.out.println("Загрузка DS успешно завершена");
                 }
                 case "MP.xml" -> {
-                    zllMP = zllistService.loadZllist(multiFileMemoryBuffer.getInputStream(event.getFileName()), "MP");
+                    MPZLListService mpzlListService = new MPZLListService();
+                    zllMP = mpzlListService.loadMPZllist(multiFileMemoryBuffer.getInputStream(event.getFileName()));
                     System.out.println("Загрузка MP успешно завершена");
                 }
                 case "VMP.xml" -> {
-                    zllVMP = zllistService.loadZllist(multiFileMemoryBuffer.getInputStream(event.getFileName()), "VMP");
+                    VMPZllistService vmpZllistService = new VMPZllistService();
+                    zllVMP = vmpZllistService.loadVMPZllist(multiFileMemoryBuffer.getInputStream(event.getFileName()));
                     System.out.println("Загрузка VMP успешно завершена");
                 }
                 case "MPD.xml" -> {
-                    zllMPD = zllistService.loadZllist(multiFileMemoryBuffer.getInputStream(event.getFileName()), "MPD");
+                    MPDZllistService mpdZllistService = new MPDZllistService();
+                    zllMPD = mpdZllistService.loadVMPZllist(multiFileMemoryBuffer.getInputStream(event.getFileName()));
                     System.out.println("Загрузка MPD успешно завершена");
                 }
                 case "ONK.xml" -> {
-                    zllONK = zllistService.loadZllist(multiFileMemoryBuffer.getInputStream(event.getFileName()), "ONK");
+                    ONKZllistService onkZllistService = new ONKZllistService();
+                    zllONK = onkZllistService.loadONKZllist(multiFileMemoryBuffer.getInputStream(event.getFileName()));
                     System.out.println("Загрузка ONK успешно завершена");
                 }
                 case "PD.xml" -> {
@@ -124,7 +135,7 @@ public class LoadXMLView extends VerticalLayout {
                 }
             }
             System.out.println("Загрузка успешно завершена");
-            btnMerge.setEnabled(true);
+            //btnMerge.setEnabled(true);
         });
 
         btnGenFiles.addClickListener(event -> {
@@ -143,9 +154,18 @@ public class LoadXMLView extends VerticalLayout {
 
         });
         btnMerge.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        btnMerge.setEnabled(false);
+        //btnMerge.setEnabled(false);
+
         btnMerge.addClickListener(event -> {
-            merger();
+            F008Service f008Service = new F008Service();
+            try {
+                List<F008> f008 = f008Service.getF008s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=F008"));
+                System.out.println(f008.get(0));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            //merger();
         });
 
         add(multiFileUpload, btnGenFiles, statusLabel, statusSyncZap, statusSyncPacient, tfURL, hbq018Grid, btnMerge);
@@ -154,54 +174,143 @@ public class LoadXMLView extends VerticalLayout {
 
     private void merger(){
         for (PDPers pdPers : pdPerslist.getPers()){
-            for(Zap zap : zllMP.getZaps()){
-                // Заполняем доп. свединями
-                addMoreInfo(zap, zllMP, dsZllist);
+            List<MPZap> mpZaps = new ArrayList<>();
+            for(MPZap zap : zllMP.getZap()){
+                // Заполняем доп. свединями наши полученные случаи
+                for (DSZap dsZap : dsZllist.getZaps()){
+                    for (DSZsl dsZsl : dsZap.getZsl()) {
+                        if (dsZap.getFilename1().equals(zllMP.getZglv().getFilename())
+                                && dsZsl.getIdcase().equals(zap.getZsl().getIdcase())) {
+                            zap.getZsl().setDsZsl(dsZsl);
+                            for (MPSl mpSl : zap.getZsl().getSl()) {
+                                for (DSSl dsSl : dsZsl.getSl()){
+                                    if (dsSl.getSlid().equals(mpSl.getSlid())){
+                                        mpSl.setDsSl(dsSl);
+                                        for (MPUsl mpUsl : mpSl.getUsl()){
+                                            for (DSUsl dsUsl : dsSl.getUsl()){
+                                                if (dsUsl.getIdserv().equals(mpUsl.getIdserv())){
+                                                    mpUsl.setDsUsl(dsUsl);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                //
                 if (pdPers.getIdpac().equals(zap.getPacient().getIdpac())
                         &&pdPerslist.getZglv().getFilename1().equals(zllMP.getZglv().getFilename())){
-                    pdPers.setMpZap(zap);
+                    mpZaps.add(zap);
                 }
             }
+            pdPers.setMpZap(mpZaps);
             System.out.println("MP");
-            for(Zap zap : zllMPD.getZaps()){
-                // Заполняем доп. свединями
-                addMoreInfo(zap, zllMPD, dsZllist);
+
+            List<MPDZap> mpdZaps = new ArrayList<>();
+            for(MPDZap zap : zllMPD.getZap()){
+                // Заполняем доп. свединями наши полученные случаи
+                for (DSZap dsZap : dsZllist.getZaps()){
+                    for (DSZsl dsZsl : dsZap.getZsl()) {
+                        if (dsZap.getFilename1().equals(zllMPD.getZglv().getFilename())
+                                && dsZsl.getIdcase().equals(zap.getZsl().getIdcase())) {
+                            zap.getZsl().setDsZsl(dsZsl);
+
+                            for (DSSl dsSl : dsZsl.getSl()){
+                                if (dsSl.equals(zap.getZsl().getSl())){
+                                    zap.getZsl().getSl().setDsSl(dsSl);
+
+                                    for (DSUsl dsUsl : dsSl.getUsl()){
+                                        for (MPDUsl mpdUsl : zap.getZsl().getSl().getUsl()){
+                                            if (dsUsl.getIdserv().equals(dsUsl.getIdserv())){
+                                                mpdUsl.setDsUsl(dsUsl);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                //
                 if (pdPers.getIdpac().equals(zap.getPacient().getIdpac())
                         &&pdPerslist.getZglv().getFilename1().equals(zllMPD.getZglv().getFilename())){
-                    pdPers.setMpZap(zap);
+                    mpdZaps.add(zap);
                 }
             }
+            pdPers.setMpdZap(mpdZaps);
             System.out.println("MPD");
-            for(Zap zap : zllVMP.getZaps()){
-                // Заполняем доп. свединями
-                addMoreInfo(zap, zllVMP, dsZllist);
+
+            List<VMPZap> vmpZap = new ArrayList<>();
+            for(VMPZap zap : zllVMP.getZaps()){
+                // Заполняем доп. свединями наши полученные случаи
+                for (DSZap dsZap : dsZllist.getZaps()){
+                    for (DSZsl dsZsl : dsZap.getZsl()) {
+                        if (dsZap.getFilename1().equals(zllMPD.getZglv().getFilename())
+                                && dsZsl.getIdcase().equals(zap.getZsl().getIdcase())) {
+                            zap.getZsl().setDsZsl(dsZsl);
+                            for (VMPSl vmpSl : zap.getZsl().getSl()) {
+                                for (DSSl dsSl : dsZsl.getSl()){
+                                    if (dsSl.getSlid().equals(vmpSl.getSlid())){
+                                        vmpSl.setDsSl(dsSl);
+                                        for (VMPUsl vmpUsl : vmpSl.getUsl()){
+                                            for (DSUsl dsUsl : dsSl.getUsl()){
+                                                if (dsUsl.getIdserv().equals(vmpUsl.getIdserv())){
+                                                    vmpUsl.setDsUsl(dsUsl);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
                 if (pdPers.getIdpac().equals(zap.getPacient().getIdpac())
                         &&pdPerslist.getZglv().getFilename1().equals(zllVMP.getZglv().getFilename())){
-                    pdPers.setMpZap(zap);
+                    vmpZap.add(zap);
                 }
             }
+            pdPers.setVmpZap(vmpZap);
             System.out.println("VMP");
-            for(Zap zap : zllONK.getZaps()){
-                // Заполняем доп. свединями
-                addMoreInfo(zap, zllONK, dsZllist);
+
+            List<ONKZap> onkZaps = new ArrayList<>();
+            for(ONKZap zap : zllONK.getZaps()){
+                // Заполняем доп. свединями наши полученные случаи
+                for (DSZap dsZap : dsZllist.getZaps()){
+                    for (DSZsl dsZsl : dsZap.getZsl()) {
+                        if (dsZap.getFilename1().equals(zllMPD.getZglv().getFilename())
+                                && dsZsl.getIdcase().equals(zap.getZsl().getIdcase())) {
+                            zap.getZsl().setDsZsl(dsZsl);
+                            for (ONKSl onkSl : zap.getZsl().getSls()) {
+                                for (DSSl dsSl : dsZsl.getSl()){
+                                    if (dsSl.getSlid().equals(onkSl.getSlid())){
+                                        onkSl.setDsSl(dsSl);
+                                        for (ONKUsl onkUsl : onkSl.getUsl()){
+                                            for (DSUsl dsUsl : dsSl.getUsl()){
+                                                if (dsUsl.getIdserv().equals(onkUsl.getIdserv())){
+                                                    onkUsl.setDsUsl(dsUsl);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
                 if (pdPers.getIdpac().equals(zap.getPacient().getIdpac())
                         &&pdPerslist.getZglv().getFilename1().equals(zllONK.getZglv().getFilename())){
-                    pdPers.setMpZap(zap);
+                    onkZaps.add(zap);
                 }
             }
+            pdPers.setOnkZap(onkZaps);
             System.out.println("ONK");
         }
-        System.out.println("Сдияние завершено.");
-    }
-
-    private void addMoreInfo(Zap zap, Zllist zllist, DSZllist dsZllist) {
-        for (DSZap dsZap : dsZllist.getZaps()){
-            for (DSZsl dsZsl : dsZap.getZsl())
-            if (dsZap.getFilename1().equals(zllist.getZglv().getFilename())
-                    &&dsZsl.getIdcase().equals(zap.getZsl().getIdcase())){
-                zap.getZsl().setDsZsl(dsZsl);
-            }
-        }
+        System.out.println("Слияние завершено.");
     }
 
     private void loadXMLFiles(Dialog dialog, MultiFileMemoryBuffer multiFileMemoryBuffer, String[] fileName, SucceededEvent event) {

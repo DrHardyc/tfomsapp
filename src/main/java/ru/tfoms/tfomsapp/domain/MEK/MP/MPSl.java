@@ -1,6 +1,7 @@
 package ru.tfoms.tfomsapp.domain.MEK.MP;
 
 import lombok.Data;
+import ru.tfoms.tfomsapp.domain.MEK.DS.DSSl;
 import ru.tfoms.tfomsapp.domain.MEK.Ksgkpg;
 
 import java.util.List;
@@ -39,4 +40,5 @@ public class MPSl{
     private List<MPLekpr> lekpr;
     private List<MPUsl> usl;
     private String comentsl;
+    private DSSl dsSl;
 }

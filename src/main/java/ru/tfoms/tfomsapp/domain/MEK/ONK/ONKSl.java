@@ -2,6 +2,7 @@ package ru.tfoms.tfomsapp.domain.MEK.ONK;
 
 import lombok.Data;
 import ru.tfoms.tfomsapp.domain.MEK.Cons;
+import ru.tfoms.tfomsapp.domain.MEK.DS.DSSl;
 import ru.tfoms.tfomsapp.domain.MEK.Ksgkpg;
 import ru.tfoms.tfomsapp.domain.MEK.Napr;
 
@@ -43,4 +44,5 @@ public class ONKSl {
     private String summ;
     private List<ONKUsl> usl;
     private String comentsl;
+    private DSSl dsSl;
 }

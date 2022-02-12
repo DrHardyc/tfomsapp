@@ -1,15 +1,13 @@
 package ru.tfoms.tfomsapp.domain.MEK.VMP;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import ru.tfoms.tfomsapp.domain.MEK.DS.DSZsl;
 import ru.tfoms.tfomsapp.domain.MEK.Sank;
-import ru.tfoms.tfomsapp.domain.MEK.Zsl;
 
 import java.util.List;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class VMPZsl extends Zsl {
+public class VMPZsl {
     private String idcase;
     private String uslok;
     private String vidpom;
@@ -31,4 +29,5 @@ public class VMPZsl extends Zsl {
     private String sump;
     private List<Sank> sanks;
     private String sankit;
+    private DSZsl dsZsl;
 }

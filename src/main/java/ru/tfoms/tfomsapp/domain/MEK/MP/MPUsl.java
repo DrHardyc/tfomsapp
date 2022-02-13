@@ -2,6 +2,7 @@ package ru.tfoms.tfomsapp.domain.MEK.MP;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import ru.tfoms.tfomsapp.domain.MEK.DS.DSUsl;
 import ru.tfoms.tfomsapp.domain.MEK.Mrusln;
 
 import java.util.List;
@@ -26,4 +27,5 @@ public class MPUsl{
     private List<Mrusln> mruslns;
     private String npl;
     private String comentu;
+    private DSUsl dsUsl;
 }

@@ -2,6 +2,7 @@ package ru.tfoms.tfomsapp.domain.MEK.MPD;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import ru.tfoms.tfomsapp.domain.MEK.DS.DSSl;
 
 import java.util.List;
 
@@ -23,4 +24,5 @@ public class MPDSl {
     private String summ;
     private List<MPDUsl> usl;
     private String comentsl;
+    private DSSl dsSl;
 }

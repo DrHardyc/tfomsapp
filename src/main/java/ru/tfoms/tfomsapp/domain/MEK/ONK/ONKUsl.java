@@ -1,6 +1,7 @@
 package ru.tfoms.tfomsapp.domain.MEK.ONK;
 
 import lombok.Data;
+import ru.tfoms.tfomsapp.domain.MEK.DS.DSUsl;
 
 @Data
 public class ONKUsl {
@@ -22,4 +23,5 @@ public class ONKUsl {
     private String codemd;
     private String npl;
     private String comentu;
+    private DSUsl dsUsl;
 }

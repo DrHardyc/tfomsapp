@@ -1,13 +1,10 @@
 package ru.tfoms.tfomsapp.domain.MEK.VMP;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import ru.tfoms.tfomsapp.domain.MEK.Pacient;
 
 
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class VMPPacient extends Pacient {
+public class VMPPacient {
     private String idpac;
     private String vpolis;
     private String spolis;

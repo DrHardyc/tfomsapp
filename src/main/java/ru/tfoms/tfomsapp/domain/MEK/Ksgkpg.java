@@ -8,7 +8,7 @@ import java.util.List;
 public class Ksgkpg {
     private String nksg;
     private String verksg;
-    private String kdgpg;
+    private String ksgpg;
     private String nkpg;
     private String koefz;
     private String koefup;

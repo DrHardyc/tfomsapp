@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class GenerateDSXML {
 
-    public void generate(){
+    public void generate(String dirName){
         Random random = new Random();
         Element zlList = new Element("ZL_LIST");
 
@@ -136,7 +136,7 @@ public class GenerateDSXML {
 
         try {
 //            Files.write(Paths.get("C:\\test.xml"), Collections.singleton(doc.toXML()));
-            PrintWriter out = new PrintWriter("C:\\DS.xml");
+            PrintWriter out = new PrintWriter(dirName);
             out.println(doc.toXML());
             out.close();
         } catch (IOException e) {

@@ -21,7 +21,7 @@ public class KsgkpgService {
             switch (child.getLocalName()){
                 case "N_KSG" -> essKsgkpg.setNksg(child.getValue());
                 case "VER_KSG" -> essKsgkpg.setVerksg(child.getValue());
-                case "KSG_PG" -> essKsgkpg.setKdgpg(child.getValue());
+                case "KSG_PG" -> essKsgkpg.setKsgpg(child.getValue());
                 case "N_KPG" -> essKsgkpg.setNkpg(child.getValue());
                 case "KOEF_Z" -> essKsgkpg.setKoefz(child.getValue());
                 case "KOEF_UP" -> essKsgkpg.setKoefup(child.getValue());

@@ -1,9 +1,9 @@
 package ru.tfoms.tfomsapp.service.HandBook;
 
 import org.springframework.stereotype.Service;
-import ru.tfoms.tfomsapp.domain.HandBook.F008;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
 import ru.tfoms.tfomsapp.domain.HandBook.V014;
+import ru.tfoms.tfomsapp.domain.HandBook.V027;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,22 +11,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class V014Service {
-    public List<V014> getV014s(BufferedReader in) throws IOException {
+public class V027Service {
+    public List<V027> getV027s(BufferedReader in) throws IOException {
         List<List<HandBookValues>> listHandBooksValues = new HandBookService().getHandBook(in).getDirValues();
-        ArrayList<V014> listV014 = new ArrayList<>();
+        ArrayList<V027> listV027 = new ArrayList<>();
         for (List<HandBookValues> handBooksValues : listHandBooksValues){
-            V014 v014 = new V014();
+            V027 v027 = new V027();
             for (HandBookValues handBookValues : handBooksValues){
                 switch (handBookValues.getColumn()) {
-                    case "IDFRMMP" -> v014.setIdfrmmp(handBookValues.getValue());
-                    case "FRMMPNAME" -> v014.setFrmmpname(handBookValues.getValue());
-                    case "DATEBEG" -> v014.setDatebeg(handBookValues.getValue());
-                    case "DATEEND" -> v014.setDateend(handBookValues.getValue());
+                    case "ISCZ" -> v027.setIdcz(handBookValues.getValue());
+                    case "N_CZ" -> v027.setN_cz(handBookValues.getValue());
+                    case "DATEBEG" -> v027.setDatebeg(handBookValues.getValue());
+                    case "DATEEND" -> v027.setDateend(handBookValues.getValue());
                 }
             }
-            listV014.add(v014);
+            listV027.add(v027);
         }
-        return listV014;
+        return listV027;
     }
 }

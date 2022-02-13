@@ -157,14 +157,9 @@ public class LoadXMLView extends VerticalLayout {
         //btnMerge.setEnabled(false);
 
         btnMerge.addClickListener(event -> {
-            F008Service f008Service = new F008Service();
-            try {
-                List<F008> f008 = f008Service.getF008s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=F008"));
-                System.out.println(f008.get(0));
-            } catch (IOException e) {
-                e.printStackTrace();
+            for(int i = 0; i < 10; i++){
+                System.out.println("D0" + i);
             }
-
             //merger();
         });
 
@@ -199,7 +194,6 @@ public class LoadXMLView extends VerticalLayout {
                         }
                     }
                 }
-                //
                 if (pdPers.getIdpac().equals(zap.getPacient().getIdpac())
                         &&pdPerslist.getZglv().getFilename1().equals(zllMP.getZglv().getFilename())){
                     mpZaps.add(zap);

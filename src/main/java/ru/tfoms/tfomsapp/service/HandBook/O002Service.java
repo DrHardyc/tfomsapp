@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 public class O002Service {
-    public List<O002> getO002(BufferedReader in) throws IOException {
+    public List<O002> getO002s(BufferedReader in) throws IOException {
         List<List<HandBookValues>> listHandBooksValues = new HandBookService().getHandBook(in).getDirValues();
         ArrayList<O002> listO002 = new ArrayList<>();
         for (List<HandBookValues> handBooksValues : listHandBooksValues){

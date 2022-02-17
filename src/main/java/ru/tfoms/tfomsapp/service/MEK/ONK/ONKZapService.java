@@ -22,6 +22,17 @@ public class ONKZapService {
                 case "Z_SL" -> essONKZap.setZsl(onkZslService.loadOnkZsl(child));
             }
         }
+
+        return CheckForNull(essONKZap);
+    }
+
+    private ONKZap CheckForNull(ONKZap essONKZap) {
+        if (essONKZap.getNzap() == null){
+            essONKZap.setNzap("");
+        }
+        if (essONKZap.getPrnov() == null){
+            essONKZap.setPrnov("");
+        }
         return essONKZap;
     }
 }

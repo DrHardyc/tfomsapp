@@ -19,6 +19,23 @@ public class PDZglvService {
                 case "FILENAME1" -> essPdZglv.setFilename1(child.getValue());
             }
         }
+        return CheckForNull(essPdZglv);
+    }
+
+    private PDZglv CheckForNull(PDZglv essPdZglv) {
+        if (essPdZglv.getVersion() == null){
+            essPdZglv.setVersion("");
+        }
+        if (essPdZglv.getDate() == null){
+            essPdZglv.setDate("");
+        }
+        if (essPdZglv.getFilename() == null){
+            essPdZglv.setFilename("");
+        }
+        if (essPdZglv.getFilename1() == null){
+            essPdZglv.setFilename1("");
+        }
+
         return essPdZglv;
     }
 }

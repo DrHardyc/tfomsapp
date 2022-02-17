@@ -19,6 +19,23 @@ public class MPLekdoseService {
                 case "COL_INJ" -> essMpLekdose.setColinj(child.getValue());
             }
         }
+        return CheckForNull(essMpLekdose);
+    }
+
+    private MPLekdose CheckForNull(MPLekdose essMpLekdose) {
+        if (essMpLekdose.getEdizm() == null){
+            essMpLekdose.setEdizm("");
+        }
+        if (essMpLekdose.getDoseinj() == null){
+            essMpLekdose.setDoseinj("");
+        }
+        if (essMpLekdose.getMethodinj() == null){
+            essMpLekdose.setMethodinj("");
+        }
+        if (essMpLekdose.getColinj() == null){
+            essMpLekdose.setColinj("");
+        }
+
         return essMpLekdose;
     }
 }

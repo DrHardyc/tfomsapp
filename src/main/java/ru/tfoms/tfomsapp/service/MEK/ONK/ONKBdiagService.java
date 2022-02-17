@@ -19,6 +19,26 @@ public class ONKBdiagService {
                 case "REC_RSLT" -> essOnkBdiag.setRecrlst(child.getValue());
             }
         }
+        return CheckForNull(essOnkBdiag);
+    }
+
+    private ONKBdiag CheckForNull(ONKBdiag essOnkBdiag) {
+        if (essOnkBdiag.getDiagdate() == null){
+            essOnkBdiag.setDiagdate("");
+        }
+        if (essOnkBdiag.getDiagtip() == null){
+            essOnkBdiag.setDiagtip("");
+        }
+        if (essOnkBdiag.getDiagcode() == null){
+            essOnkBdiag.setDiagcode("");
+        }
+        if (essOnkBdiag.getDiagrlst() == null){
+            essOnkBdiag.setDiagrlst("");
+        }
+        if (essOnkBdiag.getRecrlst() == null){
+            essOnkBdiag.setRecrlst("");
+        }
+
         return essOnkBdiag;
     }
 }

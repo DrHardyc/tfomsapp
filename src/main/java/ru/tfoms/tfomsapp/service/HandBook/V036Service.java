@@ -20,7 +20,7 @@ public class V036Service {
                 switch (handBookValues.getColumn()) {
                     case "S_CODE" -> v036.setS_code(handBookValues.getValue());
                     case "NAME" -> v036.setName(handBookValues.getValue());
-                    case "PARAMETR" -> v036.setParameter(handBookValues.getValue());
+                    case "Parameter" -> v036.setParameter(handBookValues.getValue());
                     case "COMMENT" -> v036.setComment(handBookValues.getValue());
                     case "DATEBEG" -> v036.setDatebeg(handBookValues.getValue());
                     case "DATEEND" -> v036.setDateend(handBookValues.getValue());

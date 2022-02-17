@@ -31,6 +31,7 @@
             <artifactId>opencsv</artifactId>
             <version>5.5.1</version>
         </dependency>
+        <!--        DB-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -49,16 +50,19 @@
             <artifactId>mssql-jdbc</artifactId>
             <version>9.5.0.jre17-preview</version>
         </dependency>
+        <!--        -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+        <!--        XML-->
         <dependency>
             <groupId>xom</groupId>
             <artifactId>xom</artifactId>
             <version>1.3.7</version>
         </dependency>
+        <!--        -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -74,6 +78,29 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--        Test-->
+        <!-- exclude junit 4 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- junit 5 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!--        -->
+
     </dependencies>
     <dependencyManagement>
         <dependencies>

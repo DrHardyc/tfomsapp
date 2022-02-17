@@ -16,6 +16,16 @@ public class ConsService {
                 case "DT_CONS" -> essCons.setDtcons(child.getValue());
             }
         }
+        return CHeckForNull(essCons);
+    }
+
+    private Cons CHeckForNull(Cons essCons) {
+        if (essCons.getPrcons() == null){
+            essCons.setPrcons("");
+        }
+        if (essCons.getDtcons() == null){
+            essCons.setDtcons("");
+        }
         return essCons;
     }
 }

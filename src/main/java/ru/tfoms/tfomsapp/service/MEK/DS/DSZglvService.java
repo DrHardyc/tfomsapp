@@ -20,6 +20,29 @@ public class DSZglvService {
                 case "VER_PO" -> essDsZglv.setVerpo(child.getValue());
             }
         }
+        return CheckForNull(essDsZglv);
+    }
+
+    private DSZglv CheckForNull(DSZglv essDsZglv) {
+        if (essDsZglv.getVerpo() == null){
+            essDsZglv.setVerpo("");
+        }
+        if (essDsZglv.getDate() == null){
+            essDsZglv.setDate("");
+        }
+        if (essDsZglv.getFilename() == null){
+            essDsZglv.setFilename("");
+        }
+        if (essDsZglv.getSdz() == null){
+            essDsZglv.setSdz("");
+        }
+        if (essDsZglv.getTest() == null){
+            essDsZglv.setTest("");
+        }
+        if (essDsZglv.getVerpo() == null){
+            essDsZglv.setVerpo("");
+        }
+
         return essDsZglv;
     }
 }

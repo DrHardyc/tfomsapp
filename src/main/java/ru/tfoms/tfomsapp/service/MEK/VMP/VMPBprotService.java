@@ -16,6 +16,18 @@ public class VMPBprotService {
                 case "D_PROT" -> essVmpBprot.setDprot(child.getValue());
             }
         }
+        return CHeckForNull(essVmpBprot);
+    }
+
+    private VMPBprot CHeckForNull(VMPBprot essVmpBprot) {
+        if (essVmpBprot.getProt() == null){
+            essVmpBprot.setProt("");
+        }
+        if (essVmpBprot.getDprot() == null){
+            essVmpBprot.setDprot("");
+        }
+
+
         return essVmpBprot;
     }
 }

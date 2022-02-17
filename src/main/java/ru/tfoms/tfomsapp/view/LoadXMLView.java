@@ -5,7 +5,6 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.progressbar.ProgressBar;
 import com.vaadin.flow.component.textfield.TextField;
@@ -13,19 +12,26 @@ import com.vaadin.flow.component.upload.SucceededEvent;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
 import com.vaadin.flow.router.Route;
-import ru.tfoms.tfomsapp.domain.HandBook.F008;
+import lombok.Data;
 import ru.tfoms.tfomsapp.domain.HandBook.HBQ018;
 import ru.tfoms.tfomsapp.domain.MEK.DS.*;
-import ru.tfoms.tfomsapp.domain.MEK.MP.*;
-import ru.tfoms.tfomsapp.domain.MEK.MPD.*;
+import ru.tfoms.tfomsapp.domain.MEK.MP.MPSl;
+import ru.tfoms.tfomsapp.domain.MEK.MP.MPUsl;
+import ru.tfoms.tfomsapp.domain.MEK.MP.MPZap;
+import ru.tfoms.tfomsapp.domain.MEK.MP.MPZllist;
+import ru.tfoms.tfomsapp.domain.MEK.MPD.MPDUsl;
+import ru.tfoms.tfomsapp.domain.MEK.MPD.MPDZap;
+import ru.tfoms.tfomsapp.domain.MEK.MPD.MPDZllist;
 import ru.tfoms.tfomsapp.domain.MEK.ONK.ONKSl;
 import ru.tfoms.tfomsapp.domain.MEK.ONK.ONKUsl;
 import ru.tfoms.tfomsapp.domain.MEK.ONK.ONKZap;
 import ru.tfoms.tfomsapp.domain.MEK.ONK.ONKZllist;
 import ru.tfoms.tfomsapp.domain.MEK.PD.PDPers;
 import ru.tfoms.tfomsapp.domain.MEK.PD.PDPerslist;
-import ru.tfoms.tfomsapp.domain.MEK.VMP.*;
-import ru.tfoms.tfomsapp.service.HandBook.F008Service;
+import ru.tfoms.tfomsapp.domain.MEK.VMP.VMPSl;
+import ru.tfoms.tfomsapp.domain.MEK.VMP.VMPUsl;
+import ru.tfoms.tfomsapp.domain.MEK.VMP.VMPZap;
+import ru.tfoms.tfomsapp.domain.MEK.VMP.VMPZllist;
 import ru.tfoms.tfomsapp.service.MEK.DS.DSZllistService;
 import ru.tfoms.tfomsapp.service.MEK.DS.GenerateDSXML;
 import ru.tfoms.tfomsapp.service.MEK.MP.GenerateMPXML;
@@ -47,6 +53,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +63,6 @@ import java.util.List;
 @PermitAll
 public class LoadXMLView extends VerticalLayout {
 
-    private int filesCounter = 0;
     private PDPerslist pdPerslist = new PDPerslist();
     private DSZllist dsZllist = new DSZllist();
     private MPZllist zllMP = new MPZllist();
@@ -157,9 +164,7 @@ public class LoadXMLView extends VerticalLayout {
         //btnMerge.setEnabled(false);
 
         btnMerge.addClickListener(event -> {
-            for(int i = 0; i < 10; i++){
-                System.out.println("D0" + i);
-            }
+
             //merger();
         });
 
@@ -308,7 +313,6 @@ public class LoadXMLView extends VerticalLayout {
     }
 
     private void loadXMLFiles(Dialog dialog, MultiFileMemoryBuffer multiFileMemoryBuffer, String[] fileName, SucceededEvent event) {
-        filesCounter = multiFileMemoryBuffer.getFiles().size();
         if (event.getFileName().substring(0, 2).contains("HM"))
             fileName[0] = event.getFileName();
         else if (event.getFileName().substring(0, 2).contains("LM"))

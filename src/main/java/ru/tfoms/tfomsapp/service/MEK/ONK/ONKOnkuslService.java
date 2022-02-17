@@ -28,6 +28,30 @@ public class ONKOnkuslService {
             }
         }
         essOnkOnkusl.setLekprs(onkLekprs);
+        return CheckForNull(essOnkOnkusl);
+    }
+
+    private ONKOnkusl CheckForNull(ONKOnkusl essOnkOnkusl) {
+        if (essOnkOnkusl.getUsltip() == null){
+            essOnkOnkusl.setUsltip("");
+        }
+        if (essOnkOnkusl.getHirtip() == null){
+            essOnkOnkusl.setHirtip("");
+        }
+        if (essOnkOnkusl.getLektipl() == null){
+            essOnkOnkusl.setLektipl("");
+        }
+        if (essOnkOnkusl.getLektipv() == null){
+            essOnkOnkusl.setLektipv("");
+        }
+        if (essOnkOnkusl.getPptr() == null){
+            essOnkOnkusl.setPptr("");
+        }
+        if (essOnkOnkusl.getLuchtip() == null){
+            essOnkOnkusl.setLuchtip("");
+        }
+
+
         return essOnkOnkusl;
     }
 }

@@ -29,6 +29,29 @@ public class VMPOnkuslService {
             }
         }
         essVmpOnkusl.setLekpr(vmpLekprs);
+        return CheckForNull(essVmpOnkusl);
+    }
+
+    private VMPOnkusl CheckForNull(VMPOnkusl essVmpOnkusl) {
+        if (essVmpOnkusl.getUsltip() == null){
+            essVmpOnkusl.setUsltip("");
+        }
+        if (essVmpOnkusl.getHirtip() == null){
+            essVmpOnkusl.setHirtip("");
+        }
+        if (essVmpOnkusl.getLektipl() == null){
+            essVmpOnkusl.setLektipl("");
+        }
+        if (essVmpOnkusl.getLektipv() == null){
+            essVmpOnkusl.setLektipv("");
+        }
+        if (essVmpOnkusl.getPptr() == null){
+            essVmpOnkusl.setPptr("");
+        }
+        if (essVmpOnkusl.getLuchtip() == null){
+            essVmpOnkusl.setLuchtip("");
+        }
+
         return essVmpOnkusl;
     }
 }

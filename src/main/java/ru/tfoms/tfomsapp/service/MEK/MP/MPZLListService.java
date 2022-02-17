@@ -46,6 +46,4 @@ public class MPZLListService {
         essMPZllist.setZap(mpZaps);
         return essMPZllist;
     }
-
-
 }

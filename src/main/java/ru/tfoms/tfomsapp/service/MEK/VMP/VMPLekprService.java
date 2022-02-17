@@ -17,6 +17,21 @@ public class VMPLekprService {
                 case "DATE_INJ" -> essVmpLekpr.setDateinj(child.getValue());
             }
         }
+        return CheckForNull(essVmpLekpr);
+    }
+
+    private VMPLekpr CheckForNull(VMPLekpr essVmpLekpr) {
+        if (essVmpLekpr.getRegnum() == null){
+            essVmpLekpr.setRegnum("");
+        }
+        if (essVmpLekpr.getCodesh() == null){
+            essVmpLekpr.setCodesh("");
+        }
+        if (essVmpLekpr.getDateinj() == null){
+            essVmpLekpr.setDateinj("");
+        }
+
+
         return essVmpLekpr;
     }
 }

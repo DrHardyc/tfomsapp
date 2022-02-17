@@ -27,6 +27,47 @@ public class MPPacientService {
                 case "VNOV_D" -> essMPPacient.setVnovd(child.getValue());
             }
         }
+        return CheckForNull(essMPPacient);
+    }
+
+    private MPPacient CheckForNull(MPPacient essMPPacient) {
+        if (essMPPacient.getIdpac() == null){
+            essMPPacient.setIdpac("");
+        }
+        if (essMPPacient.getVpolis() == null){
+            essMPPacient.setVpolis("");
+        }
+        if (essMPPacient.getSpolis() == null){
+            essMPPacient.setSpolis("");
+        }
+        if (essMPPacient.getNpolis() == null){
+            essMPPacient.setNpolis("");
+        }
+        if (essMPPacient.getEnp() == null){
+            essMPPacient.setEnp("");
+        }
+        if (essMPPacient.getStokato() == null){
+            essMPPacient.setStokato("");
+        }
+        if (essMPPacient.getSmo() == null){
+            essMPPacient.setSmo("");
+        }
+        if (essMPPacient.getSmonam() == null){
+            essMPPacient.setSmonam("");
+        }
+        if (essMPPacient.getInv() == null){
+            essMPPacient.setInv("");
+        }
+        if (essMPPacient.getMse() == null){
+            essMPPacient.setMse("");
+        }
+        if (essMPPacient.getNovor() == null){
+            essMPPacient.setNovor("");
+        }
+        if (essMPPacient.getVnovd() == null){
+            essMPPacient.setVnovd("");
+        }
+
         return essMPPacient;
     }
 }

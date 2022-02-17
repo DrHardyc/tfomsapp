@@ -33,7 +33,7 @@ public class ONKSl {
     private String codemes2;
     private List<Napr> napr;
     private List<Cons> cons;
-    private List<ONKOnksl> onksl;
+    private ONKOnksl onksl;
     private Ksgkpg ksgkpg;
     private String reab;
     private String prvs;

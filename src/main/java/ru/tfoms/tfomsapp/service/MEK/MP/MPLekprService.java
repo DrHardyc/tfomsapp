@@ -21,6 +21,22 @@ public class MPLekprService {
                 case "LEK_DOSE" -> essMpLekpr.setLekdose(mpLekdoseService.loadMpLekdose(child));
             }
         }
+        return CheckForNull(essMpLekpr);
+    }
+
+    private MPLekpr CheckForNull(MPLekpr essMpLekpr) {
+        if (essMpLekpr.getDateinj() == null){
+            essMpLekpr.setDateinj("");
+        }
+        if (essMpLekpr.getCodesh() == null){
+            essMpLekpr.setCodesh("");
+        }
+        if (essMpLekpr.getRegnum() == null){
+            essMpLekpr.setRegnum("");
+        }
+        if (essMpLekpr.getCodmark() == null){
+            essMpLekpr.setCodmark("");
+        }
         return essMpLekpr;
     }
 }

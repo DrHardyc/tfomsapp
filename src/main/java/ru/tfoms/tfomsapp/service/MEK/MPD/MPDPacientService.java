@@ -23,6 +23,38 @@ public class MPDPacientService {
                 case "NOVOR" -> essMpdPacient.setNovor(child.getValue());
             }
         }
+        return CheckForNull(essMpdPacient);
+    }
+
+    private MPDPacient CheckForNull(MPDPacient essMpdPacient) {
+        if (essMpdPacient.getIdpac() == null){
+            essMpdPacient.setIdpac("");
+        }
+        if (essMpdPacient.getVpolis() == null){
+            essMpdPacient.setVpolis("");
+        }
+        if (essMpdPacient.getSpolis() == null){
+            essMpdPacient.setSpolis("");
+        }
+        if (essMpdPacient.getNpolis() == null){
+            essMpdPacient.setNpolis("");
+        }
+        if (essMpdPacient.getEnp() == null){
+            essMpdPacient.setEnp("");
+        }
+        if (essMpdPacient.getStokato() == null){
+            essMpdPacient.setStokato("");
+        }
+        if (essMpdPacient.getSmo() == null){
+            essMpdPacient.setSmo("");
+        }
+        if (essMpdPacient.getSmonam() == null){
+            essMpdPacient.setSmonam("");
+        }
+        if (essMpdPacient.getNovor() == null){
+            essMpdPacient.setNovor("");
+        }
+
         return essMpdPacient;
     }
 }

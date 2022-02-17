@@ -19,6 +19,26 @@ public class NaprService {
                 case "NAPR_USL" -> essNapr.setNaprusl(child.getValue());
             }
         }
+        return CheckForNull(essNapr);
+    }
+
+    private Napr CheckForNull(Napr essNapr) {
+        if (essNapr.getNaprdate() == null){
+            essNapr.setNaprdate("");
+        }
+        if (essNapr.getNaprmo() == null){
+            essNapr.setNaprmo("");
+        }
+        if (essNapr.getNaprv() == null){
+            essNapr.setNaprv("");
+        }
+        if (essNapr.getMetissl() == null){
+            essNapr.setMetissl("");
+        }
+        if (essNapr.getNaprusl() == null){
+            essNapr.setNaprusl("");
+        }
+
         return essNapr;
     }
 }

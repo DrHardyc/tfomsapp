@@ -19,14 +19,14 @@ public class F014Service {
             F014 f014 = new F014();
             for (HandBookValues handBookValues : handBooksValues){
                 switch (handBookValues.getColumn()) {
-                    case "KOD" -> f014.setKod(handBookValues.getValue());
+                    case "Kod" -> f014.setKod(handBookValues.getValue());
                     case "IDVID" -> f014.setIdvid(handBookValues.getValue());
-                    case "NAIM" -> f014.setNaim(handBookValues.getValue());
-                    case "OSN" -> f014.setOsn(handBookValues.getValue());
-                    case "KOMMENT" -> f014.setKomment(handBookValues.getValue());
+                    case "Naim" -> f014.setNaim(handBookValues.getValue());
+                    case "Osn" -> f014.setOsn(handBookValues.getValue());
+                    case "Komment" -> f014.setKomment(handBookValues.getValue());
                     case "K_NO" -> f014.setK_no(handBookValues.getValue());
                     case "K_SH" -> f014.setK_sh(handBookValues.getValue());
-                    case "KODPG" -> f014.setKodpg(handBookValues.getValue());
+                    case "KodPG" -> f014.setKodpg(handBookValues.getValue());
                     case "DATEBEG" -> f014.setDatebeg(handBookValues.getValue());
                     case "DATEEND" -> f014.setDateend(handBookValues.getValue());
                 }

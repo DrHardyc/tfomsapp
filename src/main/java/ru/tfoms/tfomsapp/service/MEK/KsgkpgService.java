@@ -36,6 +36,44 @@ public class KsgkpgService {
         }
         essKsgkpg.setCrit(crits);
         essKsgkpg.setSlkoef(slkoefs);
+        return CheckForNull(essKsgkpg);
+    }
+
+    private Ksgkpg CheckForNull(Ksgkpg essKsgkpg) {
+        if (essKsgkpg.getNksg() == null){
+            essKsgkpg.setNksg("");
+        }
+        if (essKsgkpg.getNkpg() == null){
+            essKsgkpg.setNkpg("");
+        }
+        if (essKsgkpg.getVerksg() == null){
+            essKsgkpg.setVerksg("");
+        }
+        if (essKsgkpg.getKsgpg() == null){
+            essKsgkpg.setKsgpg("");
+        }
+        if (essKsgkpg.getKoefz() == null){
+            essKsgkpg.setKoefz("");
+        }
+        if (essKsgkpg.getKoefup() == null){
+            essKsgkpg.setKoefup("");
+        }
+        if (essKsgkpg.getBztsz() == null){
+            essKsgkpg.setBztsz("");
+        }
+        if (essKsgkpg.getKoefd() == null){
+            essKsgkpg.setKoefd("");
+        }
+        if (essKsgkpg.getKoefu() == null){
+            essKsgkpg.setKoefu("");
+        }
+        if (essKsgkpg.getSlk() == null){
+            essKsgkpg.setSlk("");
+        }
+        if (essKsgkpg.getItsl() == null){
+            essKsgkpg.setItsl("");
+        }
+
         return essKsgkpg;
     }
 }

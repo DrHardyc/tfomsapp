@@ -45,6 +45,77 @@ public class PDPersService {
         }
         essPDPers.setDost(dosts);
         essPDPers.setDostp(dostps);
+        return CheckForNull(essPDPers);
+    }
+
+    private PDPers CheckForNull(PDPers essPDPers) {
+        if (essPDPers.getIdpac() == null){
+            essPDPers.setIdpac("");
+        }
+        if (essPDPers.getFam() == null){
+            essPDPers.setFam("");
+        }
+        if (essPDPers.getIm() == null){
+            essPDPers.setIm("");
+        }
+        if (essPDPers.getOt() == null){
+            essPDPers.setOt("");
+        }
+        if (essPDPers.getW() == null){
+            essPDPers.setW("");
+        }
+        if (essPDPers.getDr() == null){
+            essPDPers.setDr("");
+        }
+        if (essPDPers.getTel() == null){
+            essPDPers.setTel("");
+        }
+        if (essPDPers.getFamp() == null){
+            essPDPers.setFamp("");
+        }
+        if (essPDPers.getImp() == null){
+            essPDPers.setImp("");
+        }
+        if (essPDPers.getOtp() == null){
+            essPDPers.setOtp("");
+        }
+        if (essPDPers.getWp() == null){
+            essPDPers.setWp("");
+        }
+        if (essPDPers.getDrp() == null){
+            essPDPers.setDrp("");
+        }
+        if (essPDPers.getMr() == null){
+            essPDPers.setMr("");
+        }
+        if (essPDPers.getDoctype() == null){
+            essPDPers.setDoctype("");
+        }
+        if (essPDPers.getDocser() == null){
+            essPDPers.setDocser("");
+        }
+        if (essPDPers.getDocnum() == null){
+            essPDPers.setDocnum("");
+        }
+        if (essPDPers.getDocdate() == null){
+            essPDPers.setDocdate("");
+        }
+        if (essPDPers.getDocorg() == null){
+            essPDPers.setDocdate("");
+        }
+        if (essPDPers.getSnils() == null){
+            essPDPers.setSnils("");
+        }
+        if (essPDPers.getOkatog() == null){
+            essPDPers.setOkatog("");
+        }
+        if (essPDPers.getOkatop() == null){
+            essPDPers.setOkatop("");
+        }
+        if (essPDPers.getComentp() == null){
+            essPDPers.setComentp("");
+        }
+
         return essPDPers;
     }
 }

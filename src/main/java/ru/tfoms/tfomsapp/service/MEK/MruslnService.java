@@ -17,6 +17,20 @@ public class MruslnService {
                 case "CODE_MD" -> essMrusln.setCodemd(child.getValue());
             }
         }
+        return CheckForNull(essMrusln);
+    }
+
+    private Mrusln CheckForNull(Mrusln essMrusln) {
+        if (essMrusln.getMrn() == null){
+            essMrusln.setMrn("");
+        }
+        if (essMrusln.getPrvs() == null){
+            essMrusln.setPrvs("");
+        }
+        if (essMrusln.getCodemd() == null){
+            essMrusln.setCodemd("");
+        }
+
         return essMrusln;
     }
 }

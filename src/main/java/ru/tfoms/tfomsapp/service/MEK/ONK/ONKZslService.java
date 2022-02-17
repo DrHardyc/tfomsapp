@@ -51,6 +51,68 @@ public class ONKZslService {
         essOnkZsl.setOssluch(ossluchs);
         essOnkZsl.setSls(onkSls);
         essOnkZsl.setSanks(sanks);
+        return CheckForNull(essOnkZsl);
+    }
+
+    private ONKZsl CheckForNull(ONKZsl essOnkZsl) {
+        if (essOnkZsl.getIdcase() == null){
+            essOnkZsl.setIdcase("");
+        }
+        if (essOnkZsl.getUslok() == null){
+            essOnkZsl.setUslok("");
+        }
+        if (essOnkZsl.getVidpom() == null){
+            essOnkZsl.setVidpom("");
+        }
+        if (essOnkZsl.getForpom() == null){
+            essOnkZsl.setForpom("");
+        }
+        if (essOnkZsl.getNprmo() == null){
+            essOnkZsl.setNprmo("");
+        }
+        if (essOnkZsl.getNprdate() == null){
+            essOnkZsl.setNprdate("");
+        }
+        if (essOnkZsl.getLpu() == null){
+            essOnkZsl.setLpu("");
+        }
+        if (essOnkZsl.getDatez1() == null){
+            essOnkZsl.setDatez1("");
+        }
+        if (essOnkZsl.getDatez2() == null){
+            essOnkZsl.setDatez2("");
+        }
+        if (essOnkZsl.getKdz() == null){
+            essOnkZsl.setKdz("");
+        }
+        if (essOnkZsl.getVnovm() == null){
+            essOnkZsl.setVnovm("");
+        }
+        if (essOnkZsl.getRslt() == null){
+            essOnkZsl.setRslt("");
+        }
+        if (essOnkZsl.getIshod() == null){
+            essOnkZsl.setIshod("");
+        }
+        if (essOnkZsl.getVbp() == null){
+            essOnkZsl.setVbp("");
+        }
+        if (essOnkZsl.getIdsp() == null){
+            essOnkZsl.setIdsp("");
+        }
+        if (essOnkZsl.getSumv() == null){
+            essOnkZsl.setSump("");
+        }
+        if (essOnkZsl.getOplata() == null){
+            essOnkZsl.setOplata("");
+        }
+        if (essOnkZsl.getSump() == null){
+            essOnkZsl.setSump("");
+        }
+        if (essOnkZsl.getSankit() == null){
+            essOnkZsl.setSankit("");
+        }
+
         return essOnkZsl;
     }
 }

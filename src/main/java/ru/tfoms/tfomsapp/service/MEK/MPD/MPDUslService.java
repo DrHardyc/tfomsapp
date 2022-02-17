@@ -29,6 +29,44 @@ public class MPDUslService {
             }
         }
 
+        return CheckForNull(essMpdUsl);
+    }
+
+    private MPDUsl CheckForNull(MPDUsl essMpdUsl) {
+        if (essMpdUsl.getIdserv() == null){
+            essMpdUsl.setIdserv("");
+        }
+        if (essMpdUsl.getLpu() == null){
+            essMpdUsl.setLpu("");
+        }
+        if (essMpdUsl.getLpu1() == null){
+            essMpdUsl.setLpu1("");
+        }
+        if (essMpdUsl.getDatein() == null){
+            essMpdUsl.setDatein("");
+        }
+        if (essMpdUsl.getDateout() == null){
+            essMpdUsl.setDateout("");
+        }
+        if (essMpdUsl.getPotk() == null){
+            essMpdUsl.setPotk("");
+        }
+        if (essMpdUsl.getPotk() == null){
+            essMpdUsl.setPotk("");
+        }
+        if (essMpdUsl.getCodeusl() == null){
+            essMpdUsl.setCodeusl("");
+        }
+        if (essMpdUsl.getTarif() == null){
+            essMpdUsl.setTarif("");
+        }
+        if (essMpdUsl.getSumvusl() == null){
+            essMpdUsl.setSumvusl("");
+        }
+        if (essMpdUsl.getComentu() == null){
+            essMpdUsl.setComentu("");
+        }
+
         return essMpdUsl;
     }
 }

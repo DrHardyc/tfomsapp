@@ -12,6 +12,7 @@ public class Handbook {
     private String resultText;
     private String resultCode;
     private String total;
+    private String isHierarchical;
 
     @JsonProperty("list")
     private List<List<HandBookValues>> dirValues;

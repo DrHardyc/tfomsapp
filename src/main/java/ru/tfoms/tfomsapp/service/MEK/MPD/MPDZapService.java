@@ -22,6 +22,16 @@ public class MPDZapService {
                 case "Z_SL" -> essMPDZap.setZsl(mpdZslService.loadMpdZsl(child));
             }
         }
+        return CheckForNull(essMPDZap);
+    }
+
+    private MPDZap CheckForNull(MPDZap essMPDZap) {
+        if (essMPDZap.getNzap() == null){
+            essMPDZap.setNzap("");
+        }
+        if (essMPDZap.getPrnov() == null){
+            essMPDZap.setPrnov("");
+        }
         return essMPDZap;
     }
 }

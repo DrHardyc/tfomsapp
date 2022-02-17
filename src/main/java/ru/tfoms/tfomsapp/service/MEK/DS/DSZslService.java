@@ -26,6 +26,20 @@ public class DSZslService {
             }
         }
         essDsZsl.setSl(dsSls);
+        return CheckForNull(essDsZsl);
+    }
+
+    private DSZsl CheckForNull(DSZsl essDsZsl) {
+        if (essDsZsl.getIdcase() == null){
+            essDsZsl.setIdcase("");
+        }
+        if (essDsZsl.getNprnom() == null){
+            essDsZsl.setNprnom("");
+        }
+        if (essDsZsl.getExtr() == null){
+            essDsZsl.setExtr("");
+        }
+
         return essDsZsl;
     }
 }

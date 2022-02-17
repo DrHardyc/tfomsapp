@@ -18,6 +18,20 @@ public class MPMeddevService {
                 case "NUMBER_SER" -> essMpMeddev.setNumberser(child.getValue());
             }
         }
+        return CheckForNull(essMpMeddev);
+    }
+
+    private MPMeddev CheckForNull(MPMeddev essMpMeddev) {
+        if (essMpMeddev.getDatemed() == null){
+            essMpMeddev.setDatemed("");
+        }
+        if (essMpMeddev.getCodemeddev() == null){
+            essMpMeddev.setCodemeddev("");
+        }
+        if (essMpMeddev.getNumberser() == null){
+            essMpMeddev.setNumberser("");
+        }
+
         return essMpMeddev;
     }
 }

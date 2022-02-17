@@ -2,8 +2,6 @@ package ru.tfoms.tfomsapp.domain.HandBook;
 
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 public class O002 {
     private String ter;
@@ -18,4 +16,5 @@ public class O002 {
     private String status;
     private String dateutv;
     private String datevved;
+
 }

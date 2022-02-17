@@ -66,6 +66,89 @@ public class MPSlService {
         essMpsl.setCodemes1(mpCodemes1);
         essMpsl.setLekpr(mpLekprs);
         essMpsl.setUsl(mpUsls);
+        return CheckForNull(essMpsl);
+    }
+
+    private MPSl CheckForNull(MPSl essMpsl) {
+        if (essMpsl.getSlid() == null){
+            essMpsl.setSlid("");
+        }
+        if (essMpsl.getLpu1() == null){
+            essMpsl.setLpu1("");
+        }
+        if (essMpsl.getPodr() == null){
+            essMpsl.setPodr("");
+        }
+        if (essMpsl.getProfilk() == null){
+            essMpsl.setProfilk("");
+        }
+        if (essMpsl.getProfil() == null){
+            essMpsl.setProfil("");
+        }
+        if (essMpsl.getDet() == null){
+            essMpsl.setDet("");
+        }
+        if (essMpsl.getPcel() == null){
+            essMpsl.setPcel("");
+        }
+        if (essMpsl.getNhistory() == null){
+            essMpsl.setNhistory("");
+        }
+        if (essMpsl.getPper() == null){
+            essMpsl.setPper("");
+        }
+        if (essMpsl.getDate1() == null){
+            essMpsl.setDate1("");
+        }
+        if (essMpsl.getDate2() == null){
+            essMpsl.setDate2("");
+        }
+        if (essMpsl.getKd() == null){
+            essMpsl.setKd("");
+        }
+        if (essMpsl.getWei() == null){
+            essMpsl.setWei("");
+        }
+        if (essMpsl.getDs0() == null){
+            essMpsl.setDs0("");
+        }
+        if (essMpsl.getDs1() == null){
+            essMpsl.setDs1("");
+        }
+        if (essMpsl.getCzab() == null){
+            essMpsl.setCzab("");
+        }
+        if (essMpsl.getDn() == null){
+            essMpsl.setDn("");
+        }
+        if (essMpsl.getCodemes2() == null){
+            essMpsl.setCodemes2("");
+        }
+        if (essMpsl.getReab() == null){
+            essMpsl.setReab("");
+        }
+        if (essMpsl.getPrvs() == null){
+            essMpsl.setPrvs("");
+        }
+        if (essMpsl.getVersspec() == null){
+            essMpsl.setVersspec("");
+        }
+        if (essMpsl.getIddoct() == null){
+            essMpsl.setIddoct("");
+        }
+        if (essMpsl.getEdcol() == null){
+            essMpsl.setEdcol("");
+        }
+        if (essMpsl.getTarif() == null){
+            essMpsl.setTarif("");
+        }
+        if (essMpsl.getSumm() == null){
+            essMpsl.setSumm("");
+        }
+        if (essMpsl.getComentsl() == null){
+            essMpsl.setComentsl("");
+        }
+
         return essMpsl;
     }
 }

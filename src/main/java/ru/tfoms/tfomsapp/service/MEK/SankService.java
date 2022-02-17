@@ -31,6 +31,35 @@ public class SankService {
         }
         essSank.setSlid(slid);
         essSank.setCodeexp(codeexp);
+        return CheckForNull(essSank);
+    }
+
+    private Sank CheckForNull(Sank essSank) {
+        if (essSank.getScode() == null){
+            essSank.setScode("");
+        }
+        if (essSank.getSsum() == null){
+            essSank.setSsum("");
+        }
+        if (essSank.getStip() == null){
+            essSank.setStip("");
+        }
+        if (essSank.getSosn() == null){
+            essSank.setSosn("");
+        }
+        if (essSank.getDateact() == null){
+            essSank.setDateact("");
+        }
+        if (essSank.getNumact() == null){
+            essSank.setNumact("");
+        }
+        if (essSank.getScom() == null){
+            essSank.setScom("");
+        }
+        if (essSank.getSist() == null){
+            essSank.setSist("");
+        }
+
         return essSank;
     }
 }

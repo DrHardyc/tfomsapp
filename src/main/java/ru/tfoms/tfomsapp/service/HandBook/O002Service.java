@@ -1,7 +1,6 @@
 package ru.tfoms.tfomsapp.service.HandBook;
 
 import org.springframework.stereotype.Service;
-import ru.tfoms.tfomsapp.domain.HandBook.HBQ016;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
 import ru.tfoms.tfomsapp.domain.HandBook.O002;
 
@@ -12,7 +11,7 @@ import java.util.List;
 
 @Service
 public class O002Service {
-    public List<O002> getO002s(BufferedReader in) throws IOException {
+    public ArrayList<O002> getO002s(BufferedReader in) throws IOException {
         List<List<HandBookValues>> listHandBooksValues = new HandBookService().getHandBook(in).getDirValues();
         ArrayList<O002> listO002 = new ArrayList<>();
         for (List<HandBookValues> handBooksValues : listHandBooksValues){
@@ -36,15 +35,5 @@ public class O002Service {
             listO002.add(o002);
         }
         return listO002;
-    }
-
-    public boolean searchInO002(List<O002> o002s, String searchElement){
-        boolean flag = false;
-        for (O002 o002 : o002s){
-            if ((o002.getTer() + "000").equals(searchElement)){
-                flag = true;
-            } else flag = false;
-        }
-        return flag;
     }
 }

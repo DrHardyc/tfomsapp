@@ -26,6 +26,48 @@ public class VMPPacientService {
                 case "VNOV_D" -> essVmpPacient.setVnovd(child.getValue());
             }
         }
+        return CheckForNull(essVmpPacient);
+    }
+
+    private VMPPacient CheckForNull(VMPPacient essVmpPacient) {
+        if (essVmpPacient.getIdpac() == null){
+            essVmpPacient.setIdpac("");
+        }
+        if (essVmpPacient.getVpolis() == null){
+            essVmpPacient.setVpolis("");
+        }
+        if (essVmpPacient.getSpolis() == null){
+            essVmpPacient.setSpolis("");
+        }
+        if (essVmpPacient.getNpolis() == null){
+            essVmpPacient.setNpolis("");
+        }
+        if (essVmpPacient.getStokato() == null){
+            essVmpPacient.setStokato("");
+        }
+        if (essVmpPacient.getSmo() == null){
+            essVmpPacient.setSmo("");
+        }
+        if (essVmpPacient.getSmoogrn() == null){
+            essVmpPacient.setSmoogrn("");
+        }
+        if (essVmpPacient.getSmook() == null){
+            essVmpPacient.setSmook("");
+        }
+        if (essVmpPacient.getSmonam() == null){
+            essVmpPacient.setSmonam("");
+        }
+        if(essVmpPacient.getMse() == null){
+            essVmpPacient.setMse("");
+        }
+        if (essVmpPacient.getNovor() == null){
+            essVmpPacient.setNovor("");
+        }
+        if (essVmpPacient.getVnovd() == null){
+            essVmpPacient.setVnovd("");
+        }
+
+
         return essVmpPacient;
     }
 

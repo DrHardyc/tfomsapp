@@ -20,6 +20,26 @@ public class VMPBdiagService {
                 case "REC_RSLT" -> essVmpBdiag.setRecrslt(child.getValue());
             }
         }
+        return CheckForNull(essVmpBdiag);
+    }
+
+    private VMPBdiag CheckForNull(VMPBdiag essVmpBdiag) {
+        if (essVmpBdiag.getDiagcode() == null){
+            essVmpBdiag.setDiagdate("");
+        }
+        if (essVmpBdiag.getDiagtip() == null){
+            essVmpBdiag.setDiagtip("");
+        }
+        if (essVmpBdiag.getDiagcode() == null){
+            essVmpBdiag.setDiagcode("");
+        }
+        if (essVmpBdiag.getDiagrlst() == null){
+            essVmpBdiag.setDiagrlst("");
+        }
+        if (essVmpBdiag.getRecrslt() == null){
+            essVmpBdiag.setRecrslt("");
+        }
+
         return essVmpBdiag;
     }
 }

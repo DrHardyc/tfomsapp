@@ -30,6 +30,50 @@ public class SchetService {
                 case "DISP" -> essSchet.setDisp(child.getValue());
             }
         }
-        return essSchet;
+        return CheckForNull(essSchet);
+    }
+
+    private Schet CheckForNull(Schet schet){
+        if(schet.getCode() == null){
+            schet.setCode("");
+        }
+        if(schet.getCodemo() == null){
+            schet.setCodemo("");
+        }
+        if(schet.getYear() == null){
+            schet.setYear("");
+        }
+        if(schet.getMonth() == null){
+            schet.setMonth("");
+        }
+        if(schet.getNschet() == null){
+            schet.setNschet("");
+        }
+        if(schet.getDschet() == null){
+            schet.setDschet("");
+        }
+        if(schet.getPlat() == null){
+            schet.setPlat("");
+        }
+        if(schet.getSummav() == null){
+            schet.setSummav("");
+        }
+        if(schet.getComents() == null){
+            schet.setComents("");
+        }
+        if(schet.getSummav() == null){
+            schet.setSummav("");
+        }
+        if (schet.getSankmek() == null){
+            schet.setSankmek("");
+        }
+        if (schet.getSankmee() == null){
+            schet.setSankmee("");
+        }
+        if (schet.getSankmek() == null){
+            schet.setSankmek("");
+        }
+
+        return schet;
     }
 }

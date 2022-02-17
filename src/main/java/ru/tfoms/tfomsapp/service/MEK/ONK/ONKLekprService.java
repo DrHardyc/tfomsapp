@@ -2,6 +2,7 @@ package ru.tfoms.tfomsapp.service.MEK.ONK;
 
 import nu.xom.Element;
 import nu.xom.Elements;
+import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
 import org.springframework.stereotype.Service;
 import ru.tfoms.tfomsapp.domain.MEK.ONK.ONKLekpr;
 
@@ -17,6 +18,20 @@ public class ONKLekprService {
                 case "DATE_INJ" -> essOnkLekpr.setDateinj(child.getValue());
             }
         }
+        return CheckForNull(essOnkLekpr);
+    }
+
+    private ONKLekpr CheckForNull(ONKLekpr essOnkLekpr) {
+        if (essOnkLekpr.getRegnum() == null){
+            essOnkLekpr.setRegnum("");
+        }
+        if (essOnkLekpr.getCodesh() == null){
+            essOnkLekpr.setCodesh("");
+        }
+        if (essOnkLekpr.getDateinj() == null){
+            essOnkLekpr.setDateinj("");
+        }
+
         return essOnkLekpr;
     }
 }

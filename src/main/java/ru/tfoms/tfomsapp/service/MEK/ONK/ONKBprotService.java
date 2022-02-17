@@ -17,6 +17,18 @@ public class ONKBprotService {
                 case "D_PROT" -> essOnkBprot.setDprot(child.getValue());
             }
         }
+
+        return CheckForNull(essOnkBprot);
+    }
+
+    private ONKBprot CheckForNull(ONKBprot essOnkBprot) {
+        if (essOnkBprot.getProt() == null){
+            essOnkBprot.setProt("");
+        }
+        if (essOnkBprot.getDprot() == null){
+            essOnkBprot.setDprot("");
+        }
+
         return essOnkBprot;
     }
 }

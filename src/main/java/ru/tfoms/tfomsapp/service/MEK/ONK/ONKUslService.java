@@ -32,6 +32,66 @@ public class ONKUslService {
                 case "COMENTU" -> essOnkUsl.setComentu(child.getValue());
             }
         }
+        return CheckForNull(essOnkUsl);
+    }
+
+    private ONKUsl CheckForNull(ONKUsl essOnkUsl) {
+        if (essOnkUsl.getIdserv() == null){
+            essOnkUsl.setIdserv("");
+        }
+        if (essOnkUsl.getLpu() == null){
+            essOnkUsl.setLpu("");
+        }
+        if (essOnkUsl.getLpu1() == null){
+            essOnkUsl.setLpu1("");
+        }
+        if (essOnkUsl.getPodr() == null){
+            essOnkUsl.setPodr("");
+        }
+        if (essOnkUsl.getProfil() == null){
+            essOnkUsl.setProfil("");
+        }
+        if (essOnkUsl.getVidvme() == null){
+            essOnkUsl.setVidvme("");
+        }
+        if (essOnkUsl.getDet() == null){
+            essOnkUsl.setDet("");
+        }
+        if (essOnkUsl.getDatein() == null){
+            essOnkUsl.setDatein("");
+        }
+        if (essOnkUsl.getDateout() == null){
+            essOnkUsl.setDateout("");
+        }
+        if (essOnkUsl.getDs() == null){
+            essOnkUsl.setDs("");
+        }
+        if (essOnkUsl.getCodeusl() == null){
+            essOnkUsl.setCodeusl("");
+        }
+        if (essOnkUsl.getKolusl() == null){
+            essOnkUsl.setKolusl("");
+        }
+        if (essOnkUsl.getTarif() == null){
+            essOnkUsl.setTarif("");
+        }
+        if (essOnkUsl.getSumvusl() == null){
+            essOnkUsl.setSumvusl("");
+        }
+        if (essOnkUsl.getPrvs() == null){
+            essOnkUsl.setPrvs("");
+        }
+        if (essOnkUsl.getCodemd() == null){
+            essOnkUsl.setCodemd("");
+        }
+        if (essOnkUsl.getNpl() == null){
+            essOnkUsl.setNpl("");
+        }
+        if (essOnkUsl.getComentu() == null){
+            essOnkUsl.setComentu("");
+        }
+
+
         return essOnkUsl;
     }
 }

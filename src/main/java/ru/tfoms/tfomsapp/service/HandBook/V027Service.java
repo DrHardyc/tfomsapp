@@ -19,7 +19,7 @@ public class V027Service {
             V027 v027 = new V027();
             for (HandBookValues handBookValues : handBooksValues){
                 switch (handBookValues.getColumn()) {
-                    case "ISCZ" -> v027.setIdcz(handBookValues.getValue());
+                    case "IDCZ" -> v027.setIdcz(handBookValues.getValue());
                     case "N_CZ" -> v027.setN_cz(handBookValues.getValue());
                     case "DATEBEG" -> v027.setDatebeg(handBookValues.getValue());
                     case "DATEEND" -> v027.setDateend(handBookValues.getValue());

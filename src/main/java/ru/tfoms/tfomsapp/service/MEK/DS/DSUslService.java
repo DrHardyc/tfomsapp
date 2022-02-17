@@ -19,6 +19,24 @@ public class DSUslService {
                 case "PR_ANAST" -> essDsUsl.setPranast(child.getValue());
             }
         }
+        return CheckForNull(essDsUsl);
+    }
+
+    private DSUsl CheckForNull(DSUsl essDsUsl) {
+        if (essDsUsl.getIdserv() == null){
+            essDsUsl.setIdserv("");
+        }
+        if (essDsUsl.getFzub() == null){
+            essDsUsl.setFzub("");
+        }
+        if (essDsUsl.getViszub() == null){
+            essDsUsl.setViszub("");
+        }
+        if (essDsUsl.getPranast() == null){
+            essDsUsl.setPranast("");
+        }
+
+
         return essDsUsl;
     }
 }

@@ -2,7 +2,6 @@ package ru.tfoms.tfomsapp.service.HandBook;
 
 import org.springframework.stereotype.Service;
 import ru.tfoms.tfomsapp.domain.HandBook.F002;
-import ru.tfoms.tfomsapp.domain.HandBook.F008;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
 
 import java.io.BufferedReader;
@@ -20,24 +19,24 @@ public class F002Service {
             F002 f002 = new F002();
             for (HandBookValues handBookValues : handBooksValues) {
                 switch (handBookValues.getColumn()) {
-                    case "SMOCOD" -> f002.setSmocod(handBookValues.getValue());
-                    case "OGRN" -> f002.setOgrn(handBookValues.getValue());
+                    case "smocod" -> f002.setSmocod(handBookValues.getValue());
+                    case "Ogrn" -> f002.setOgrn(handBookValues.getValue());
                     case "KPP" -> f002.setKpp(handBookValues.getValue());
-                    case "NAM_SMOP" -> f002.setNam_smop(handBookValues.getValue());
-                    case "NAM_SMOK" -> f002.setNam_smok(handBookValues.getValue());
-                    case "ADDR_F" -> f002.setAddr_f(handBookValues.getValue());
-                    case "FAM_RUK" -> f002.setFam_ruk(handBookValues.getValue());
-                    case "IM_RUK" -> f002.setIm_ruk(handBookValues.getValue());
-                    case "OT_RUK" -> f002.setOt_ruk(handBookValues.getValue());
-                    case "PHONE" -> f002.setPhone(handBookValues.getValue());
-                    case "FAX" -> f002.setFax(handBookValues.getValue());
-                    case "HOT_LINE" -> f002.setHot_line(handBookValues.getValue());
-                    case "E_MAIL" -> f002.setE_mail(handBookValues.getValue());
-                    case "N_DOC" -> f002.setN_doc(handBookValues.getValue());
-                    case "D_START" -> f002.setD_start(handBookValues.getValue());
-                    case "DATE_E" -> f002.setDate_e(handBookValues.getValue());
-                    case "D_BEGIN" -> f002.setD_begin(handBookValues.getValue());
-                    case "D_END" -> f002.setD_end(handBookValues.getValue());
+                    case "nam_smop" -> f002.setNam_smop(handBookValues.getValue());
+                    case "nam_smok" -> f002.setNam_smok(handBookValues.getValue());
+                    case "addr_f" -> f002.setAddr_f(handBookValues.getValue());
+                    case "fam_ruk" -> f002.setFam_ruk(handBookValues.getValue());
+                    case "im_ruk" -> f002.setIm_ruk(handBookValues.getValue());
+                    case "ot_ruk" -> f002.setOt_ruk(handBookValues.getValue());
+                    case "phone" -> f002.setPhone(handBookValues.getValue());
+                    case "fax" -> f002.setFax(handBookValues.getValue());
+                    case "hot_line" -> f002.setHot_line(handBookValues.getValue());
+                    case "e_mail" -> f002.setE_mail(handBookValues.getValue());
+                    case "n_doc" -> f002.setN_doc(handBookValues.getValue());
+                    case "d_start" -> f002.setD_start(handBookValues.getValue());
+                    case "date_e" -> f002.setDate_e(handBookValues.getValue());
+                    case "d_begin" -> f002.setD_begin(handBookValues.getValue());
+                    case "d_end" -> f002.setD_end(handBookValues.getValue());
                 }
             }
             listF002.add(f002);

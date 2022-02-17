@@ -23,6 +23,35 @@ public class MPDNazService {
                 case "NAZ_PK" -> essMpdNaz.setNazpk(child.getValue());
             }
         }
+        return CheckForNull(essMpdNaz);
+    }
+
+    private MPDNaz CheckForNull(MPDNaz essMpdNaz) {
+        if (essMpdNaz.getNazn() == null){
+            essMpdNaz.setNazn("");
+        }
+        if (essMpdNaz.getNazr() == null){
+            essMpdNaz.setNazr("");
+        }
+        if (essMpdNaz.getNaziddokt() == null){
+            essMpdNaz.setNaziddokt("");
+        }
+        if (essMpdNaz.getNazv() == null){
+            essMpdNaz.setNazv("");
+        }
+        if (essMpdNaz.getNazusl() == null){
+            essMpdNaz.setNazusl("");
+        }
+        if (essMpdNaz.getNaprdate() == null){
+            essMpdNaz.setNaprmo("");
+        }
+        if (essMpdNaz.getNazpmp() == null){
+            essMpdNaz.setNazpmp("");
+        }
+        if (essMpdNaz.getNazpk() == null){
+            essMpdNaz.setNazpk("");
+        }
+
         return essMpdNaz;
     }
 }

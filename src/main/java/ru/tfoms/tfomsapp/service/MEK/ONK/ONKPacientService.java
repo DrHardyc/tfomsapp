@@ -27,6 +27,50 @@ public class ONKPacientService {
                 case "VNOV_D" -> essOnkPacient.setVnovd(child.getValue());
             }
         }
+        return CheckForNull(essOnkPacient);
+    }
+
+    private ONKPacient CheckForNull(ONKPacient essOnkPacient) {
+        if (essOnkPacient.getIdpac() == null){
+            essOnkPacient.setIdpac("");
+        }
+        if (essOnkPacient.getVpolis() == null){
+            essOnkPacient.setVpolis("");
+        }
+        if (essOnkPacient.getSpolis() == null){
+            essOnkPacient.setSpolis("");
+        }
+        if (essOnkPacient.getNpolis() == null){
+            essOnkPacient.setNpolis("");
+        }
+        if (essOnkPacient.getStokato() == null){
+            essOnkPacient.setStokato("");
+        }
+        if (essOnkPacient.getSmo() == null){
+            essOnkPacient.setSmo("");
+        }
+        if (essOnkPacient.getSmoogrn() == null){
+            essOnkPacient.setSmoogrn("");
+        }
+        if (essOnkPacient.getSmook() == null){
+            essOnkPacient.setSmook("");
+        }
+        if (essOnkPacient.getSmonam() == null){
+            essOnkPacient.setSmonam("");
+        }
+        if (essOnkPacient.getInv() == null){
+            essOnkPacient.setInv("");
+        }
+        if (essOnkPacient.getMse() == null){
+            essOnkPacient.setMse("");
+        }
+        if (essOnkPacient.getNovor() == null){
+            essOnkPacient.setNovor("");
+        }
+        if (essOnkPacient.getVnovd() == null){
+            essOnkPacient.setVnovd("");
+        }
+
         return essOnkPacient;
     }
 }

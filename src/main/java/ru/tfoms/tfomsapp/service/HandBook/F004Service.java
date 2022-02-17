@@ -18,17 +18,17 @@ public class F004Service {
             F004 f004 = new F004();
             for (HandBookValues handBookValues : handBooksValues){
                 switch (handBookValues.getColumn()) {
-                    case "TF_OKATO" -> f004.setTf_okato(handBookValues.getValue());
-                    case "N_EXPERT" -> f004.setN_expert(handBookValues.getValue());
-                    case "FAM" -> f004.setFam(handBookValues.getValue());
-                    case "IM" -> f004.setIm(handBookValues.getValue());
-                    case "OT" -> f004.setOt(handBookValues.getValue());
+                    case "tf_okato" -> f004.setTf_okato(handBookValues.getValue());
+                    case "n_expert" -> f004.setN_expert(handBookValues.getValue());
+                    case "fam" -> f004.setFam(handBookValues.getValue());
+                    case "im" -> f004.setIm(handBookValues.getValue());
+                    case "ot" -> f004.setOt(handBookValues.getValue());
                     case "SNILS" -> f004.setSnils(handBookValues.getValue());
-                    case "PHONE1" -> f004.setPhone1(handBookValues.getValue());
-                    case "PHONE2" -> f004.setPhone2(handBookValues.getValue());
-                    case "E_MAIL1" -> f004.setE_mail1(handBookValues.getValue());
-                    case "E_MAIL2" -> f004.setE_mail2(handBookValues.getValue());
-                    case "DATE_REG" -> f004.setDate_reg(handBookValues.getValue());
+                    case "phone1" -> f004.setPhone1(handBookValues.getValue());
+                    case "phone2" -> f004.setPhone2(handBookValues.getValue());
+                    case "e_mail1" -> f004.setE_mail1(handBookValues.getValue());
+                    case "e_mail2" -> f004.setE_mail2(handBookValues.getValue());
+                    case "date_red" -> f004.setDate_reg(handBookValues.getValue());
                 }
             }
             listF004.add(f004);

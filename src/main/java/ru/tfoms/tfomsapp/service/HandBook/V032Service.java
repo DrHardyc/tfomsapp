@@ -18,9 +18,9 @@ public class V032Service {
             V032 v032 = new V032();
             for (HandBookValues handBookValues : handBooksValues){
                 switch (handBookValues.getColumn()) {
-                    case "SCHEDRUGGRCD" -> v032.setSchedruggrcd(handBookValues.getValue());
-                    case "NAME" -> v032.setName(handBookValues.getValue());
-                    case "SCHEMCODE" -> v032.setShemcode(handBookValues.getValue());
+                    case "ScheDrugGrCd" -> v032.setSchedruggrcd(handBookValues.getValue());
+                    case "Name" -> v032.setName(handBookValues.getValue());
+                    case "SchemCode" -> v032.setShemcode(handBookValues.getValue());
                     case "DATEBEG" -> v032.setDatebeg(handBookValues.getValue());
                     case "DATEEND" -> v032.setDateend(handBookValues.getValue());
                 }

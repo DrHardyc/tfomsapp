@@ -40,6 +40,65 @@ public class DSSlService {
             }
         }
         essDsSl.setUsl(dsUsl);
+        return CheckForNull(essDsSl);
+    }
+
+    private DSSl CheckForNull(DSSl essDsSl) {
+        if (essDsSl.getSlid() == null){
+            essDsSl.setSlid("");
+        }
+        if (essDsSl.getCelobsl() == null) {
+            essDsSl.setCelobsl("");
+        }
+        if (essDsSl.getPolvis() == null) {
+            essDsSl.setPolvis("");
+        }
+        if (essDsSl.getHomvis() == null){
+            essDsSl.setHomvis("");
+        }
+        if (essDsSl.getSpecend() == null){
+            essDsSl.setSpecend("");
+        }
+        if (essDsSl.getCel1() == null){
+            essDsSl.setCel1("");
+        }
+        if (essDsSl.getTypemn() == null){
+            essDsSl.setTypemn("");
+        }
+        if (essDsSl.getObr() == null){
+            essDsSl.setObr("");
+        }
+        if (essDsSl.getTimev() == null){
+            essDsSl.setTimev("");
+        }
+        if (essDsSl.getTimep() == null){
+            essDsSl.setTimep("");
+        }
+        if (essDsSl.getTl() == null){
+            essDsSl.setTl("");
+        }
+        if (essDsSl.getVidtr() == null){
+            essDsSl.setVidtr("");
+        }
+        if (essDsSl.getKslpp() == null){
+            essDsSl.setKslpp("");
+        }
+        if (essDsSl.getBartel() == null){
+            essDsSl.setBartel("");
+        }
+        if (essDsSl.getPerspost() == null){
+            essDsSl.setPerspost("");
+        }
+        if (essDsSl.getDater1() == null){
+            essDsSl.setDater1("");
+        }
+        if (essDsSl.getDater2() == null){
+            essDsSl.setDater2("");
+        }
+        if (essDsSl.getSost() == null){
+            essDsSl.setSost("");
+        }
+
         return essDsSl;
     }
 }

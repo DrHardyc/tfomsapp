@@ -24,6 +24,17 @@ public class DSZapService {
             }
         }
         essDsZap.setZsl(dsZsls);
+        return CheckForNull(essDsZap);
+    }
+
+    private DSZap CheckForNull(DSZap essDsZap) {
+        if (essDsZap.getNzap() == null){
+            essDsZap.setNzap("");
+        }
+        if (essDsZap.getFilename1() == null){
+            essDsZap.setFilename1("");
+        }
+
         return essDsZap;
     }
 }

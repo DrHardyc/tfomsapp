@@ -16,6 +16,17 @@ public class SlkoefService {
                 case "Z_SL" -> essSlcoef.setZsl(child.getValue());
             }
         }
-        return essSlcoef;
+        return CheckForNull(essSlcoef);
+    }
+
+    private Slkoef CheckForNull(Slkoef slkoef){
+        if (slkoef.getZsl() == null){
+            slkoef.setZsl("");
+        }
+        if (slkoef.getIdsl() == null){
+            slkoef.setIdsl("");
+        }
+
+        return slkoef;
     }
 }

@@ -17,6 +17,20 @@ public class MPDDs2nService {
                 case "PR_DS2_N" -> essMpdDs2n.setPrds2n(child.getValue());
             }
         }
+        return CheckForNull(essMpdDs2n);
+    }
+
+    private MPDDs2n CheckForNull(MPDDs2n essMpdDs2n) {
+        if (essMpdDs2n.getDs2() == null){
+            essMpdDs2n.setDs2("");
+        }
+        if (essMpdDs2n.getDs2pr() == null){
+            essMpdDs2n.setDs2pr("");
+        }
+        if (essMpdDs2n.getPrds2n() == null){
+            essMpdDs2n.setPrds2n("");
+        }
+
         return essMpdDs2n;
     }
 }

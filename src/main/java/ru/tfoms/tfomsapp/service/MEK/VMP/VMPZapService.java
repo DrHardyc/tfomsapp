@@ -25,6 +25,17 @@ public class VMPZapService {
                 case "Z_SL" -> essVMPZap.setZsl(vmpZslService.loadVmpZsl(child));
             }
         }
+        return CheckForNull(essVMPZap);
+    }
+
+    private VMPZap CheckForNull(VMPZap essVMPZap) {
+        if (essVMPZap.getNzap() == null){
+            essVMPZap.setNzap("");
+        }
+        if (essVMPZap.getPrnov() == null){
+            essVMPZap.setPrnov("");
+        }
+
         return essVMPZap;
     }
 }

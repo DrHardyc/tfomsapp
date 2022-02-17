@@ -1,5 +1,6 @@
 package ru.tfoms.tfomsapp.service.MEK.VMP;
 
+import com.fasterxml.jackson.databind.deser.CreatorProperty;
 import nu.xom.Element;
 import nu.xom.Elements;
 import org.springframework.stereotype.Service;
@@ -52,6 +53,64 @@ public class VMPZslService {
         essVmpZsl.setOssluch(ossluchs);
         essVmpZsl.setSl(sls);
         essVmpZsl.setSanks(sanks);
+        return CheckForNull(essVmpZsl);
+    }
+
+    private VMPZsl CheckForNull(VMPZsl essVmpZsl) {
+        if (essVmpZsl.getIdcase() == null){
+            essVmpZsl.setIdsp("");
+        }
+        if (essVmpZsl.getUslok() == null){
+            essVmpZsl.setUslok("");
+        }
+        if (essVmpZsl.getVidpom() == null){
+            essVmpZsl.setVidpom("");
+        }
+        if (essVmpZsl.getForpom() == null){
+            essVmpZsl.setForpom("");
+        }
+        if (essVmpZsl.getNprmo() == null){
+            essVmpZsl.setNprmo("");
+        }
+        if (essVmpZsl.getNprdate() == null){
+            essVmpZsl.setNprdate("");
+        }
+        if (essVmpZsl.getLpu() == null){
+            essVmpZsl.setLpu("");
+        }
+        if (essVmpZsl.getDatez1() == null){
+            essVmpZsl.setDatez1("");
+        }
+        if (essVmpZsl.getDatez2() == null){
+            essVmpZsl.setDatez2("");
+        }
+        if (essVmpZsl.getKdz() == null){
+            essVmpZsl.setKdz("");
+        }
+        if (essVmpZsl.getRslt() == null){
+            essVmpZsl.setRslt("");
+        }
+        if (essVmpZsl.getIshod() == null){
+            essVmpZsl.setIshod("");
+        }
+        if (essVmpZsl.getIdsp() == null){
+            essVmpZsl.setIdsp("");
+        }
+        if (essVmpZsl.getSumv() == null){
+            essVmpZsl.setSumv("");
+        }
+        if (essVmpZsl.getOplata() == null){
+            essVmpZsl.setOplata("");
+        }
+        if (essVmpZsl.getSump() == null){
+            essVmpZsl.setSump("");
+        }
+        if (essVmpZsl.getSankit() == null){
+            essVmpZsl.setSankit("");
+        }
+
+
+
         return essVmpZsl;
     }
 }

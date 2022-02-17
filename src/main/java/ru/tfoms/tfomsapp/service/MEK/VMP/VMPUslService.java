@@ -32,6 +32,63 @@ public class VMPUslService {
             }
         }
 
+        return CheckForNull(essVmpUsl);
+    }
+
+    private VMPUsl CheckForNull(VMPUsl essVmpUsl) {
+        if (essVmpUsl.getIdserv() == null){
+            essVmpUsl.setIdserv("");
+        }
+        if (essVmpUsl.getLpu() == null){
+            essVmpUsl.setLpu("");
+        }
+        if (essVmpUsl.getLpu1() == null){
+            essVmpUsl.getLpu1();
+        }
+        if (essVmpUsl.getPodr() == null){
+            essVmpUsl.setPodr("");
+        }
+        if (essVmpUsl.getProfil() == null){
+            essVmpUsl.setProfil("");
+        }
+        if (essVmpUsl.getVidvme() == null){
+            essVmpUsl.setVidvme("");
+        }
+        if (essVmpUsl.getDet() == null){
+            essVmpUsl.setDet("");
+        }
+        if (essVmpUsl.getDatein() == null){
+            essVmpUsl.setDatein("");
+        }
+        if (essVmpUsl.getDateout() == null){
+            essVmpUsl.setDateout("");
+        }
+        if (essVmpUsl.getDs() == null){
+            essVmpUsl.setDs("");
+        }
+        if (essVmpUsl.getCodeusl() == null){
+            essVmpUsl.setCodeusl("");
+        }
+        if (essVmpUsl.getKolusl() == null){
+            essVmpUsl.setKolusl("");
+        }
+        if (essVmpUsl.getTarif() == null){
+            essVmpUsl.setTarif("");
+        }
+        if (essVmpUsl.getSumvusl() == null){
+            essVmpUsl.setSumvusl("");
+        }
+        if (essVmpUsl.getPrvs() == null){
+            essVmpUsl.setPrvs("");
+        }
+        if (essVmpUsl.getCodemd() == null){
+            essVmpUsl.setCodemd("");
+        }
+        if (essVmpUsl.getComentu() == null){
+            essVmpUsl.setComentu("");
+        }
+
+
         return essVmpUsl;
     }
 }

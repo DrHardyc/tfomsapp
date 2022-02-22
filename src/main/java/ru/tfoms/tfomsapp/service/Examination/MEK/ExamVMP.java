@@ -14,10 +14,7 @@ import ru.tfoms.tfomsapp.domain.MEK.ONK.ONKOnksl;
 import ru.tfoms.tfomsapp.domain.MEK.PD.PDPers;
 import ru.tfoms.tfomsapp.domain.MEK.PD.PDPerslist;
 import ru.tfoms.tfomsapp.domain.MEK.Schet;
-import ru.tfoms.tfomsapp.domain.MEK.VMP.VMPOnksl;
-import ru.tfoms.tfomsapp.domain.MEK.VMP.VMPSl;
-import ru.tfoms.tfomsapp.domain.MEK.VMP.VMPUsl;
-import ru.tfoms.tfomsapp.domain.MEK.VMP.VMPZap;
+import ru.tfoms.tfomsapp.domain.MEK.VMP.*;
 import ru.tfoms.tfomsapp.domain.MEK.Zglv;
 import ru.tfoms.tfomsapp.service.HandBook.*;
 import ru.tfoms.tfomsapp.service.ServiceUtil;
@@ -29,6 +26,8 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -41,6 +40,14 @@ public class ExamVMP {
     private final F008Service f008Service = new F008Service();
     private final F014Service f014Service = new F014Service();
     private final N018Service n018Service = new N018Service();
+    private final N002Service n002Service = new N002Service();
+    private final N003Service n003Service = new N003Service();
+    private final N004Service n004Service = new N004Service();
+    private final N005Service n005Service = new N005Service();
+    private final N007Service n007Service = new N007Service();
+    private final N008Service n008Service = new N008Service();
+    private final N010Service n010Service = new N010Service();
+    private final N011Service n011Service = new N011Service();
     private final V001Service v001Service = new V001Service();
     private final V002Service v002Service = new V002Service();
     private final V006Service v006Service = new V006Service();
@@ -72,6 +79,14 @@ public class ExamVMP {
         List<F008> f008s = f008Service.getF008s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=F008"));
         List<F014> f014s = f014Service.getF014s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=F014"));
         List<N018> n018s = n018Service.getN018s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N018"));
+        List<N002> n002s = n002Service.getN002s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N002"));
+        List<N003> n003s = n003Service.getN003s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N003"));
+        List<N004> n004s = n004Service.getN004s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N004"));
+        List<N005> n005s = n005Service.getN005s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N005"));
+        List<N007> n007s = n007Service.getN007s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N007"));
+        List<N008> n008s = n008Service.getN008s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N008"));
+        List<N010> n010s = n010Service.getN010s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N010"));
+        List<N011> n011s = n011Service.getN011s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N011"));
         List<V001> v001s = v001Service.getV001s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V001"));
         List<V002> v002s = v002Service.getV002s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V002"));
         List<V006> v006s = v006Service.getV006s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V006"));
@@ -221,7 +236,7 @@ public class ExamVMP {
 
                 double sumv = 0.00;
                 for (VMPSl sl : zap.getZsl().getSl()){
-                    sumv =+ Double.parseDouble(sl.getSumm());
+                    sumv = sumv + Double.parseDouble(sl.getSumm());
 
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0600_04102)){
                         if (zap.getZsl().getNprmo().isEmpty() && (zap.getZsl().getForpom().equals("3")
@@ -374,19 +389,20 @@ public class ExamVMP {
                             resultTestExam = ResultTestExam.Failed;
                         }
                     }
-                    if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0700_08902)){
-                        if (sl.getUsl() == null && CheckDS1(sl.getDs1())){
-                            Element pr = getPrElement("T_0700/08902", schet,
-                                    zap, sl, null, "",
-                                    "USL не может быть пустым если " +
-                                            " первый символ кода основного диагноза - «С» или код" +
-                                            " основного диагноза входит в диапазон D00-D09 или D45-D47");
-                            flk_p.appendChild(pr);
-                            su.showMessagesEx("Ошибка T_0700/08902");
-                            resultTestExam = ResultTestExam.Failed;
-                        } else {
-                            for (VMPUsl usl : sl.getUsl()){
 
+                    if (sl.getUsl() != null){
+
+                    } else {
+                        if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0700_08902)) {
+                            if (CheckDS1(sl.getDs1())) {
+                                Element pr = getPrElement("T_0700/08902", schet,
+                                        zap, sl, null, "",
+                                        "USL не может быть пустым если " +
+                                                " первый символ кода основного диагноза - «С» или код" +
+                                                " основного диагноза входит в диапазон D00-D09 или D45-D47");
+                                flk_p.appendChild(pr);
+                                su.showMessagesEx("Ошибка T_0700/08902");
+                                resultTestExam = ResultTestExam.Failed;
                             }
                         }
                     }
@@ -451,7 +467,7 @@ public class ExamVMP {
                                         || cons.getPrcons().equals("2") || cons.getPrcons().equals("3"))){
                                     Element pr = getPrElement("T_0900/09700", schet,
                                             zap, sl, null, cons.getPrcons(),
-                                            "DT_CONS обязательно заполнению, если консилиум проведен (PR_CONS={1,2,3})");
+                                            "DT_CONS обязательно к заполнению, если консилиум проведен (PR_CONS={1,2,3})");
                                     flk_p.appendChild(pr);
                                     su.showMessagesEx("Ошибка соотвествия справочника T_0900/09700");
                                     resultTestExam = ResultTestExam.Failed;
@@ -470,6 +486,157 @@ public class ExamVMP {
                                 resultTestExam = ResultTestExam.Failed;
                             }
                         }
+                        if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1000_09900)){
+                            if (sl.getOnksl().getStad().isEmpty() && (sl.getOnksl().getDs1t().equals("0")
+                                    || sl.getOnksl().getDs1t().equals("1") || sl.getOnksl().getDs1t().equals("2"))){
+                                Element pr = getPrElement("T_1000/09900", schet,
+                                        zap, sl, null, sl.getOnksl().getStad(),
+                                        "STAD обязательно к заполнению при проведении " +
+                                                "противоопухолевого лечения (DS1_T={0,1,2})");
+                                flk_p.appendChild(pr);
+                                su.showMessagesEx("Ошибка соотвествия справочника T_1000/09900");
+                                resultTestExam = ResultTestExam.Failed;
+                            } else {
+                                if (n002Service.CheckN002(n002s, sl.getOnksl().getStad())) {
+                                    Element pr = getPrElement("T_1000/09900", schet,
+                                            zap, sl, null, sl.getOnksl().getStad(),
+                                            "Ошибка соответствия записи c справочником N002");
+                                    flk_p.appendChild(pr);
+                                    su.showMessagesEx("Ошибка соотвествия справочника T_1000/09900");
+                                    resultTestExam = ResultTestExam.Failed;
+                                }
+                            }
+                        }
+                        if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1000_10000)){
+                            if (sl.getOnksl().getOnkt().isEmpty() && sl.getOnksl().getDs1t().equals("0")
+                                    && GetAge(pers.getDr(), sl.getDate1()) > 18){
+                                Element pr = getPrElement("T_1000/10000", schet,
+                                        zap, sl, null, sl.getOnksl().getOnkt(),
+                                        "ONK_T обязательно к заполнению при первичном лечении (DS1_T=0) " +
+                                                "для пациентов, возраст которых на дату начала лечения более 18 лет");
+                                flk_p.appendChild(pr);
+                                su.showMessagesEx("Ошибка соотвествия справочника T_1000/10000");
+                                resultTestExam = ResultTestExam.Failed;
+                            } else {
+                                if (n003Service.CheckN003(n003s, sl.getOnksl().getOnkt())) {
+                                    Element pr = getPrElement("T_1000/10000", schet,
+                                            zap, sl, null, sl.getOnksl().getOnkt(),
+                                            "Ошибка соответствия записи c справочником N003");
+                                    flk_p.appendChild(pr);
+                                    su.showMessagesEx("Ошибка соотвествия справочника T_1000/10000");
+                                    resultTestExam = ResultTestExam.Failed;
+                                }
+                            }
+                        }
+                        if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1000_10100)){
+                            if (sl.getOnksl().getOnkn().isEmpty() && sl.getOnksl().getDs1t().equals("0")
+                                    && GetAge(pers.getDr(), sl.getDate1()) > 18){
+                                Element pr = getPrElement("T_1000/10100", schet,
+                                        zap, sl, null, sl.getOnksl().getOnkn(),
+                                        "ONK_N обязательно к заполнению при первичном лечении (DS1_T=0) " +
+                                                "для пациентов, возраст которых на дату начала лечения более 18 лет");
+                                flk_p.appendChild(pr);
+                                su.showMessagesEx("Ошибка соотвествия справочника T_1000/10100");
+                                resultTestExam = ResultTestExam.Failed;
+                            } else {
+                                if (n004Service.CheckN004(n004s, sl.getOnksl().getOnkn())) {
+                                    Element pr = getPrElement("T_1000/10000", schet,
+                                            zap, sl, null, sl.getOnksl().getOnkn(),
+                                            "Ошибка соответствия записи c справочником N004");
+                                    flk_p.appendChild(pr);
+                                    su.showMessagesEx("Ошибка соотвествия справочника T_1000/10100");
+                                    resultTestExam = ResultTestExam.Failed;
+                                }
+                            }
+                        }
+                        if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1000_10200)){
+                            if (sl.getOnksl().getOnkm().isEmpty() && sl.getOnksl().getDs1t().equals("0")
+                                    && GetAge(pers.getDr(), sl.getDate1()) > 18){
+                                Element pr = getPrElement("T_1000/10200", schet,
+                                        zap, sl, null, sl.getOnksl().getOnkm(),
+                                        "ONK_M обязательно к заполнению при первичном лечении (DS1_T=0) " +
+                                                "для пациентов, возраст которых на дату начала лечения более 18 лет");
+                                flk_p.appendChild(pr);
+                                su.showMessagesEx("Ошибка соотвествия справочника T_1000/10000");
+                                resultTestExam = ResultTestExam.Failed;
+                            } else {
+                                if (n005Service.CheckN005(n005s, sl.getOnksl().getOnkn())) {
+                                    Element pr = getPrElement("T_1000/10200", schet,
+                                            zap, sl, null, sl.getOnksl().getOnkm(),
+                                            "Ошибка соответствия записи c справочником N005");
+                                    flk_p.appendChild(pr);
+                                    su.showMessagesEx("Ошибка соотвествия справочника T_1000/10200");
+                                    resultTestExam = ResultTestExam.Failed;
+                                }
+                            }
+                        }
+                        if (sl.getOnksl().getOnkusls() != null){
+                            for (VMPOnkusl onkusl : sl.getOnksl().getOnkusls()) {
+                                if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1000_10400)) {
+                                    if (sl.getOnksl().getSod().isEmpty() && (onkusl.getUsltip().equals("3")
+                                            && onkusl.getUsltip().equals("4"))) {
+                                        Element pr = getPrElement("T_1000/10400", schet,
+                                                zap, sl, null, sl.getOnksl().getOnkm(),
+                                                "SOD обязательно для заполнения при проведении лучевой или " +
+                                                        "химиолучевой терапии (USL_TIP=3 или USL_TIP=4)");
+                                        flk_p.appendChild(pr);
+                                        su.showMessagesEx("Ошибка соотвествия справочника T_1000/10400");
+                                        resultTestExam = ResultTestExam.Failed;
+                                    }
+                                }
+                                if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1000_10500)) {
+                                    if (sl.getOnksl().getKfr().isEmpty() && (onkusl.getUsltip().equals("3")
+                                            && onkusl.getUsltip().equals("4"))) {
+                                        Element pr = getPrElement("T_1000/10400", schet,
+                                                zap, sl, null, sl.getOnksl().getKfr(),
+                                                "K_FR обязательно для заполнения при проведении лучевой или " +
+                                                        "химиолучевой терапии (USL_TIP=3 или USL_TIP=4)");
+                                        flk_p.appendChild(pr);
+                                        su.showMessagesEx("Ошибка соотвествия справочника T_1000/10400");
+                                        resultTestExam = ResultTestExam.Failed;
+                                    }
+                                }
+                            }
+                        }
+                        if (sl.getOnksl().getBdiags() != null){
+                            for (VMPBdiag bdiag : sl.getOnksl().getBdiags()) {
+                                if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1100_11400)){
+                                    if (n007Service.CheckN007(n007s, bdiag.getDiagcode()) && bdiag.getDiagtip().equals("1")){
+                                        Element pr = getPrElement("T_1100/11400", schet,
+                                                zap, sl, null, bdiag.getDiagcode(),
+                                                "Ошибка соответствия записи c справочником N007");
+                                        flk_p.appendChild(pr);
+                                        su.showMessagesEx("Ошибка соотвествия справочника T_1100/11400");
+                                        resultTestExam = ResultTestExam.Failed;
+                                    } else if (n010Service.CheckN010(n010s, bdiag.getDiagcode()) && bdiag.getDiagtip().equals("2")){
+                                        Element pr = getPrElement("T_1100/11400", schet,
+                                                zap, sl, null, bdiag.getDiagcode(),
+                                                "Ошибка соответствия записи c справочником N010");
+                                        flk_p.appendChild(pr);
+                                        su.showMessagesEx("Ошибка соотвествия справочника T_1100/11400");
+                                        resultTestExam = ResultTestExam.Failed;
+                                    }
+                                }
+                                if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1100_11500)){
+                                    if (n008Service.CheckN008(n008s, bdiag.getDiagrlst()) && bdiag.getDiagtip().equals("1")){
+                                        Element pr = getPrElement("T_1100/11500", schet,
+                                                zap, sl, null, bdiag.getDiagcode(),
+                                                "Ошибка соответствия записи c справочником N008");
+                                        flk_p.appendChild(pr);
+                                        su.showMessagesEx("Ошибка соотвествия справочника T_1100/11500");
+                                        resultTestExam = ResultTestExam.Failed;
+                                    } else if (n011Service.CheckN011(n011s, bdiag.getDiagcode()) && bdiag.getDiagtip().equals("2")){
+                                        Element pr = getPrElement("T_1100/11500", schet,
+                                                zap, sl, null, bdiag.getDiagcode(),
+                                                "Ошибка соответствия записи c справочником N011");
+                                        flk_p.appendChild(pr);
+                                        su.showMessagesEx("Ошибка соотвествия справочника T_1100/11500");
+                                        resultTestExam = ResultTestExam.Failed;
+                                    }
+                                }
+                            }
+                        }
+
                     }
                 }
 
@@ -491,6 +658,13 @@ public class ExamVMP {
         out.println(doc.toXML());
         out.close();
         return resultTestExam;
+    }
+
+    private int GetAge(String dr, String date1) {
+        LocalDate dateDr = LocalDate.parse(dr);
+        LocalDate dateDate1 = LocalDate.parse(date1);
+        long age = ChronoUnit.YEARS.between(dateDr, dateDate1);
+        return (int) age;
     }
 
     private boolean CheckDS1(String ds1) {

@@ -1,19 +1,21 @@
 package ru.tfoms.tfomsapp.service.Examination.MEK;
 
+import nu.xom.Document;
+import nu.xom.Element;
 import org.springframework.stereotype.Service;
 import ru.tfoms.tfomsapp.domain.Exam.ExamParam;
 import ru.tfoms.tfomsapp.domain.HandBook.*;
 import ru.tfoms.tfomsapp.domain.MEK.MP.*;
-import ru.tfoms.tfomsapp.domain.MEK.Mrusln;
+import ru.tfoms.tfomsapp.domain.MEK.*;
 import ru.tfoms.tfomsapp.domain.MEK.PD.PDPers;
 import ru.tfoms.tfomsapp.domain.MEK.PD.PDPerslist;
-import ru.tfoms.tfomsapp.domain.MEK.Sank;
 import ru.tfoms.tfomsapp.service.HandBook.*;
 import ru.tfoms.tfomsapp.service.ServiceUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -23,7 +25,6 @@ import java.util.List;
 
 @Service
 public class ExamMP {
-    private final O002Service o002Service = new O002Service();
     private final F002Service f002Service = new F002Service();
     private final F003Service f003Service = new F003Service();
     private final F004Service f004Service = new F004Service();
@@ -48,8 +49,8 @@ public class ExamMP {
     private final V036Service v036Service = new V036Service();
     private final ServiceUtil su = new ServiceUtil();
 
-    public void exam(PDPerslist persList, ExamParam examParam) throws IOException {
-        List<O002> o002s = o002Service.getO002s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=o002"));
+    public ResultTestExam exam(PDPerslist persList, Zglv zglv, Schet schet, ExamParam examParam) throws IOException {
+        ResultTestExam resultTestExam = ResultTestExam.Success;
         List<F002> f002s = f002Service.getF002s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=F002"));
         List<F003> f003s = f003Service.getF003s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=F003"));
         List<F004> f004s = f004Service.getF004s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=F004"));
@@ -73,54 +74,105 @@ public class ExamMP {
         List<V032> v032s = v032Service.getV032s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V032"));
         List<V036> v036s = v036Service.getV036s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V036"));
 
+        Element flk_p = new Element("FLK_P");
+        Element fname = new Element("FNAME");
+        fname.appendChild("V" + zglv.getFilename() );
+        flk_p.appendChild(fname);
+        Element fname_i = new Element("FNAME_I");
+        fname_i.appendChild(zglv.getFilename());
+        flk_p.appendChild(fname_i);
+
         for (PDPers pacient : persList.getPers()){
 
             for (MPZap zap : pacient.getMpZap()){
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0500_02600)){
-                    if (zap.getPacient().getVpolis() != null){
-                        if (CheckF008(f008s, zap.getPacient().getVpolis()) ){
-                            su.showMessagesEx("Ошибка соотвествия справочника H_0500/02600");
-                        }
+                    if (CheckF008(f008s, zap.getPacient().getVpolis()) ){
+                        Element pr = getPrElement("H_0500/02600", schet,
+                                zap, null, null, zap.getPacient().getVpolis(),
+                                "Ошибка соответствия записи в справочнике F008");
+                        flk_p.appendChild(pr);
+                        su.showMessagesEx("Ошибка соотвествия справочника H_0500/02600");
+                        resultTestExam = ResultTestExam.Failed;
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0500_03000)){
                     if (CheckF002(f002s, zap.getPacient().getSmo())){
+                        Element pr = getPrElement("H_0500/03000", schet,
+                                zap, null, null, zap.getPacient().getSmo(),
+                                "Ошибка соответствия записи в справочнике F002");
+                        flk_p.appendChild(pr);
                         su.showMessagesEx("Ошибка соотвествия справочника H_0500/03000");
+                        resultTestExam = ResultTestExam.Failed;
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0500_03101)){
                     if (zap.getPacient().getEnp().isEmpty() && zap.getPacient().getVpolis().equals("3")){
+                        Element pr = getPrElement("H_0500/03101", schet,
+                                zap, null, null, zap.getPacient().getEnp(),
+                                "Поле ENP не может быть пустым если VPOLIS = 3");
+                        flk_p.appendChild(pr);
                         su.showMessagesEx("Ошибка H_0500/03101");
+                        resultTestExam = ResultTestExam.Failed;
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0500_02801)){
                     if (zap.getPacient().getVpolis().equals("3") && zap.getPacient().getNpolis().isEmpty()){
+                        Element pr = getPrElement("H_0500/02801", schet,
+                                zap, null, null, zap.getPacient().getEnp(),
+                                "Поле NPOLIS не может быть пустым если VPOLIS = 3");
+                        flk_p.appendChild(pr);
                         su.showMessagesEx("Ошиюка H_0500/02801");
+                        resultTestExam = ResultTestExam.Failed;
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0600_03900)){
                     if (CheckV006(v006s, zap.getZsl().getUslok())){
+                        Element pr = getPrElement("H_0600/03900", schet,
+                                zap, null, null, zap.getZsl().getUslok(),
+                                "Ошибка соответствия записи в справочнике V006");
+                        flk_p.appendChild(pr);
                         su.showMessagesEx("Ошибка соотвествия справочника H_0600/03900");
+                        resultTestExam = ResultTestExam.Failed;
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0600_04000)){
                     if (CheckV008(v008s, zap.getZsl().getVidpom())){
+                        Element pr = getPrElement("H_0600/04000", schet,
+                                zap, null, null, zap.getZsl().getVidpom(),
+                                "Ошибка соответствия записи в справочнике V008");
+                        flk_p.appendChild(pr);
                         su.showMessagesEx("Ошибка соотвествия справочника H_0600/04000");
+                        resultTestExam = ResultTestExam.Failed;
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0600_04100)){
                     if (CheckV014(v014s, zap.getZsl().getForpom())){
+                        Element pr = getPrElement("H_0600/04100", schet,
+                                zap, null, null, zap.getZsl().getForpom(),
+                                "Ошибка соответствия записи в справочнике V014");
+                        flk_p.appendChild(pr);
                         su.showMessagesEx("Ошибка соотвествия справочника H_0600/04100");
+                        resultTestExam = ResultTestExam.Failed;
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0600_04200)){
                     if (zap.getZsl().getNprmo().isEmpty()
                             && ((zap.getZsl().getForpom().equals("3")
                             && zap.getZsl().getUslok().equals("1"))||zap.getZsl().getUslok().equals("2"))){
+                        Element pr = getPrElement("H_0600/04200", schet,
+                                zap, null, null, zap.getZsl().getNprmo(),
+                                "NPR_MO не может быть пустым если (USL_OK = 1 или USK_OK = 2) и FOR_POM = 3");
+                        flk_p.appendChild(pr);
                         su.showMessagesEx("Ошибка H_0600/04200");
+                        resultTestExam = ResultTestExam.Failed;
                     } else {
                         if (CheckF003(f003s, zap.getZsl().getNprmo())){
+                            Element pr = getPrElement("H_0600/04200", schet,
+                                    zap, null, null, zap.getZsl().getNprmo(),
+                                    "Ошибка соответствия записи в справочнике F003");
+                            flk_p.appendChild(pr);
                             su.showMessagesEx("Ошибка соотвествия справочника H_0600/04200");
+                            resultTestExam = ResultTestExam.Failed;
                         }
                     }
                 }
@@ -128,28 +180,52 @@ public class ExamMP {
                     if (zap.getZsl().getNprdate().isEmpty()
                             && ((zap.getZsl().getForpom().equals("3")
                             && zap.getZsl().getUslok().equals("1"))||zap.getZsl().getUslok().equals("2"))){
-                        su.showMessagesEx("Ошибка H_0600/04200");
+                        Element pr = getPrElement("H_0600/04300", schet,
+                                zap, null, null, zap.getZsl().getNprdate(),
+                                "NPR_DATE не может быть пустым если (USL_OK = 1 или USK_OK = 2) и FOR_POM = 3");
+                        flk_p.appendChild(pr);
+                        su.showMessagesEx("Ошибка H_0600/04300");
+                        resultTestExam = ResultTestExam.Failed;
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0600_04400)){
                     if (CheckF003(f003s, zap.getZsl().getLpu())){
+                        Element pr = getPrElement("H_0600/04400", schet,
+                                zap, null, null, zap.getZsl().getLpu(),
+                                "Ошибка соответствия записи в справочнике F003");
+                        flk_p.appendChild(pr);
                         su.showMessagesEx("Ошибка соотвествия справочника H_0600/04400");
+                        resultTestExam = ResultTestExam.Failed;
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0600_04900)){
                     if (CheckV009(v009s, zap.getZsl().getRslt())){
+                        Element pr = getPrElement("H_0600/04900", schet,
+                                zap, null, null, zap.getZsl().getRslt(),
+                                "Ошибка соответствия записи в справочнике V009");
+                        flk_p.appendChild(pr);
                         su.showMessagesEx("Ошибка соотвествия справочника H_0600/04900");
+                        resultTestExam = ResultTestExam.Failed;
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0600_05000)){
                     if (CheckV012(v012s, zap.getZsl().getIshod())){
+                        Element pr = getPrElement("H_0600/05000", schet,
+                                zap, null, null, zap.getZsl().getIshod(),
+                                "Ошибка соответствия записи в справочнике V012");
+                        flk_p.appendChild(pr);
                         su.showMessagesEx("Ошибка соотвествия справочника H_0600/05000");
+                        resultTestExam = ResultTestExam.Failed;
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0600_05400)){
-                    //H_0600/05400
                     if (CheckV010(v010s, zap.getZsl().getIdsp())){
+                        Element pr = getPrElement("H_0600/05400", schet,
+                                zap, null, null, zap.getZsl().getIdsp(),
+                                "Ошибка соответствия записи в справочнике V010");
+                        flk_p.appendChild(pr);
                         su.showMessagesEx("Ошибка соотвествия справочника H_0600/05400");
+                        resultTestExam = ResultTestExam.Failed;
                     }
                 }
 
@@ -159,38 +235,73 @@ public class ExamMP {
 
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0700_06300)){
                         if (CheckV002(v002s, sl.getProfil())){
+                            Element pr = getPrElement("H_0700/06300", schet,
+                                    zap, sl, null, sl.getProfil(),
+                                    "Ошибка соответствия записи в справочнике V002");
+                            flk_p.appendChild(pr);
                             su.showMessagesEx("Ошибка соотвествия справочника H_0700/06300");
+                            resultTestExam = ResultTestExam.Failed;
                         }
                     }
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0700_06400)){
                         if (sl.getProfilk().isEmpty()
                                 && (zap.getZsl().getUslok().equals("1") || zap.getZsl().getUslok().equals("2"))){
+                            Element pr = getPrElement("H_0700/06400", schet,
+                                    zap, sl, null, sl.getProfilk(),
+                                    "PROFIL_K не может быть пустым если USL_OK = 1 или USK_OK = 2");
+                            flk_p.appendChild(pr);
                             su.showMessagesEx("Ошибка соотвествия справочника H_0700/06400");
+                            resultTestExam = ResultTestExam.Failed;
                         } else {
                             if (CheckV020(v020s, sl.getProfilk())){
+                                Element pr = getPrElement("H_0700/06300", schet,
+                                        zap, sl, null, sl.getProfilk(),
+                                        "Ошибка соответствия записи в справочнике V020");
+                                flk_p.appendChild(pr);
                                 su.showMessagesEx("Ошибка соотвествия справочника H_0700/06400");
+                                resultTestExam = ResultTestExam.Failed;
                             }
                         }
                     }
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0700_06600)){
                         if (sl.getPcel().isEmpty() && zap.getZsl().getUslok().equals("3")){
+                            Element pr = getPrElement("H_0700/06600", schet,
+                                    zap, sl, null, sl.getPcel(),
+                                    "P_CEL не может быть пустым если USL_OK = 3");
+                            flk_p.appendChild(pr);
                             su.showMessagesEx("Ошибка H_0700/06600");
+                            resultTestExam = ResultTestExam.Failed;
                         } else {
                             if (CheckV025(v025s, sl.getPcel())){
+                                Element pr = getPrElement("H_0700/06600", schet,
+                                        zap, sl, null, sl.getPcel(),
+                                        "Ошибка соответствия записи в справочнике V025");
+                                flk_p.appendChild(pr);
                                 su.showMessagesEx("Ошибка соотвествия справочника H_0700/06600");
+                                resultTestExam = ResultTestExam.Failed;
                             }
                         }
                     }
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0700_06800)){
                         if (sl.getNhistory().isEmpty()
                                 && (zap.getZsl().getUslok().equals("1") || zap.getZsl().getUslok().equals("2"))){
+                            Element pr = getPrElement("H_0700/06800", schet,
+                                    zap, sl, null, sl.getNhistory(),
+                                    "P_CEL не может быть пустым если USL_OK = 1 или USL_OK = 2");
+                            flk_p.appendChild(pr);
                             su.showMessagesEx("Ошибка H_0700/06800");
+                            resultTestExam = ResultTestExam.Failed;
                         }
                     }
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0700_07100)){
                         if (sl.getKd().isEmpty()
                                 && (zap.getZsl().getUslok().equals("1") || zap.getZsl().getUslok().equals("2"))){
+                            Element pr = getPrElement("H_0700/07100", schet,
+                                    zap, sl, null, sl.getKd(),
+                                    "P_CEL не может быть пустым если USL_OK = 1 или USL_OK = 2");
+                            flk_p.appendChild(pr);
                             su.showMessagesEx("Ошибка H_0700/07100");
+                            resultTestExam = ResultTestExam.Failed;
                         }
                     }
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0700_07302)){
@@ -198,7 +309,12 @@ public class ExamMP {
                             if (sl.getDs1().contains("D0" + iDs1) || sl.getDs1().contains("D45")
                                     || sl.getDs1().contains("D46") || sl.getDs1().contains("D47")
                                     || sl.getDs1().contains("C")){
+                                Element pr = getPrElement("H_0700/07302", schet,
+                                        zap, sl, null, sl.getDs1(),
+                                        "Не допускаются следующие значения:1. первый символ кода основного диагноза «С»;2. код основного диагноза входит в диапазон D00-D09 или D45-D47");
+                                flk_p.appendChild(pr);
                                 su.showMessagesEx("Ошибка H_0700/07302");
+                                resultTestExam = ResultTestExam.Failed;
                             };
                         }
                     }
@@ -206,42 +322,86 @@ public class ExamMP {
                         if (sl.getCzab().isEmpty()
                                 && sl.getDs1().contains("Z")
                                 && (sl.getDs1().equals("D11.0") || sl.getDs1().equals("D11.9"))){
-                            su.showMessagesEx("Ошибка H_0700/07600");
+                            Element pr = getPrElement("H_0700/07601", schet,
+                                    zap, sl, null, sl.getDs1(),
+                                    "C_ZAB не может быть пустым, если основной диагноз (DS1) не входит в рубрику Z и не соответствует кодам диагноза U11 и U11.9");
+                            flk_p.appendChild(pr);
+                            su.showMessagesEx("Ошибка H_0700/07601");
+                            resultTestExam = ResultTestExam.Failed;
                         } else {
                             if (CheckV027(v027s, sl.getCzab())){
-                                su.showMessagesEx("Ошибка соотвествия справочника H_0700/07600");
+                                Element pr = getPrElement("H_0700/07601", schet,
+                                        zap, sl, null, sl.getCzab(),
+                                        "Ошибка соответствия записи в справочнике V027");
+                                flk_p.appendChild(pr);
+                                su.showMessagesEx("Ошибка соотвествия справочника H_0700/07601");
+                                resultTestExam = ResultTestExam.Failed;
                             }
                         }
                     }
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0700_07700)){
                         if (sl.getPcel().equals("1.3") && sl.getDn().isEmpty()){
+                            Element pr = getPrElement("H_0700/07700", schet,
+                                    zap, sl, null, sl.getDs1(),
+                                    "P_CEL не может быть пустым, если P_CEL=1.3");
+                            flk_p.appendChild(pr);
                             su.showMessagesEx("Ошибка H_0700/07700");
+                            resultTestExam = ResultTestExam.Failed;
                         }
                     }
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0700_08201)){
                         if (CheckV021(v021s, sl.getPrvs())){
+                            Element pr = getPrElement("H_0700/08201", schet,
+                                    zap, sl, null, sl.getPrvs(),
+                                    "Ошибка соответствия записи в справочнике V021");
+                            flk_p.appendChild(pr);
                             su.showMessagesEx("Ошибка соотвествия справочника H_0700/08201");
+                            resultTestExam = ResultTestExam.Failed;
                         }
                     }
-                    if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0800_09000)
-                            || examParam.equals(ExamParam.H_0800_09300)) {
-                        if (!sl.getKsgkpg().getNksg().isEmpty() && !sl.getKsgkpg().getNkpg().isEmpty()){
+                    if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0800_09300)
+                            || examParam.equals(ExamParam.H_0800_09000)) {
+                        if ((!sl.getKsgkpg().getNksg().isEmpty() && !sl.getKsgkpg().getNkpg().isEmpty())
+                                || (sl.getKsgkpg().getNksg().isEmpty() && sl.getKsgkpg().getNkpg().isEmpty())){
+                            Element pr = getPrElement("H_0800/09300 | H_0800/09000", schet,
+                                    zap, sl, null, sl.getKsgkpg().getNksg(),
+                                    "N_KSG и N_KPG не могут быть одновременно пустыми или заполненными");
+                            flk_p.appendChild(pr);
                             su.showMessagesEx("Ошибка H_0800/09000 или H_0800/09300");
-                        }
-                    }
-                    if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0800_09300)){
-                        if (CheckV026(v026s, sl.getKsgkpg().getNkpg())){
-                            su.showMessagesEx("Ошибка соотвествия справочника H_0800/09300");
-                        }
+                            resultTestExam = ResultTestExam.Failed;
+                        } else if (!sl.getKsgkpg().getNkpg().isEmpty() && CheckV026(v026s, sl.getKsgkpg().getNkpg())) {
+                            Element pr = getPrElement("H_0800/09300", schet,
+                                    zap, sl, null, sl.getKsgkpg().getNkpg(),
+                                    "Ошибка соответствия записи в справочнике V026");
+                            flk_p.appendChild(pr);
+                                su.showMessagesEx("Ошибка соотвествия справочника H_0800/09300");
+                                resultTestExam = ResultTestExam.Failed;
+                            }
+
                     }
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0800_09900)){
                         if (CheckV024(v024s, sl.getKsgkpg().getCrit())){
+                            for (String crit : sl.getKsgkpg().getCrit()){
+                                Element pr = getPrElement("H_0800/09300", schet,
+                                        zap, sl, null, crit,
+                                        "Ошибка соответствия записи в справочнике V024");
+                                flk_p.appendChild(pr);
+                            }
                             su.showMessagesEx("Ошибка соотвествия справочника H_0800/09900");
+                            resultTestExam = ResultTestExam.Failed;
                         }
                     }
+
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0800_10200)){
-                        if (!sl.getKsgkpg().getSlkoef().isEmpty() && sl.getKsgkpg().getItsl().isEmpty()){
+                        if (sl.getKsgkpg().getSlkoef().isEmpty() && !sl.getKsgkpg().getItsl().isEmpty()){
+                            for (Slkoef slkoef : sl.getKsgkpg().getSlkoef()){
+                                    Element pr = getPrElement("H_0800/10200", schet,
+                                            zap, sl, null, slkoef.getIdsl(),
+                                            "SL_KOEF обязательно к заполнению при наличии IT_SL");
+                                    flk_p.appendChild(pr);
+                            }
                             su.showMessagesEx("Ошибка H_0800/10200");
+                            resultTestExam = ResultTestExam.Failed;
                         }
                     }
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1100_13300)){
@@ -251,7 +411,15 @@ public class ExamMP {
                                 && zap.getZsl().getUslok().equals("1")
                                 && CheckDS2(sl.getDs2())
                                 && GetAge(pacient.getDr(), sl.getDate1()) >= 18){
+                            Element pr = getPrElement("H_1100/13300", schet,
+                                    zap, sl, null, sl.getWei(),
+                                    "WEI не может быть пустым, " +
+                                            "если в DS1 указано значение заболевания " +
+                                            "(U07.1 или U07.2) и REAB <> 1 и CRIT <> STT5 и USL_OK = 1 и DS2 <> IN (O00-O99, Z34-Z35) " +
+                                            "и возраст пациента на дату начала лечения больше или равно 18 лет");
+                            flk_p.appendChild(pr);
                             su.showMessagesEx("Ошибка H_1100/13300");
+                            resultTestExam = ResultTestExam.Failed;
                         }
                     }
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1100_13400)){
@@ -261,55 +429,98 @@ public class ExamMP {
                                 && zap.getZsl().getUslok().equals("1")
                                 && CheckDS2(sl.getDs2())
                                 && GetAge(pacient.getDr(), sl.getDate1()) >= 18){
-                            su.showMessagesEx("Ошибка H_1100/13300");
+                            Element pr = getPrElement("H_1100/13400", schet,
+                                    zap, sl, null, "",
+                                    "LEK_PR не может быть пустым, " +
+                                            "если в DS1 указано значение заболевания " +
+                                            "(U07.1 или U07.2) и REAB <> 1 и CRIT <> STT5 и USL_OK = 1 и DS2 <> IN (O00-O99, Z34-Z35) " +
+                                            "и возраст пациента на дату начала лечения больше или равно 18 лет");
+                            flk_p.appendChild(pr);
+                            su.showMessagesEx("Ошибка H_1100/13400");
+                            resultTestExam = ResultTestExam.Failed;
+                        } else {
+                            for (MPLekpr lekpr : sl.getLekpr()) {
+                                if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1100_13600)) {
+                                    for (String crit : sl.getKsgkpg().getCrit()) {
+                                        if (lekpr.getCodesh().isEmpty()
+                                                && (sl.getDs1().equals("V07.1") || sl.getDs1().equals("V07.2"))
+                                                && Integer.parseInt(sl.getReab()) != 0
+                                                && !crit.equals("STT5")
+                                                && zap.getZsl().getUslok().equals("0")
+                                                && DS2CheckInH_1100_13600(sl.getDs2())) {
+                                            Element pr = getPrElement("H_1100/13600", schet,
+                                                    zap, sl, null, lekpr.getCodesh(),
+                                                    "CODE_SH не может быть пустым, если в DS1 " +
+                                                            "указано значение заболевания (U07.1 или U07.2) и REAB <> 1 " +
+                                                            "и CRIT <> STT5 и USL_OK = 1 и DS2 <> IN (O00-O99, Z34-Z35) " +
+                                                            "и возраст пациента на дату начала лечения больше или равно 18 лет.");
+                                            flk_p.appendChild(pr);
+                                            su.showMessagesEx("Ошибка H_1100/13600");
+                                            resultTestExam = ResultTestExam.Failed;
+                                        } else {
+                                            if (CheckV032(v032s, lekpr.getCodesh())) {
+                                                su.showMessagesEx("Ошибка соотвествия справочника H_1100/13600");
+                                                resultTestExam = ResultTestExam.Failed;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
 
                     for (MPUsl usl : sl.getUsl()){
                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1000_10600)){
                             if (CheckF003(f003s, usl.getLpu())){
+                                Element pr = getPrElement("H_1000/10600", schet,
+                                        zap, sl, usl, usl.getLpu(),
+                                        "Ошибка соответствия записи в справочнике F003");
+                                flk_p.appendChild(pr);
                                 su.showMessagesEx("Ошибка соотвествия справочника H_1000/10600");
+                                resultTestExam = ResultTestExam.Failed;
                             }
                         }
                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1000_10900)){
                             if (CheckV002(v002s, usl.getProfil())){
+                                Element pr = getPrElement("H_1000/10900", schet,
+                                        zap, sl, usl, usl.getProfil(),
+                                        "Ошибка соответствия записи в справочнике V002");
+                                flk_p.appendChild(pr);
                                 su.showMessagesEx("Ошибка соотвествия справочника H_1000/10900");
+                                resultTestExam = ResultTestExam.Failed;
                             }
                         }
                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1000_11000)){
                             if (CheckV001(v001s, usl.getVidvme())){
+                                Element pr = getPrElement("H_1000/11000", schet,
+                                        zap, sl, usl, usl.getVidvme(),
+                                        "Ошибка соответствия записи в справочнике V001");
+                                flk_p.appendChild(pr);
                                 su.showMessagesEx("Ошибка соотвествия справочника H_1000/11000");
+                                resultTestExam = ResultTestExam.Failed;
                             }
                         }
                         for (Mrusln mrusln : usl.getMruslns()){
                             if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1000_11904)){
                                 if (CheckV021(v021s, mrusln.getPrvs())){
+                                    Element pr = getPrElement("H_1000/11904", schet,
+                                            zap, sl, usl, mrusln.getPrvs(),
+                                            "Ошибка соответствия записи в справочнике V021");
+                                    flk_p.appendChild(pr);
                                     su.showMessagesEx("Ошибка соотвествия справочника H_1000/11904");
-                                }
-                            }
-                        }
-                        for (MPLekpr lekpr : sl.getLekpr()){
-                            if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1100_13600)){
-                                for (String crit : sl.getKsgkpg().getCrit()){
-                                    if (lekpr.getCodesh().isEmpty()
-                                            && (sl.getDs1().equals("V07.1") || sl.getDs1().equals("V07.2"))
-                                            && Integer.parseInt(sl.getReab()) != 0
-                                            && !crit.equals("STT5")
-                                            && zap.getZsl().getUslok().equals("0")
-                                            && DS2CheckInH_1100_13600(sl.getDs2())){
-                                        su.showMessagesEx("Ошибка H_1100/13600");
-                                    } else {
-                                        if (CheckV032(v032s, lekpr.getCodesh())){
-                                            su.showMessagesEx("Ошибка соотвествия справочника H_1100/13600");
-                                        }
-                                    }
+                                    resultTestExam = ResultTestExam.Failed;
                                 }
                             }
                         }
                         for (MPMeddev meddev : usl.getMeddev()){
                             if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1100_14400)){
                                 if (CheckV036(v036s, meddev)){
+                                    Element pr = getPrElement("H_1100/14400", schet,
+                                            zap, sl, usl, meddev.getCodemeddev(),
+                                            "Ошибка соответствия записи в справочнике V036");
+                                    flk_p.appendChild(pr);
                                     su.showMessagesEx("Ошибка соотвествия справочника H_1100/14400");
+                                    resultTestExam = ResultTestExam.Failed;
                                 }
                             }
                         }
@@ -317,32 +528,134 @@ public class ExamMP {
                 }
                 for (Sank sank : zap.getZsl().getSank()){
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1100_12500)){
-                        if (!sank.getSsum().equals("0") && sank.getSlid().isEmpty()){
+                        if (CheckF006(f006s, sank.getStip())){
+                            Element pr = getPrElement("H_1100/12500", schet,
+                                    zap, null, null, sank.getStip(),
+                                    "Ошибка соответствия записи в справочнике F006");
+                            flk_p.appendChild(pr);
                             su.showMessagesEx("Ошибка H_1100/12500");
+                            resultTestExam = ResultTestExam.Failed;
+                        }
+                    }
+                    if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1100_12600)){
+                        if (!sank.getSsum().equals("0") && sank.getSlid().isEmpty()){
+                            for (String slid : sank.getSlid()){
+                                Element pr = getPrElement("H_1100/12600", schet,
+                                        zap, null, null, slid,
+                                        "SL_ID не может быть пустым если S_SUM=0");
+                                flk_p.appendChild(pr);
+                            }
+                            su.showMessagesEx("Ошибка H_1100/12600");
+                            resultTestExam = ResultTestExam.Failed;
                         }
                     }
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1100_12700)){
                         if (CheckF014(f014s, sank.getSosn())){
+                            Element pr = getPrElement("H_1100/12700", schet,
+                                    zap, null, null, sank.getSosn(),
+                                    "Ошибка соответствия записи в справочнике F014");
+                            flk_p.appendChild(pr);
                             su.showMessagesEx("Ошибка H_1100/12700");
+                            resultTestExam = ResultTestExam.Failed;
                         }
                     }
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1100_13000)){
                         if ((Integer.parseInt(sank.getStip()) >= 30) && sank.getCodeexp().isEmpty()){
+                            Element pr = getPrElement("H_1100/12600", schet,
+                                    zap, null, null, "",
+                                    "CODE_EXP не может быть пустым если S_TIP больше или равно 30");
+                            flk_p.appendChild(pr);
                             su.showMessagesEx("Ошибка H_1100/13000");
+                            resultTestExam = ResultTestExam.Failed;
                         } else {
                             if (CheckF004(f004s, sank.getCodeexp())){
+                                for (String codeexp : sank.getCodeexp()){
+                                    Element pr = getPrElement("H_1100/13000", schet,
+                                            zap, null, null, codeexp,
+                                            "Ошибка соответствия записи в справочнике F004");
+                                    flk_p.appendChild(pr);
+                                }
                                 su.showMessagesEx("Ошибка H_1100/13000");
+                                resultTestExam = ResultTestExam.Failed;
                             }
                         }
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0600_05500)){
                     if (Double.parseDouble(zap.getZsl().getSumv()) != sumv){
-                        su.showMessagesEx("Ошибка //H_0600/05500");
+                        Element pr = getPrElement("H_0600/05500", schet,
+                                zap, null, null, zap.getZsl().getSumv(),
+                                "SUM_V не равно сумме значений SUM_M вложенных элементов SL");
+                        flk_p.appendChild(pr);
+                        su.showMessagesEx("Ошибка H_0600/05500");
+                        resultTestExam = ResultTestExam.Failed;
                     }
                 }
             }
         }
+        Document doc = new Document(flk_p);
+        PrintWriter out = new PrintWriter("D:\\Protocol.xml");
+        out.println(doc.toXML());
+        out.close();
+        return resultTestExam;
+    }
+
+    private boolean CheckF006(List<F006> f006s, String stip) {
+        for (F006 f006  : f006s){
+            if (f006.getIdvid().equals(stip)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private Element getPrElement(String oshib, Schet schet, MPZap zap, MPSl sl,
+                                 MPUsl usl, String znPol, String comment) {
+        Element pr = new Element("PR");
+        Element elOshib = new Element("OSHIB");
+        elOshib.appendChild(oshib);
+        pr.appendChild(elOshib);
+        Element elNzap = new Element("N_ZAP");
+        elNzap.appendChild(zap.getNzap());
+        pr.appendChild(elNzap);
+        Element elIdcase = new Element("IDCASE");
+        if (sl == null){
+            elIdcase.appendChild("");
+        } else {
+            elIdcase.appendChild(zap.getZsl().getIdcase());
+        }
+        pr.appendChild(elIdcase);
+        Element elIdserv = new Element("IDSERV");
+        if (usl == null) {
+            elIdserv.appendChild("");
+        } else {
+            elIdserv.appendChild(usl.getIdserv());
+        }
+        pr.appendChild(elIdserv);
+        Element elNhistory = new Element("NHISTORY");
+        if (sl == null) {
+            elNhistory.appendChild("");
+        } else {
+            elNhistory.appendChild(sl.getNhistory());
+        }
+        pr.appendChild(elNhistory);
+
+//        Element elTyp = new Element("TYP");
+//        elTyp.appendChild("Требует уточнения");
+//        pr.appendChild(elTyp);
+        Element elZnpol = new Element("ZN_POL");
+        elZnpol.appendChild(znPol);
+        pr.appendChild(elZnpol);
+        Element elNschet = new Element("NSCHET");
+        elNschet.appendChild(schet.getNschet());
+        pr.appendChild(elNschet);
+        Element elIdpac = new Element("ID_PAC");
+        elIdpac.appendChild(zap.getPacient().getIdpac());
+        pr.appendChild(elIdpac);
+        Element elComment = new Element("COMMENT");
+        elComment.appendChild(comment);
+        pr.appendChild(elComment);
+        return pr;
     }
 
     private int GetAge(String dr, String date1) {

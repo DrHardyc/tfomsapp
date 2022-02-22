@@ -35,4 +35,13 @@ public class F014Service {
         }
         return listF014;
     }
+
+    public boolean CheckF014(List<F014> f014s, String sosn) {
+        for (F014 f014 : f014s){
+            if (f014.getOsn().equals(sosn)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

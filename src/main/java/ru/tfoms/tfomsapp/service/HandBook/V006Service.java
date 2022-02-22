@@ -29,4 +29,13 @@ public class V006Service {
         }
         return listV006;
     }
+
+    public boolean CheckV006(List<V006> v006s, String par) {
+        for (V006 v006 : v006s){
+            if (v006.getIdump().equals(par)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

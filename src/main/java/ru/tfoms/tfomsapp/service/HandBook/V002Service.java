@@ -29,4 +29,13 @@ public class V002Service {
         }
         return listV002;
     }
+
+    public boolean CheckV002(List<V002> v002s, String par) {
+        for (V002 v002 : v002s){
+            if (v002.getIdpr().equals(par)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

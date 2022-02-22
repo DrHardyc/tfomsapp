@@ -28,4 +28,13 @@ public class F006Service {
         }
         return listF006;
     }
+
+    public boolean CheckF006(List<F006> f006s, String par) {
+        for (F006 f006  : f006s){
+            if (f006.getIdvid().equals(par)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

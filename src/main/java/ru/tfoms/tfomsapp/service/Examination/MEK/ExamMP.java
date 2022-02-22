@@ -76,30 +76,51 @@ public class ExamMP {
 
         Element flk_p = new Element("FLK_P");
         Element fname = new Element("FNAME");
-        fname.appendChild("V" + zglv.getFilename() );
+        fname.appendChild("V" + zglv.getFilename());
         flk_p.appendChild(fname);
         Element fname_i = new Element("FNAME_I");
         fname_i.appendChild(zglv.getFilename());
         flk_p.appendChild(fname_i);
 
+        if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0300_00900)){
+            if (f003Service.CheckF003(f003s, schet.getCodemo())){
+                Element pr = getPrElement("H_0300/00900", schet,
+                        null, null, null, schet.getCodemo(),
+                        "Ошибка соответствия записи c справочником F003");
+                flk_p.appendChild(pr);
+                su.showMessagesEx("Ошибка соответствия записи в справочнике H_0300/00900");
+                resultTestExam = ResultTestExam.Failed;
+            }
+        }
+        if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0300_01400)){
+            if (f002Service.CheckF002(f002s, schet.getPlat()) && !schet.getPlat().isEmpty()){
+                Element pr = getPrElement("H_0300/01400", schet,
+                        null, null, null, schet.getPlat(),
+                        "Ошибка соответствия записи c справочником F002");
+                flk_p.appendChild(pr);
+                su.showMessagesEx("Ошибка соответствия записи в справочнике H_0300/01400");
+                resultTestExam = ResultTestExam.Failed;
+            }
+        }
+
         for (PDPers pacient : persList.getPers()){
 
             for (MPZap zap : pacient.getMpZap()){
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0500_02600)){
-                    if (CheckF008(f008s, zap.getPacient().getVpolis()) ){
+                    if (f008Service.CheckF008(f008s, zap.getPacient().getVpolis()) ){
                         Element pr = getPrElement("H_0500/02600", schet,
                                 zap, null, null, zap.getPacient().getVpolis(),
-                                "Ошибка соответствия записи в справочнике F008");
+                                "Ошибка соответствия записи c справочником F008");
                         flk_p.appendChild(pr);
                         su.showMessagesEx("Ошибка соотвествия справочника H_0500/02600");
                         resultTestExam = ResultTestExam.Failed;
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0500_03000)){
-                    if (CheckF002(f002s, zap.getPacient().getSmo())){
+                    if (f002Service.CheckF002(f002s, zap.getPacient().getSmo())){
                         Element pr = getPrElement("H_0500/03000", schet,
                                 zap, null, null, zap.getPacient().getSmo(),
-                                "Ошибка соответствия записи в справочнике F002");
+                                "Ошибка соответствия записи c справочником F002");
                         flk_p.appendChild(pr);
                         su.showMessagesEx("Ошибка соотвествия справочника H_0500/03000");
                         resultTestExam = ResultTestExam.Failed;
@@ -126,30 +147,30 @@ public class ExamMP {
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0600_03900)){
-                    if (CheckV006(v006s, zap.getZsl().getUslok())){
+                    if (v006Service.CheckV006(v006s, zap.getZsl().getUslok())){
                         Element pr = getPrElement("H_0600/03900", schet,
                                 zap, null, null, zap.getZsl().getUslok(),
-                                "Ошибка соответствия записи в справочнике V006");
+                                "Ошибка соответствия записи c справочником V006");
                         flk_p.appendChild(pr);
                         su.showMessagesEx("Ошибка соотвествия справочника H_0600/03900");
                         resultTestExam = ResultTestExam.Failed;
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0600_04000)){
-                    if (CheckV008(v008s, zap.getZsl().getVidpom())){
+                    if (v008Service.CheckV008(v008s, zap.getZsl().getVidpom())){
                         Element pr = getPrElement("H_0600/04000", schet,
                                 zap, null, null, zap.getZsl().getVidpom(),
-                                "Ошибка соответствия записи в справочнике V008");
+                                "Ошибка соответствия записи c справочником V008");
                         flk_p.appendChild(pr);
                         su.showMessagesEx("Ошибка соотвествия справочника H_0600/04000");
                         resultTestExam = ResultTestExam.Failed;
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0600_04100)){
-                    if (CheckV014(v014s, zap.getZsl().getForpom())){
+                    if (v014Service.CheckV014(v014s, zap.getZsl().getForpom())){
                         Element pr = getPrElement("H_0600/04100", schet,
                                 zap, null, null, zap.getZsl().getForpom(),
-                                "Ошибка соответствия записи в справочнике V014");
+                                "Ошибка соответствия записи c справочником V014");
                         flk_p.appendChild(pr);
                         su.showMessagesEx("Ошибка соотвествия справочника H_0600/04100");
                         resultTestExam = ResultTestExam.Failed;
@@ -166,10 +187,10 @@ public class ExamMP {
                         su.showMessagesEx("Ошибка H_0600/04200");
                         resultTestExam = ResultTestExam.Failed;
                     } else {
-                        if (CheckF003(f003s, zap.getZsl().getNprmo())){
+                        if (f003Service.CheckF003(f003s, zap.getZsl().getNprmo())){
                             Element pr = getPrElement("H_0600/04200", schet,
                                     zap, null, null, zap.getZsl().getNprmo(),
-                                    "Ошибка соответствия записи в справочнике F003");
+                                    "Ошибка соответствия записи c справочником F003");
                             flk_p.appendChild(pr);
                             su.showMessagesEx("Ошибка соотвествия справочника H_0600/04200");
                             resultTestExam = ResultTestExam.Failed;
@@ -189,40 +210,40 @@ public class ExamMP {
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0600_04400)){
-                    if (CheckF003(f003s, zap.getZsl().getLpu())){
+                    if (f003Service.CheckF003(f003s, zap.getZsl().getLpu())){
                         Element pr = getPrElement("H_0600/04400", schet,
                                 zap, null, null, zap.getZsl().getLpu(),
-                                "Ошибка соответствия записи в справочнике F003");
+                                "Ошибка соответствия записи c справочником F003");
                         flk_p.appendChild(pr);
                         su.showMessagesEx("Ошибка соотвествия справочника H_0600/04400");
                         resultTestExam = ResultTestExam.Failed;
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0600_04900)){
-                    if (CheckV009(v009s, zap.getZsl().getRslt())){
+                    if (v009Service.CheckV009(v009s, zap.getZsl().getRslt())){
                         Element pr = getPrElement("H_0600/04900", schet,
                                 zap, null, null, zap.getZsl().getRslt(),
-                                "Ошибка соответствия записи в справочнике V009");
+                                "Ошибка соответствия записи c справочником V009");
                         flk_p.appendChild(pr);
                         su.showMessagesEx("Ошибка соотвествия справочника H_0600/04900");
                         resultTestExam = ResultTestExam.Failed;
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0600_05000)){
-                    if (CheckV012(v012s, zap.getZsl().getIshod())){
+                    if (v012Service.CheckV012(v012s, zap.getZsl().getIshod())){
                         Element pr = getPrElement("H_0600/05000", schet,
                                 zap, null, null, zap.getZsl().getIshod(),
-                                "Ошибка соответствия записи в справочнике V012");
+                                "Ошибка соответствия записи c справочником V012");
                         flk_p.appendChild(pr);
                         su.showMessagesEx("Ошибка соотвествия справочника H_0600/05000");
                         resultTestExam = ResultTestExam.Failed;
                     }
                 }
                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0600_05400)){
-                    if (CheckV010(v010s, zap.getZsl().getIdsp())){
+                    if (v010Service.CheckV010(v010s, zap.getZsl().getIdsp())){
                         Element pr = getPrElement("H_0600/05400", schet,
                                 zap, null, null, zap.getZsl().getIdsp(),
-                                "Ошибка соответствия записи в справочнике V010");
+                                "Ошибка соответствия записи c справочником V010");
                         flk_p.appendChild(pr);
                         su.showMessagesEx("Ошибка соотвествия справочника H_0600/05400");
                         resultTestExam = ResultTestExam.Failed;
@@ -234,10 +255,10 @@ public class ExamMP {
                     sumv =+ Double.parseDouble(sl.getSumm());
 
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0700_06300)){
-                        if (CheckV002(v002s, sl.getProfil())){
+                        if (v002Service.CheckV002(v002s, sl.getProfil())){
                             Element pr = getPrElement("H_0700/06300", schet,
                                     zap, sl, null, sl.getProfil(),
-                                    "Ошибка соответствия записи в справочнике V002");
+                                    "Ошибка соответствия записи c справочником V002");
                             flk_p.appendChild(pr);
                             su.showMessagesEx("Ошибка соотвествия справочника H_0700/06300");
                             resultTestExam = ResultTestExam.Failed;
@@ -253,10 +274,10 @@ public class ExamMP {
                             su.showMessagesEx("Ошибка соотвествия справочника H_0700/06400");
                             resultTestExam = ResultTestExam.Failed;
                         } else {
-                            if (CheckV020(v020s, sl.getProfilk())){
+                            if (v020Service.CheckV020(v020s, sl.getProfilk())){
                                 Element pr = getPrElement("H_0700/06300", schet,
                                         zap, sl, null, sl.getProfilk(),
-                                        "Ошибка соответствия записи в справочнике V020");
+                                        "Ошибка соответствия записи c справочником V020");
                                 flk_p.appendChild(pr);
                                 su.showMessagesEx("Ошибка соотвествия справочника H_0700/06400");
                                 resultTestExam = ResultTestExam.Failed;
@@ -272,10 +293,10 @@ public class ExamMP {
                             su.showMessagesEx("Ошибка H_0700/06600");
                             resultTestExam = ResultTestExam.Failed;
                         } else {
-                            if (CheckV025(v025s, sl.getPcel())){
+                            if (v025Service.CheckV025(v025s, sl.getPcel())){
                                 Element pr = getPrElement("H_0700/06600", schet,
                                         zap, sl, null, sl.getPcel(),
-                                        "Ошибка соответствия записи в справочнике V025");
+                                        "Ошибка соответствия записи c справочником V025");
                                 flk_p.appendChild(pr);
                                 su.showMessagesEx("Ошибка соотвествия справочника H_0700/06600");
                                 resultTestExam = ResultTestExam.Failed;
@@ -329,10 +350,10 @@ public class ExamMP {
                             su.showMessagesEx("Ошибка H_0700/07601");
                             resultTestExam = ResultTestExam.Failed;
                         } else {
-                            if (CheckV027(v027s, sl.getCzab())){
+                            if (v027Service.CheckV027(v027s, sl.getCzab())){
                                 Element pr = getPrElement("H_0700/07601", schet,
                                         zap, sl, null, sl.getCzab(),
-                                        "Ошибка соответствия записи в справочнике V027");
+                                        "Ошибка соответствия записи c справочником V027");
                                 flk_p.appendChild(pr);
                                 su.showMessagesEx("Ошибка соотвествия справочника H_0700/07601");
                                 resultTestExam = ResultTestExam.Failed;
@@ -350,10 +371,10 @@ public class ExamMP {
                         }
                     }
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0700_08201)){
-                        if (CheckV021(v021s, sl.getPrvs())){
+                        if (v021Service.CheckV021(v021s, sl.getPrvs())){
                             Element pr = getPrElement("H_0700/08201", schet,
                                     zap, sl, null, sl.getPrvs(),
-                                    "Ошибка соответствия записи в справочнике V021");
+                                    "Ошибка соответствия записи c справочником V021");
                             flk_p.appendChild(pr);
                             su.showMessagesEx("Ошибка соотвествия справочника H_0700/08201");
                             resultTestExam = ResultTestExam.Failed;
@@ -369,10 +390,11 @@ public class ExamMP {
                             flk_p.appendChild(pr);
                             su.showMessagesEx("Ошибка H_0800/09000 или H_0800/09300");
                             resultTestExam = ResultTestExam.Failed;
-                        } else if (!sl.getKsgkpg().getNkpg().isEmpty() && CheckV026(v026s, sl.getKsgkpg().getNkpg())) {
+                        } else if (!sl.getKsgkpg().getNkpg().isEmpty()
+                                && v026Service.CheckV026(v026s, sl.getKsgkpg().getNkpg())) {
                             Element pr = getPrElement("H_0800/09300", schet,
                                     zap, sl, null, sl.getKsgkpg().getNkpg(),
-                                    "Ошибка соответствия записи в справочнике V026");
+                                    "Ошибка соответствия записи c справочником V026");
                             flk_p.appendChild(pr);
                                 su.showMessagesEx("Ошибка соотвествия справочника H_0800/09300");
                                 resultTestExam = ResultTestExam.Failed;
@@ -380,11 +402,11 @@ public class ExamMP {
 
                     }
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_0800_09900)){
-                        if (CheckV024(v024s, sl.getKsgkpg().getCrit())){
+                        if (v024Service.CheckV024(v024s, sl.getKsgkpg().getCrit())){
                             for (String crit : sl.getKsgkpg().getCrit()){
                                 Element pr = getPrElement("H_0800/09300", schet,
                                         zap, sl, null, crit,
-                                        "Ошибка соответствия записи в справочнике V024");
+                                        "Ошибка соответствия записи c справочником V024");
                                 flk_p.appendChild(pr);
                             }
                             su.showMessagesEx("Ошибка соотвествия справочника H_0800/09900");
@@ -422,7 +444,8 @@ public class ExamMP {
                             resultTestExam = ResultTestExam.Failed;
                         }
                     }
-                    if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1100_13400)){
+                    if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1100_13400)
+                            || examParam.equals(ExamParam.H_1100_13600)){
                         if ((sl.getLekpr() == null || sl.getLekpr().isEmpty()) && (sl.getDs1().equals("U07.1") || sl.getDs1().equals("U07.2"))
                                 && Integer.parseInt(sl.getReab()) != 1
                                 && CheckCrit(sl.getKsgkpg().getCrit(), "STT5")
@@ -440,28 +463,26 @@ public class ExamMP {
                             resultTestExam = ResultTestExam.Failed;
                         } else {
                             for (MPLekpr lekpr : sl.getLekpr()) {
-                                if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1100_13600)) {
-                                    for (String crit : sl.getKsgkpg().getCrit()) {
-                                        if (lekpr.getCodesh().isEmpty()
-                                                && (sl.getDs1().equals("V07.1") || sl.getDs1().equals("V07.2"))
-                                                && Integer.parseInt(sl.getReab()) != 0
-                                                && !crit.equals("STT5")
-                                                && zap.getZsl().getUslok().equals("0")
-                                                && DS2CheckInH_1100_13600(sl.getDs2())) {
-                                            Element pr = getPrElement("H_1100/13600", schet,
-                                                    zap, sl, null, lekpr.getCodesh(),
-                                                    "CODE_SH не может быть пустым, если в DS1 " +
-                                                            "указано значение заболевания (U07.1 или U07.2) и REAB <> 1 " +
-                                                            "и CRIT <> STT5 и USL_OK = 1 и DS2 <> IN (O00-O99, Z34-Z35) " +
-                                                            "и возраст пациента на дату начала лечения больше или равно 18 лет.");
-                                            flk_p.appendChild(pr);
-                                            su.showMessagesEx("Ошибка H_1100/13600");
+                                for (String crit : sl.getKsgkpg().getCrit()) {
+                                    if (lekpr.getCodesh().isEmpty()
+                                            && (sl.getDs1().equals("V07.1") || sl.getDs1().equals("V07.2"))
+                                            && Integer.parseInt(sl.getReab()) != 0
+                                            && !crit.equals("STT5")
+                                            && zap.getZsl().getUslok().equals("0")
+                                            && DS2CheckInH_1100_13600(sl.getDs2())) {
+                                        Element pr = getPrElement("H_1100/13600", schet,
+                                                zap, sl, null, lekpr.getCodesh(),
+                                                "CODE_SH не может быть пустым, если в DS1 " +
+                                                        "указано значение заболевания (U07.1 или U07.2) и REAB <> 1 " +
+                                                        "и CRIT <> STT5 и USL_OK = 1 и DS2 <> IN (O00-O99, Z34-Z35) " +
+                                                        "и возраст пациента на дату начала лечения больше или равно 18 лет.");
+                                        flk_p.appendChild(pr);
+                                        su.showMessagesEx("Ошибка H_1100/13600");
+                                        resultTestExam = ResultTestExam.Failed;
+                                    } else {
+                                        if (v032Service.CheckV032(v032s, lekpr.getCodesh())) {
+                                            su.showMessagesEx("Ошибка соотвествия справочника H_1100/13600");
                                             resultTestExam = ResultTestExam.Failed;
-                                        } else {
-                                            if (CheckV032(v032s, lekpr.getCodesh())) {
-                                                su.showMessagesEx("Ошибка соотвествия справочника H_1100/13600");
-                                                resultTestExam = ResultTestExam.Failed;
-                                            }
                                         }
                                     }
                                 }
@@ -471,30 +492,30 @@ public class ExamMP {
 
                     for (MPUsl usl : sl.getUsl()){
                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1000_10600)){
-                            if (CheckF003(f003s, usl.getLpu())){
+                            if (f003Service.CheckF003(f003s, usl.getLpu())){
                                 Element pr = getPrElement("H_1000/10600", schet,
                                         zap, sl, usl, usl.getLpu(),
-                                        "Ошибка соответствия записи в справочнике F003");
+                                        "Ошибка соответствия записи c справочником F003");
                                 flk_p.appendChild(pr);
                                 su.showMessagesEx("Ошибка соотвествия справочника H_1000/10600");
                                 resultTestExam = ResultTestExam.Failed;
                             }
                         }
                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1000_10900)){
-                            if (CheckV002(v002s, usl.getProfil())){
+                            if (v002Service.CheckV002(v002s, usl.getProfil())){
                                 Element pr = getPrElement("H_1000/10900", schet,
                                         zap, sl, usl, usl.getProfil(),
-                                        "Ошибка соответствия записи в справочнике V002");
+                                        "Ошибка соответствия записи c справочником V002");
                                 flk_p.appendChild(pr);
                                 su.showMessagesEx("Ошибка соотвествия справочника H_1000/10900");
                                 resultTestExam = ResultTestExam.Failed;
                             }
                         }
                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1000_11000)){
-                            if (CheckV001(v001s, usl.getVidvme())){
+                            if (v001Service.CheckV001(v001s, usl.getVidvme())){
                                 Element pr = getPrElement("H_1000/11000", schet,
                                         zap, sl, usl, usl.getVidvme(),
-                                        "Ошибка соответствия записи в справочнике V001");
+                                        "Ошибка соответствия записи c справочником V001");
                                 flk_p.appendChild(pr);
                                 su.showMessagesEx("Ошибка соотвествия справочника H_1000/11000");
                                 resultTestExam = ResultTestExam.Failed;
@@ -502,10 +523,10 @@ public class ExamMP {
                         }
                         for (Mrusln mrusln : usl.getMruslns()){
                             if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1000_11904)){
-                                if (CheckV021(v021s, mrusln.getPrvs())){
+                                if (v021Service.CheckV021(v021s, mrusln.getPrvs())){
                                     Element pr = getPrElement("H_1000/11904", schet,
                                             zap, sl, usl, mrusln.getPrvs(),
-                                            "Ошибка соответствия записи в справочнике V021");
+                                            "Ошибка соответствия записи c справочником V021");
                                     flk_p.appendChild(pr);
                                     su.showMessagesEx("Ошибка соотвествия справочника H_1000/11904");
                                     resultTestExam = ResultTestExam.Failed;
@@ -514,10 +535,10 @@ public class ExamMP {
                         }
                         for (MPMeddev meddev : usl.getMeddev()){
                             if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1100_14400)){
-                                if (CheckV036(v036s, meddev)){
+                                if (v036Service.CheckV036(v036s, meddev)){
                                     Element pr = getPrElement("H_1100/14400", schet,
                                             zap, sl, usl, meddev.getCodemeddev(),
-                                            "Ошибка соответствия записи в справочнике V036");
+                                            "Ошибка соответствия записи c справочником V036");
                                     flk_p.appendChild(pr);
                                     su.showMessagesEx("Ошибка соотвествия справочника H_1100/14400");
                                     resultTestExam = ResultTestExam.Failed;
@@ -528,10 +549,10 @@ public class ExamMP {
                 }
                 for (Sank sank : zap.getZsl().getSank()){
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1100_12500)){
-                        if (CheckF006(f006s, sank.getStip())){
+                        if (f006Service.CheckF006(f006s, sank.getStip())){
                             Element pr = getPrElement("H_1100/12500", schet,
                                     zap, null, null, sank.getStip(),
-                                    "Ошибка соответствия записи в справочнике F006");
+                                    "Ошибка соответствия записи c справочником F006");
                             flk_p.appendChild(pr);
                             su.showMessagesEx("Ошибка H_1100/12500");
                             resultTestExam = ResultTestExam.Failed;
@@ -550,10 +571,10 @@ public class ExamMP {
                         }
                     }
                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.H_1100_12700)){
-                        if (CheckF014(f014s, sank.getSosn())){
+                        if (f014Service.CheckF014(f014s, sank.getSosn())){
                             Element pr = getPrElement("H_1100/12700", schet,
                                     zap, null, null, sank.getSosn(),
-                                    "Ошибка соответствия записи в справочнике F014");
+                                    "Ошибка соответствия записи c справочником F014");
                             flk_p.appendChild(pr);
                             su.showMessagesEx("Ошибка H_1100/12700");
                             resultTestExam = ResultTestExam.Failed;
@@ -568,11 +589,11 @@ public class ExamMP {
                             su.showMessagesEx("Ошибка H_1100/13000");
                             resultTestExam = ResultTestExam.Failed;
                         } else {
-                            if (CheckF004(f004s, sank.getCodeexp())){
+                            if (f004Service.CheckF004(f004s, sank.getCodeexp())){
                                 for (String codeexp : sank.getCodeexp()){
                                     Element pr = getPrElement("H_1100/13000", schet,
                                             zap, null, null, codeexp,
-                                            "Ошибка соответствия записи в справочнике F004");
+                                            "Ошибка соответствия записи c справочником F004");
                                     flk_p.appendChild(pr);
                                 }
                                 su.showMessagesEx("Ошибка H_1100/13000");
@@ -594,19 +615,10 @@ public class ExamMP {
             }
         }
         Document doc = new Document(flk_p);
-        PrintWriter out = new PrintWriter("D:\\Protocol.xml");
+        PrintWriter out = new PrintWriter("D:\\V" + zglv.getFilename() + ".xml");
         out.println(doc.toXML());
         out.close();
         return resultTestExam;
-    }
-
-    private boolean CheckF006(List<F006> f006s, String stip) {
-        for (F006 f006  : f006s){
-            if (f006.getIdvid().equals(stip)){
-                return false;
-            }
-        }
-        return true;
     }
 
     private Element getPrElement(String oshib, Schet schet, MPZap zap, MPSl sl,
@@ -616,7 +628,11 @@ public class ExamMP {
         elOshib.appendChild(oshib);
         pr.appendChild(elOshib);
         Element elNzap = new Element("N_ZAP");
-        elNzap.appendChild(zap.getNzap());
+        if (zap == null){
+            elNzap.appendChild("");
+        } else {
+            elNzap.appendChild(zap.getNzap());
+        }
         pr.appendChild(elNzap);
         Element elIdcase = new Element("IDCASE");
         if (sl == null){
@@ -694,24 +710,6 @@ public class ExamMP {
         return true;
     }
 
-    private boolean CheckV036(List<V036> v036s, MPMeddev meddev) {
-        for (V036 v036 : v036s){
-            if (v036.getS_code().equals(meddev.getCodemeddev())){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean CheckV032(List<V032> v032s, String codesh) {
-        for (V032 v032 : v032s){
-                if (v032.getSchedruggrcd().equals(codesh)){
-                    return false;
-                }
-        }
-        return true;
-    }
-
     private boolean DS2CheckInH_1100_13600(List<String> ds2s) {
         for (String ds2 : ds2s){
             for (int iDs2 = 0; iDs2 < 100; iDs2++){
@@ -725,185 +723,6 @@ public class ExamMP {
         }
         return true;
     }
-
-    private boolean CheckF004(List<F004> f004s, List<String> codeexps) {
-        for (F004 f004 : f004s){
-            for (String codeexp : codeexps){
-                if (f004.getN_expert().equals(codeexp)){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    private boolean CheckF014(List<F014> f014s, String sosn) {
-        for (F014 f014 : f014s){
-            if (f014.getOsn().equals(sosn)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean CheckV001(List<V001> v001s, String vidvme) {
-        for (V001 v001 : v001s){
-            if (v001.getS_code().equals(vidvme)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean CheckV024(List<V024> v024s, List<String> crits) {
-        for (V024 v024 : v024s){
-            for (String crit : crits){
-                if (v024.getIddkk().equals(crit)){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    private boolean CheckV026(List<V026> v026s, String nkpg) {
-        for (V026 v026 : v026s){
-            if (v026.getK_kpg().equals(nkpg)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean CheckV021(List<V021> v021s, String prvs) {
-        for (V021 v021 : v021s){
-            if (v021.getIdpost_mz().equals(prvs)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean CheckV027(List<V027> v027s, String czab) {
-        for (V027 v027 : v027s){
-            if (v027.getIdcz().equals(czab)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean CheckV025(List<V025> v025s, String pcel) {
-        for (V025 v025 : v025s){
-            if (v025.getIdpc().equals(pcel)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean CheckV020(List<V020> v020s, String profilk) {
-        for (V020 v020 : v020s){
-            if (v020.getIdk_pr().equals(profilk)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean CheckV002(List<V002> v002s, String profil) {
-        for (V002 v002 : v002s){
-            if (v002.getIdpr().equals(profil)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean CheckV010(List<V010> v010s, String idsp) {
-        for (V010 v010 : v010s){
-            if (v010.getIdsp().equals(idsp)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean CheckV012(List<V012> v012s, String ishod) {
-        for (V012 v012 : v012s){
-            if (v012.getIdiz().equals(ishod)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean CheckV009(List<V009> v009s, String rslt) {
-        for (V009 v009 : v009s){
-            if (v009.getIdrmp().equals(rslt)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean CheckF003(List<F003> f003s, String nprmo) {
-        for (F003 f003 : f003s){
-            if (f003.getMcod().equals(nprmo)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean CheckV014(List<V014> v014s, String forpom) {
-        for (V014 v014 : v014s){
-            if (v014.getIdfrmmp().equals(forpom)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean CheckV008(List<V008> v008s, String vidpom) {
-        for (V008 v008 : v008s){
-            if (v008.getIdvmp().equals(vidpom)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean CheckV006(List<V006> v006s, String uslok) {
-        for (V006 v006 : v006s){
-            if (v006.getIdump().equals(uslok)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean CheckF008(List<F008> f008s, String strSearch){
-        for (F008 f008 : f008s){
-            if (strSearch.isEmpty()){
-                return true;
-            }
-            if (f008.getIddoc().equals(strSearch)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean CheckF002(List<F002> f002s, String strSearch){
-        for (F002 f002 : f002s){
-            if (f002.getSmocod().equals(strSearch)){
-                return false;
-            }
-        }
-        return true;
-    }
-
 
     private BufferedReader getHBBufferedReader(String strURL) throws IOException {
         URL url = null;

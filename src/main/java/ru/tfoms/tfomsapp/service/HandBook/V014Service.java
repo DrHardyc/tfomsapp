@@ -29,4 +29,13 @@ public class V014Service {
         }
         return listV014;
     }
+
+    public boolean CheckV014(List<V014> v014s, String par) {
+        for (V014 v014 : v014s){
+            if (v014.getIdfrmmp().equals(par)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

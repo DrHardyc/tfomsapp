@@ -29,4 +29,13 @@ public class V001Service {
         }
         return listV001;
     }
+
+    public boolean CheckV001(List<V001> v001s, String par) {
+        for (V001 v001 : v001s){
+            if (v001.getS_code().equals(par)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

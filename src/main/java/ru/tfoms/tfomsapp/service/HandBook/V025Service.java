@@ -29,4 +29,13 @@ public class V025Service {
         }
         return listV025;
     }
+
+    public boolean CheckV025(List<V025> v025s, String par) {
+        for (V025 v025 : v025s){
+            if (v025.getIdpc().equals(par)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

@@ -50,4 +50,13 @@ public class F003Service {
         }
         return listF003;
     }
+
+    public boolean CheckF003(List<F003> f003s, String par) {
+        for (F003 f003 : f003s){
+            if (f003.getMcod().equals(par)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

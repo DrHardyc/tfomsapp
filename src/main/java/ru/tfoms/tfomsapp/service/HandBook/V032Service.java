@@ -29,4 +29,13 @@ public class V032Service {
         }
         return listV032;
     }
+
+    public boolean CheckV032(List<V032> v032s, String par) {
+        for (V032 v032 : v032s){
+            if (v032.getSchedruggrcd().equals(par)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

@@ -43,4 +43,13 @@ public class F002Service {
         }
         return listF002;
     }
+
+    public boolean CheckF002(List<F002> f002s, String par){
+        for (F002 f002 : f002s){
+            if (f002.getSmocod().equals(par)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

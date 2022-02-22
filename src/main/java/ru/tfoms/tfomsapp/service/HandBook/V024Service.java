@@ -1,4 +1,4 @@
-package ru.tfoms.tfomsapp.service.Examination.MEK;
+package ru.tfoms.tfomsapp.service.HandBook;
 
 import org.springframework.stereotype.Service;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
@@ -29,5 +29,16 @@ public class V024Service {
             listV024.add(v024);
         }
         return listV024;
+    }
+
+    public boolean CheckV024(List<V024> v024s, List<String> crits) {
+        for (V024 v024 : v024s){
+            for (String crit : crits){
+                if (v024.getIddkk().equals(crit)){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

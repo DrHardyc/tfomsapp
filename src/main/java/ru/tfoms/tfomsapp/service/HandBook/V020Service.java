@@ -29,4 +29,13 @@ public class V020Service {
         }
         return listV020;
     }
+
+    public boolean CheckV020(List<V020> v020s, String par) {
+        for (V020 v020 : v020s){
+            if (v020.getIdk_pr().equals(par)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

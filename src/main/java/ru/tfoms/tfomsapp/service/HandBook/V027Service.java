@@ -29,4 +29,14 @@ public class V027Service {
         }
         return listV027;
     }
+
+    public boolean CheckV027(List<V027> v027s, String par) {
+        for (V027 v027 : v027s){
+            if (v027.getIdcz().equals(par)){
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

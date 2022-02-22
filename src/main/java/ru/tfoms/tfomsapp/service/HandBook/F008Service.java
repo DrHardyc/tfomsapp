@@ -2,7 +2,6 @@ package ru.tfoms.tfomsapp.service.HandBook;
 
 import ru.tfoms.tfomsapp.domain.HandBook.F008;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
-import ru.tfoms.tfomsapp.domain.HandBook.O002;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,5 +25,17 @@ public class F008Service {
             listF008.add(f008);
         }
         return listF008;
+    }
+
+    public boolean CheckF008(List<F008> f008s, String par){
+        for (F008 f008 : f008s){
+            if (par.isEmpty()){
+                return true;
+            }
+            if (f008.getIddoc().equals(par)){
+                return false;
+            }
+        }
+        return true;
     }
 }

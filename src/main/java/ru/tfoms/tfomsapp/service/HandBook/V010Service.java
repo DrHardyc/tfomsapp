@@ -29,4 +29,13 @@ public class V010Service {
         }
         return listV010;
     }
+
+    public boolean CheckV010(List<V010> v010s, String par) {
+        for (V010 v010 : v010s){
+            if (v010.getIdsp().equals(par)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

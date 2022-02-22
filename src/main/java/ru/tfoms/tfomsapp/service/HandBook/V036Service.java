@@ -3,6 +3,7 @@ package ru.tfoms.tfomsapp.service.HandBook;
 import org.springframework.stereotype.Service;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
 import ru.tfoms.tfomsapp.domain.HandBook.V036;
+import ru.tfoms.tfomsapp.domain.MEK.MP.MPMeddev;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,5 +30,14 @@ public class V036Service {
             listV036.add(v036);
         }
         return listV036;
+    }
+
+    public boolean CheckV036(List<V036> v036s, MPMeddev par) {
+        for (V036 v036 : v036s){
+            if (v036.getS_code().equals(par.getCodemeddev())){
+                return false;
+            }
+        }
+        return true;
     }
 }

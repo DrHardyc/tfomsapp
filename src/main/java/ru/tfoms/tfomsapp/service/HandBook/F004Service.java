@@ -35,4 +35,15 @@ public class F004Service {
         }
         return listF004;
     }
+
+    public boolean CheckF004(List<F004> f004s, List<String> par) {
+        for (F004 f004 : f004s){
+            for (String codeexp : par){
+                if (f004.getN_expert().equals(codeexp)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

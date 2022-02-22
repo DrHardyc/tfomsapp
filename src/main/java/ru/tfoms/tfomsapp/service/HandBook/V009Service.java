@@ -30,4 +30,13 @@ public class V009Service {
         }
         return listV009;
     }
+
+    public boolean CheckV009(List<V009> v009s, String par) {
+        for (V009 v009 : v009s){
+            if (v009.getIdrmp().equals(par)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

@@ -2,7 +2,6 @@ package ru.tfoms.tfomsapp.service.HandBook;
 
 import org.springframework.stereotype.Service;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
-import ru.tfoms.tfomsapp.domain.HandBook.O002;
 import ru.tfoms.tfomsapp.domain.HandBook.V026;
 
 import java.io.BufferedReader;
@@ -30,5 +29,14 @@ public class V026Service {
             listV026.add(v026);
         }
         return listV026;
+    }
+
+    public boolean CheckV026(List<V026> v026s, String nkpg) {
+        for (V026 v026 : v026s){
+            if (v026.getK_kpg().equals(nkpg)){
+                return false;
+            }
+        }
+        return true;
     }
 }

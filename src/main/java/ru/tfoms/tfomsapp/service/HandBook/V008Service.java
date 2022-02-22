@@ -29,4 +29,13 @@ public class V008Service {
         }
         return listV008;
     }
+
+    public boolean CheckV008(List<V008> v008s, String par) {
+        for (V008 v008 : v008s){
+            if (v008.getIdvmp().equals(par)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

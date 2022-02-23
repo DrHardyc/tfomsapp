@@ -33,6 +33,7 @@ public class V021Service {
     }
 
     public boolean CheckV021(List<V021> v021s, String par) {
+        if (par.isEmpty()) return false;
         for (V021 v021 : v021s){
             if (v021.getIdpost_mz().equals(par)){
                 return false;

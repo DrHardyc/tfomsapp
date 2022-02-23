@@ -31,6 +31,7 @@ public class V018Service {
     }
 
     public boolean CheckV018(List<V018> v018s, String par) {
+        if (par.isEmpty()) return false;
         for (V018 v018 : v018s){
             if (v018.getIdhvid().equals(par)){
                 return false;

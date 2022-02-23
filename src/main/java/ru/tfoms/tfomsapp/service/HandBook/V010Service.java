@@ -31,6 +31,7 @@ public class V010Service {
     }
 
     public boolean CheckV010(List<V010> v010s, String par) {
+        if (par.isEmpty()) return false;
         for (V010 v010 : v010s){
             if (v010.getIdsp().equals(par)){
                 return false;

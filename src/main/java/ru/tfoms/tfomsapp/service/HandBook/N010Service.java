@@ -32,6 +32,7 @@ public class N010Service {
     }
 
     public boolean CheckN010(List<N010> n010s, String par) {
+        if (par.isEmpty()) return false;
         for (N010 n010 : n010s){
             if (n010.getId_igh().equals(par)){
                 return false;

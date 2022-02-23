@@ -31,6 +31,7 @@ public class V020Service {
     }
 
     public boolean CheckV020(List<V020> v020s, String par) {
+        if (par.isEmpty()) return false;
         for (V020 v020 : v020s){
             if (v020.getIdk_pr().equals(par)){
                 return false;

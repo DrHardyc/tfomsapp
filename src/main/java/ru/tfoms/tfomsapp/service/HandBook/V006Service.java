@@ -31,10 +31,9 @@ public class V006Service {
     }
 
     public boolean CheckV006(List<V006> v006s, String par) {
+        if (par.isEmpty()) return false;
         for (V006 v006 : v006s){
-            if (v006.getIdump().equals(par)){
-                return false;
-            }
+            if (v006.getIdump().equals(par)) return false;
         }
         return true;
     }

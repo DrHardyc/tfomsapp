@@ -2,7 +2,7 @@ package ru.tfoms.tfomsapp.service.HandBook;
 
 import org.springframework.stereotype.Service;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
-import ru.tfoms.tfomsapp.domain.HandBook.V014;
+import ru.tfoms.tfomsapp.domain.HandBook.N020;
 import ru.tfoms.tfomsapp.domain.HandBook.V027;
 
 import java.io.BufferedReader;
@@ -11,33 +11,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class V027Service {
-    public List<V027> getV027s(BufferedReader in) throws IOException {
+public class N020Service {
+    public List<N020> getN020s(BufferedReader in) throws IOException {
         List<List<HandBookValues>> listHandBooksValues = new HandBookService().getHandBook(in).getDirValues();
-        ArrayList<V027> listV027 = new ArrayList<>();
+        ArrayList<N020> listN020 = new ArrayList<>();
         for (List<HandBookValues> handBooksValues : listHandBooksValues){
-            V027 v027 = new V027();
+            N020 n020 = new N020();
             for (HandBookValues handBookValues : handBooksValues){
                 switch (handBookValues.getColumn()) {
-                    case "IDCZ" -> v027.setIdcz(handBookValues.getValue());
-                    case "N_CZ" -> v027.setN_cz(handBookValues.getValue());
-                    case "DATEBEG" -> v027.setDatebeg(handBookValues.getValue());
-                    case "DATEEND" -> v027.setDateend(handBookValues.getValue());
+                    case "ID_LEKP" -> n020.setId_lekp(handBookValues.getValue());
+                    case "MNN" -> n020.setMnn(handBookValues.getValue());
+                    case "DATEBEG" -> n020.setDatebeg(handBookValues.getValue());
+                    case "DATEEND" -> n020.setDateend(handBookValues.getValue());
                 }
             }
-            listV027.add(v027);
+            listN020.add(n020);
         }
-        return listV027;
+        return listN020;
     }
 
-    public boolean CheckV027(List<V027> v027s, String par) {
+    public boolean CheckN020(List<N020> n020s, String par) {
         if (par.isEmpty()) return false;
-        for (V027 v027 : v027s){
-            if (v027.getIdcz().equals(par)){
+        for (N020 n020 : n020s){
+            if (n020.getId_lekp().equals(par)){
                 return false;
             }
         }
         return true;
     }
-
 }

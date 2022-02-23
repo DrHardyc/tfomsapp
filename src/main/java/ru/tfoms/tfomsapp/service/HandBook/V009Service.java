@@ -32,6 +32,7 @@ public class V009Service {
     }
 
     public boolean CheckV009(List<V009> v009s, String par) {
+        if (par.isEmpty()) return false;
         for (V009 v009 : v009s){
             if (v009.getIdrmp().equals(par)){
                 return false;

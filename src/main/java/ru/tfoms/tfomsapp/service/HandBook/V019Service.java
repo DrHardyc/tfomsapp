@@ -37,6 +37,7 @@ public class V019Service {
     }
 
     public boolean CheckV019(List<V019> v019s, String par) {
+        if (par.isEmpty()) return false;
         for (V019 v019 : v019s){
             if (v019.getIdhm().equals(par)){
                 return false;

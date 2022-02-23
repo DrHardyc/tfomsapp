@@ -52,6 +52,7 @@ public class F003Service {
     }
 
     public boolean CheckF003(List<F003> f003s, String par) {
+        if (par.isEmpty()) return false;
         for (F003 f003 : f003s){
             if (f003.getMcod().equals(par)){
                 return false;

@@ -32,6 +32,7 @@ public class N002Service {
     }
 
     public boolean CheckN002(List<N002> n002s, String par) {
+        if (par.isEmpty()) return false;
         for (N002 n002 : n002s){
             if (n002.getId_st().equals(par)){
                 return false;

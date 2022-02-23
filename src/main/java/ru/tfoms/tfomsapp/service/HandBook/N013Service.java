@@ -2,7 +2,7 @@ package ru.tfoms.tfomsapp.service.HandBook;
 
 import org.springframework.stereotype.Service;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
-import ru.tfoms.tfomsapp.domain.HandBook.N007;
+import ru.tfoms.tfomsapp.domain.HandBook.N013;
 import ru.tfoms.tfomsapp.domain.HandBook.N018;
 
 import java.io.BufferedReader;
@@ -11,29 +11,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class N007Service {
-    public List<N007> getN007s(BufferedReader in) throws IOException {
+public class N013Service {
+    public List<N013> getN013s(BufferedReader in) throws IOException {
         List<List<HandBookValues>> listHandBooksValues = new HandBookService().getHandBook(in).getDirValues();
-        ArrayList<N007> listN007 = new ArrayList<>();
+        ArrayList<N013> listN013 = new ArrayList<>();
         for (List<HandBookValues> handBooksValues : listHandBooksValues){
-            N007 n007 = new N007();
+            N013 n013 = new N013();
             for (HandBookValues handBookValues : handBooksValues){
                 switch (handBookValues.getColumn()) {
-                    case "ID_Mrf" -> n007.setId_mrf(handBookValues.getValue());
-                    case "Mrf_NAME" -> n007.setMrf_name(handBookValues.getValue());
-                    case "DATEBEG" -> n007.setDatebeg(handBookValues.getValue());
-                    case "DATEEND" -> n007.setDateend(handBookValues.getValue());
+                    case "ID_TLech" -> n013.setId_tlech(handBookValues.getValue());
+                    case "TLech_NAME" -> n013.setTlech_name(handBookValues.getValue());
+                    case "DATEBEG" -> n013.setDatebeg(handBookValues.getValue());
+                    case "DATEEND" -> n013.setDateend(handBookValues.getValue());
                 }
             }
-            listN007.add(n007);
+            listN013.add(n013);
         }
-        return listN007;
+        return listN013;
     }
 
-    public boolean CheckN007(List<N007> n007s, String par) {
+    public boolean CheckN013(List<N013> n013s, String par) {
         if (par.isEmpty()) return false;
-        for (N007 n007 : n007s){
-            if (n007.getId_mrf().equals(par)){
+        for (N013 n013 : n013s){
+            if (n013.getId_tlech().equals(par)){
                 return false;
             }
         }

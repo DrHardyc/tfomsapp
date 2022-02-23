@@ -31,12 +31,23 @@ public class V024Service {
         return listV024;
     }
 
-    public boolean CheckV024(List<V024> v024s, List<String> crits) {
+    public boolean CheckV024(List<V024> v024s, List<String> par) {
+        if (par == null) return false;
         for (V024 v024 : v024s){
-            for (String crit : crits){
+            for (String crit : par){
                 if (v024.getIddkk().equals(crit)){
                     return false;
                 }
+            }
+        }
+        return true;
+    }
+
+    public boolean CheckV024(List<V024> v024s, String par) {
+        if (par.isEmpty()) return false;
+        for (V024 v024 : v024s){
+            if (v024.getIddkk().equals(par)){
+                return false;
             }
         }
         return true;

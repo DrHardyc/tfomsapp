@@ -33,6 +33,7 @@ public class N005Service {
     }
 
     public boolean CheckN005(List<N005> n005s, String par) {
+        if (par.isEmpty()) return false;
         for (N005 n005 : n005s){
             if (n005.getId_m().equals(par)){
                 return false;

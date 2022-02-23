@@ -33,6 +33,7 @@ public class N011Service {
     }
 
     public boolean CheckN011(List<N011> n011s, String par) {
+        if (par.isEmpty()) return false;
         for (N011 n011 : n011s){
             if (n011.getId_r_i().equals(par)){
                 return false;

@@ -31,6 +31,7 @@ public class N018Service {
     }
 
     public boolean CheckN018(List<N018> n018s, String par) {
+        if (par.isEmpty()) return false;
         for (N018 n018 : n018s){
             if (n018.getId_reas().equals(par)){
                 return false;

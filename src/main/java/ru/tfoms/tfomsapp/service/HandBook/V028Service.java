@@ -31,6 +31,7 @@ public class V028Service {
     }
 
     public boolean CheckV028(List<V028> v028s, String par) {
+        if (par.isEmpty()) return false;
         for (V028 v028 : v028s){
             if (v028.getIdvn().equals(par)){
                 return false;

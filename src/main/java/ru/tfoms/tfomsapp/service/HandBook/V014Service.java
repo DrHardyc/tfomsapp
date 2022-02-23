@@ -31,6 +31,7 @@ public class V014Service {
     }
 
     public boolean CheckV014(List<V014> v014s, String par) {
+        if (par.isEmpty()) return false;
         for (V014 v014 : v014s){
             if (v014.getIdfrmmp().equals(par)){
                 return false;

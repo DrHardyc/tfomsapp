@@ -31,6 +31,7 @@ public class V008Service {
     }
 
     public boolean CheckV008(List<V008> v008s, String par) {
+        if (par.isEmpty()) return false;
         for (V008 v008 : v008s){
             if (v008.getIdvmp().equals(par)){
                 return false;

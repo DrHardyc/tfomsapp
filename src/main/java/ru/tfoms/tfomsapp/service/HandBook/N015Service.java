@@ -2,7 +2,7 @@ package ru.tfoms.tfomsapp.service.HandBook;
 
 import org.springframework.stereotype.Service;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
-import ru.tfoms.tfomsapp.domain.HandBook.N007;
+import ru.tfoms.tfomsapp.domain.HandBook.N015;
 import ru.tfoms.tfomsapp.domain.HandBook.N018;
 
 import java.io.BufferedReader;
@@ -11,29 +11,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class N007Service {
-    public List<N007> getN007s(BufferedReader in) throws IOException {
+public class N015Service {
+    public List<N015> getN015s(BufferedReader in) throws IOException {
         List<List<HandBookValues>> listHandBooksValues = new HandBookService().getHandBook(in).getDirValues();
-        ArrayList<N007> listN007 = new ArrayList<>();
+        ArrayList<N015> listN015 = new ArrayList<>();
         for (List<HandBookValues> handBooksValues : listHandBooksValues){
-            N007 n007 = new N007();
+            N015 n015 = new N015();
             for (HandBookValues handBookValues : handBooksValues){
                 switch (handBookValues.getColumn()) {
-                    case "ID_Mrf" -> n007.setId_mrf(handBookValues.getValue());
-                    case "Mrf_NAME" -> n007.setMrf_name(handBookValues.getValue());
-                    case "DATEBEG" -> n007.setDatebeg(handBookValues.getValue());
-                    case "DATEEND" -> n007.setDateend(handBookValues.getValue());
+                    case "ID_TLek_L" -> n015.setId_tlek_l(handBookValues.getValue());
+                    case "TLek_NAME_L" -> n015.setTlek_name_l(handBookValues.getValue());
+                    case "DATEBEG" -> n015.setDatebeg(handBookValues.getValue());
+                    case "DATEEND" -> n015.setDateend(handBookValues.getValue());
                 }
             }
-            listN007.add(n007);
+            listN015.add(n015);
         }
-        return listN007;
+        return listN015;
     }
 
-    public boolean CheckN007(List<N007> n007s, String par) {
+    public boolean CheckN015(List<N015> n015s, String par) {
         if (par.isEmpty()) return false;
-        for (N007 n007 : n007s){
-            if (n007.getId_mrf().equals(par)){
+        for (N015 n015 : n015s){
+            if (n015.getId_tlek_l().equals(par)){
                 return false;
             }
         }

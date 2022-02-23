@@ -31,6 +31,7 @@ public class V001Service {
     }
 
     public boolean CheckV001(List<V001> v001s, String par) {
+        if (par.isEmpty()) return false;
         for (V001 v001 : v001s){
             if (v001.getS_code().equals(par)){
                 return false;

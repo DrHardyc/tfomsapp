@@ -28,10 +28,8 @@ public class F008Service {
     }
 
     public boolean CheckF008(List<F008> f008s, String par){
+        if (par.isEmpty()) return false;
         for (F008 f008 : f008s){
-            if (par.isEmpty()){
-                return true;
-            }
             if (f008.getIddoc().equals(par)){
                 return false;
             }

@@ -4,15 +4,20 @@ import org.springframework.stereotype.Service;
 import ru.tfoms.tfomsapp.domain.HandBook.F003;
 import ru.tfoms.tfomsapp.domain.HandBook.F008;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
+import ru.tfoms.tfomsapp.service.ServiceUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class F003Service {
-    public List<F003> getF003s(BufferedReader in) throws IOException {
+    private List<F003> getF003s(BufferedReader in) throws IOException {
         List<List<HandBookValues>> listHandBooksValues = new HandBookService().getHandBook(in).getDirValues();
         ArrayList<F003> listF003 = new ArrayList<>();
         for (List<HandBookValues> handBooksValues : listHandBooksValues){
@@ -51,8 +56,11 @@ public class F003Service {
         return listF003;
     }
 
-    public boolean CheckF003(List<F003> f003s, String par) {
+    public boolean Check(String par) throws IOException {
         if (par.isEmpty()) return false;
+        ServiceUtil su = new ServiceUtil();
+        F003Service f003Service = new F003Service();
+        List<F003> f003s = f003Service.getF003s(su.getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=F003&filters=mcod%7C" + par));
         for (F003 f003 : f003s){
             if (f003.getMcod().equals(par)){
                 return false;
@@ -61,3 +69,4 @@ public class F003Service {
         return true;
     }
 }
+

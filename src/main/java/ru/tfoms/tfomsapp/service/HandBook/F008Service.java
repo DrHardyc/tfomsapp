@@ -2,6 +2,7 @@ package ru.tfoms.tfomsapp.service.HandBook;
 
 import ru.tfoms.tfomsapp.domain.HandBook.F008;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
+import ru.tfoms.tfomsapp.service.ServiceUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,8 +28,12 @@ public class F008Service {
         return listF008;
     }
 
-    public boolean CheckF008(List<F008> f008s, String par){
+    public boolean Check(String par) throws IOException {
         if (par.isEmpty()) return false;
+        ServiceUtil su = new ServiceUtil();
+        F008Service f008Service = new F008Service();
+        List<F008> f008s = f008Service.getF008s(su.getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=F008&filters=IDDOC%7C" + par));
+
         for (F008 f008 : f008s){
             if (f008.getIddoc().equals(par)){
                 return false;

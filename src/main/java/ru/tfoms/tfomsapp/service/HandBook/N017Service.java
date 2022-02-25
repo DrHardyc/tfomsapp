@@ -1,9 +1,11 @@
 package ru.tfoms.tfomsapp.service.HandBook;
 
 import org.springframework.stereotype.Service;
+import ru.tfoms.tfomsapp.domain.HandBook.F002;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
 import ru.tfoms.tfomsapp.domain.HandBook.N017;
 import ru.tfoms.tfomsapp.domain.HandBook.N018;
+import ru.tfoms.tfomsapp.service.ServiceUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,8 +32,13 @@ public class N017Service {
         return listN017;
     }
 
-    public boolean CheckN017(List<N017> n017s, String par) {
+    public boolean Check(String par) throws IOException {
         if (par.isEmpty()) return false;
+        ServiceUtil su = new ServiceUtil();
+        N017Service n017Service = new N017Service();
+        List<N017> n017s = n017Service.getN017s(su
+                .getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N017&filters=ID_TLuch%7C" + par));
+
         for (N017 n017 : n017s){
             if (n017.getId_tluch().equals(par)){
                 return false;

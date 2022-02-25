@@ -1,8 +1,10 @@
 package ru.tfoms.tfomsapp.service.HandBook;
 
 import org.springframework.stereotype.Service;
+import ru.tfoms.tfomsapp.domain.HandBook.F002;
 import ru.tfoms.tfomsapp.domain.HandBook.F004;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
+import ru.tfoms.tfomsapp.service.ServiceUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -36,12 +38,15 @@ public class F004Service {
         return listF004;
     }
 
-    public boolean CheckF004(List<F004> f004s, List<String> par) {
+    public boolean Check(String par) throws IOException {
+        if (par.isEmpty()) return false;
+        ServiceUtil su = new ServiceUtil();
+        F004Service f004Service = new F004Service();
+        List<F004> f004s = f004Service.getF004s(su
+                .getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=F004&filters=tf_okato%7C" + par));
         for (F004 f004 : f004s){
-            for (String codeexp : par){
-                if (f004.getN_expert().equals(codeexp)){
-                    return false;
-                }
+            if (f004.getN_expert().equals(par)){
+                return false;
             }
         }
         return true;

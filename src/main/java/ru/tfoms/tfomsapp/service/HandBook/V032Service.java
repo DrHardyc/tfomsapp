@@ -1,8 +1,10 @@
 package ru.tfoms.tfomsapp.service.HandBook;
 
 import org.springframework.stereotype.Service;
+import ru.tfoms.tfomsapp.domain.HandBook.F002;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
 import ru.tfoms.tfomsapp.domain.HandBook.V032;
+import ru.tfoms.tfomsapp.service.ServiceUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,7 +32,13 @@ public class V032Service {
         return listV032;
     }
 
-    public boolean CheckV032(List<V032> v032s, String par) {
+    public boolean Check(String par) throws IOException {
+        if (par.isEmpty()) return false;
+        ServiceUtil su = new ServiceUtil();
+        V032Service v032Service = new V032Service();
+        List<V032> v032s = v032Service.getV032s(su
+                .getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V032&filters=ScheDrugGrCd%7C" + par));
+
         for (V032 v032 : v032s){
             if (v032.getSchedruggrcd().equals(par)){
                 return false;

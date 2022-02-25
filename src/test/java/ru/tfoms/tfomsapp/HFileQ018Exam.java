@@ -1,6 +1,5 @@
 package ru.tfoms.tfomsapp;
 
-import lombok.Data;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.tfoms.tfomsapp.domain.Exam.ExamParam;
@@ -8,7 +7,7 @@ import ru.tfoms.tfomsapp.domain.MEK.*;
 import ru.tfoms.tfomsapp.domain.MEK.MP.*;
 import ru.tfoms.tfomsapp.domain.MEK.PD.PDPers;
 import ru.tfoms.tfomsapp.domain.MEK.PD.PDPerslist;
-import ru.tfoms.tfomsapp.service.Examination.MEK.ExamMP;
+import ru.tfoms.tfomsapp.service.Examination.MEK.MPExam;
 import ru.tfoms.tfomsapp.service.Examination.MEK.ResultTestExam;
 
 import java.io.IOException;
@@ -24,7 +23,7 @@ public class HFileQ018Exam {
     void H_0500_02600() throws IOException {
         Zglv zglv = new Zglv();
         Schet schet = new Schet();
-        ExamMP examMP = new ExamMP();
+        MPExam MPExam = new MPExam();
         PDPerslist perslist = new PDPerslist();
         PDPers pers = new PDPers();
         List<PDPers> perss = new ArrayList<>();
@@ -68,7 +67,7 @@ public class HFileQ018Exam {
         perss.add(pers);
         perslist.setPers(perss);
         assertEquals(ResultTestExam.Success,
-                examMP.exam(perslist, zglv, schet, ExamParam.H_0500_02600));
+                MPExam.exam(perslist, zglv, schet, ExamParam.H_0500_02600));
     }
 
 //    @Test

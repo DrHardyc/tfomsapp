@@ -3,7 +3,7 @@ package ru.tfoms.tfomsapp.service.HandBook;
 import lombok.Data;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
 import ru.tfoms.tfomsapp.domain.HandBook.N002;
-import ru.tfoms.tfomsapp.domain.HandBook.N018;
+import ru.tfoms.tfomsapp.service.ServiceUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,8 +31,13 @@ public class N002Service {
         return listN002;
     }
 
-    public boolean CheckN002(List<N002> n002s, String par) {
+    public boolean Check(String par) throws IOException {
         if (par.isEmpty()) return false;
+        ServiceUtil su = new ServiceUtil();
+        N002Service n002Service = new N002Service();
+        List<N002> n002s = n002Service.getN002s(su
+                .getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N002&filters=ID_St%7C" + par));
+
         for (N002 n002 : n002s){
             if (n002.getId_st().equals(par)){
                 return false;

@@ -1,10 +1,12 @@
 package ru.tfoms.tfomsapp.service.HandBook;
 
 import org.springframework.stereotype.Service;
+import ru.tfoms.tfomsapp.domain.HandBook.F002;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
 import ru.tfoms.tfomsapp.domain.HandBook.V014;
 import ru.tfoms.tfomsapp.domain.HandBook.V024;
 import ru.tfoms.tfomsapp.service.HandBook.HandBookService;
+import ru.tfoms.tfomsapp.service.ServiceUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,8 +33,13 @@ public class V024Service {
         return listV024;
     }
 
-    public boolean CheckV024(List<V024> v024s, List<String> par) {
+    public boolean Check(List<String> par) throws IOException {
         if (par == null) return false;
+        ServiceUtil su = new ServiceUtil();
+        V024Service v024Service = new V024Service();
+        List<V024> v024s = v024Service.getV024s(su
+                .getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V024&filters=IDDKK%7C" + par));
+
         for (V024 v024 : v024s){
             for (String crit : par){
                 if (v024.getIddkk().equals(crit)){
@@ -43,8 +50,13 @@ public class V024Service {
         return true;
     }
 
-    public boolean CheckV024(List<V024> v024s, String par) {
+    public boolean Check(String par) throws IOException {
         if (par.isEmpty()) return false;
+        ServiceUtil su = new ServiceUtil();
+        V024Service v024Service = new V024Service();
+        List<V024> v024s = v024Service.getV024s(su
+                .getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V024&filters=IDDKK%7C" + par));
+
         for (V024 v024 : v024s){
             if (v024.getIddkk().equals(par)){
                 return false;

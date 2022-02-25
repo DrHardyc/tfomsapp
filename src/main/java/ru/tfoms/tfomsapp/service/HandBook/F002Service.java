@@ -3,6 +3,7 @@ package ru.tfoms.tfomsapp.service.HandBook;
 import org.springframework.stereotype.Service;
 import ru.tfoms.tfomsapp.domain.HandBook.F002;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
+import ru.tfoms.tfomsapp.service.ServiceUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,7 +12,6 @@ import java.util.List;
 
 @Service
 public class F002Service {
-
     public List<F002> getF002s(BufferedReader in) throws IOException {
         List<List<HandBookValues>> listHandBooksValues = new HandBookService().getHandBook(in).getDirValues();
         ArrayList<F002> listF002 = new ArrayList<>();
@@ -44,8 +44,12 @@ public class F002Service {
         return listF002;
     }
 
-    public boolean CheckF002(List<F002> f002s, String par){
+    public boolean Check(String par) throws IOException {
         if (par.isEmpty()) return false;
+        ServiceUtil su = new ServiceUtil();
+        F002Service f002Service = new F002Service();
+        List<F002> f002s = f002Service.getF002s(su
+                .getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=F002&filters=smocod%7C" + par));
         for (F002 f002 : f002s){
             if (f002.getSmocod().equals(par)){
                 return false;

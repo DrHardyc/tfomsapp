@@ -61,19 +61,21 @@ public class SchetService {
         if(schet.getComents() == null){
             schet.setComents("");
         }
-        if(schet.getSummav() == null){
-            schet.setSummav("");
-        }
         if (schet.getSankmek() == null){
             schet.setSankmek("");
+        }
+        if (schet.getSankekmp() == null){
+            schet.setSankekmp("");
         }
         if (schet.getSankmee() == null){
             schet.setSankmee("");
         }
-        if (schet.getSankmek() == null){
-            schet.setSankmek("");
+        if (schet.getSummap() == null){
+            schet.setSummap("0");
         }
-
+        if (schet.getDisp() == null){
+            schet.setDisp("");
+        }
         return schet;
     }
 }

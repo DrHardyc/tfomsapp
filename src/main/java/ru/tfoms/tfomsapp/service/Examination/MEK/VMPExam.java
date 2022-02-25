@@ -4,18 +4,10 @@ import nu.xom.Document;
 import nu.xom.Element;
 import org.springframework.stereotype.Service;
 import ru.tfoms.tfomsapp.domain.Exam.ExamParam;
-import ru.tfoms.tfomsapp.domain.HandBook.*;
-import ru.tfoms.tfomsapp.domain.MEK.Cons;
-import ru.tfoms.tfomsapp.domain.MEK.MP.MPSl;
-import ru.tfoms.tfomsapp.domain.MEK.MP.MPUsl;
-import ru.tfoms.tfomsapp.domain.MEK.MP.MPZap;
-import ru.tfoms.tfomsapp.domain.MEK.Napr;
-import ru.tfoms.tfomsapp.domain.MEK.ONK.ONKOnksl;
+import ru.tfoms.tfomsapp.domain.MEK.*;
 import ru.tfoms.tfomsapp.domain.MEK.PD.PDPers;
 import ru.tfoms.tfomsapp.domain.MEK.PD.PDPerslist;
-import ru.tfoms.tfomsapp.domain.MEK.Schet;
 import ru.tfoms.tfomsapp.domain.MEK.VMP.*;
-import ru.tfoms.tfomsapp.domain.MEK.Zglv;
 import ru.tfoms.tfomsapp.service.HandBook.*;
 import ru.tfoms.tfomsapp.service.ServiceUtil;
 
@@ -28,10 +20,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 
 @Service
-public class ExamVMP {
+public class VMPExam {
 
     private final F002Service f002Service = new F002Service();
     private final F003Service f003Service = new F003Service();
@@ -68,59 +59,13 @@ public class ExamVMP {
     private final V020Service v020Service = new V020Service();
     private final V021Service v021Service = new V021Service();
     private final V024Service v024Service = new V024Service();
-    private final V025Service v025Service = new V025Service();
-    private final V026Service v026Service = new V026Service();
     private final V027Service v027Service = new V027Service();
     private final V028Service v028Service = new V028Service();
     private final V029Service v029Service = new V029Service();
-    private final V032Service v032Service = new V032Service();
-    private final V036Service v036Service = new V036Service();
     private final ServiceUtil su = new ServiceUtil();
 
     public ResultTestExam exam(PDPerslist persList, Zglv zglv, Schet schet, ExamParam examParam) throws IOException {
         ResultTestExam resultTestExam = ResultTestExam.Success;
-        List<F002> f002s = f002Service.getF002s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=F002"));
-        List<F003> f003s = f003Service.getF003s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=F003"));
-        List<F004> f004s = f004Service.getF004s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=F004"));
-        List<F006> f006s = f006Service.getF006s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=F006"));
-        List<F008> f008s = f008Service.getF008s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=F008"));
-        List<F014> f014s = f014Service.getF014s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=F014"));
-        List<N001> n001s = n001Service.getN001s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N001"));
-        List<N002> n002s = n002Service.getN002s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N002"));
-        List<N003> n003s = n003Service.getN003s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N003"));
-        List<N004> n004s = n004Service.getN004s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N004"));
-        List<N005> n005s = n005Service.getN005s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N005"));
-        List<N007> n007s = n007Service.getN007s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N007"));
-        List<N008> n008s = n008Service.getN008s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N008"));
-        List<N010> n010s = n010Service.getN010s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N010"));
-        List<N011> n011s = n011Service.getN011s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N011"));
-        List<N013> n013s = n013Service.getN013s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N013"));
-        List<N014> n014s = n014Service.getN014s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N014"));
-        List<N015> n015s = n015Service.getN015s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N015"));
-        List<N016> n016s = n016Service.getN016s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N016"));
-        List<N017> n017s = n017Service.getN017s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N017"));
-        List<N018> n018s = n018Service.getN018s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N018"));
-        List<N020> n020s = n020Service.getN020s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=N020"));
-        List<V001> v001s = v001Service.getV001s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V001"));
-        List<V002> v002s = v002Service.getV002s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V002"));
-        List<V006> v006s = v006Service.getV006s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V006"));
-        List<V008> v008s = v008Service.getV008s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V008"));
-        List<V009> v009s = v009Service.getV009s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V009"));
-        List<V010> v010s = v010Service.getV010s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V010"));
-        List<V012> v012s = v012Service.getV012s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V012"));
-        List<V014> v014s = v014Service.getV014s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V014"));
-        List<V018> v018s = v018Service.getV018s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V018"));
-        List<V019> v019s = v019Service.getV019s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V019"));
-        List<V020> v020s = v020Service.getV020s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V020"));
-        List<V021> v021s = v021Service.getV021s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V021"));
-        List<V024> v024s = v024Service.getV024s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V024"));
-        List<V025> v025s = v025Service.getV025s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V025"));
-        List<V026> v026s = v026Service.getV026s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V026"));
-        List<V027> v027s = v027Service.getV027s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V027"));
-        List<V028> v028s = v028Service.getV028s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V028"));
-        List<V029> v029s = v029Service.getV029s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V029"));
-        List<V032> v032s = v032Service.getV032s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V032"));
-        List<V036> v036s = v036Service.getV036s(getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V036"));
 
         Element flk_p = new Element("FLK_P");
         Element fname = new Element("FNAME");
@@ -134,7 +79,7 @@ public class ExamVMP {
 
         if (schet != null){
             if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0300_00900)){
-                if (f003Service.CheckF003(f003s, schet.getCodemo())){
+                if (f003Service.Check(schet.getCodemo())){
                     Element pr = getPrElement("T_0300/00900", schet,
                             null, null, null, schet.getCodemo(),
                             "Ошибка соответствия записи c справочником F003");
@@ -144,7 +89,7 @@ public class ExamVMP {
                 }
             }
             if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0300_01400)){
-                if (f002Service.CheckF002(f002s, schet.getPlat())){
+                if (f002Service.Check(schet.getPlat())){
                     Element pr = getPrElement("T_0300/01400", schet,
                             null, null, null, schet.getPlat(),
                             "Ошибка соответствия записи c справочником F002");
@@ -160,7 +105,7 @@ public class ExamVMP {
                 if (pers.getVmpZap() != null) {
                     for (VMPZap zap : pers.getVmpZap()) {
                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0500_02600)) {
-                            if (f008Service.CheckF008(f008s, zap.getPacient().getVpolis())) {
+                            if (f008Service.Check(zap.getPacient().getVpolis())) {
                                 Element pr = getPrElement("T_0500/02600", schet,
                                         zap, null, null, zap.getPacient().getVpolis(),
                                         "Ошибка соответствия записи c справочником F008");
@@ -170,7 +115,7 @@ public class ExamVMP {
                             }
                         }
                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0500_03000)) {
-                            if (f002Service.CheckF002(f002s, zap.getPacient().getSmo())) {
+                            if (f002Service.Check(zap.getPacient().getSmo())) {
                                 Element pr = getPrElement("T_0500/03000", schet,
                                         zap, null, null, zap.getPacient().getSmo(),
                                         "Ошибка соответствия записи c справочником F002");
@@ -180,7 +125,7 @@ public class ExamVMP {
                             }
                         }
                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0600_03800)) {
-                            if (v006Service.CheckV006(v006s, zap.getZsl().getUslok())) {
+                            if (v006Service.Check(zap.getZsl().getUslok())) {
                                 Element pr = getPrElement("T_0600/03800", schet,
                                         zap, null, null, zap.getZsl().getUslok(),
                                         "Ошибка соответствия записи c справочником V006");
@@ -190,7 +135,7 @@ public class ExamVMP {
                             }
                         }
                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0600_03900)) {
-                            if (v008Service.CheckV008(v008s, zap.getZsl().getVidpom())) {
+                            if (v008Service.Check(zap.getZsl().getVidpom())) {
                                 Element pr = getPrElement("T_0600/03900", schet,
                                         zap, null, null, zap.getZsl().getVidpom(),
                                         "Ошибка соответствия записи c справочником V008");
@@ -200,7 +145,7 @@ public class ExamVMP {
                             }
                         }
                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0600_04000)) {
-                            if (v014Service.CheckV014(v014s, zap.getZsl().getForpom())) {
+                            if (v014Service.Check(zap.getZsl().getForpom())) {
                                 Element pr = getPrElement("T_0600/04000", schet,
                                         zap, null, null, zap.getZsl().getForpom(),
                                         "Ошибка соответствия записи c справочником V014");
@@ -210,7 +155,7 @@ public class ExamVMP {
                             }
                         }
                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0600_04300)) {
-                            if (f003Service.CheckF003(f003s, zap.getZsl().getLpu())) {
+                            if (f003Service.Check(zap.getZsl().getLpu())) {
                                 Element pr = getPrElement("T_0600/04300", schet,
                                         zap, null, null, zap.getZsl().getLpu(),
                                         "Ошибка соответствия записи c справочником F003");
@@ -221,7 +166,7 @@ public class ExamVMP {
                         }
 
                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0600_04800)) {
-                            if (v009Service.CheckV009(v009s, zap.getZsl().getRslt())) {
+                            if (v009Service.Check(zap.getZsl().getRslt())) {
                                 Element pr = getPrElement("T_0600/04800", schet,
                                         zap, null, null, zap.getZsl().getRslt(),
                                         "Ошибка соответствия записи c справочником V009");
@@ -232,7 +177,7 @@ public class ExamVMP {
                         }
 
                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0600_04900)) {
-                            if (v012Service.CheckV012(v012s, zap.getZsl().getIshod())) {
+                            if (v012Service.Check(zap.getZsl().getIshod())) {
                                 Element pr = getPrElement("T_0600/04900", schet,
                                         zap, null, null, zap.getZsl().getIshod(),
                                         "Ошибка соответствия записи c справочником V012");
@@ -243,7 +188,7 @@ public class ExamVMP {
                         }
 
                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0600_05200)) {
-                            if (v010Service.CheckV010(v010s, zap.getZsl().getIdsp())) {
+                            if (v010Service.Check(zap.getZsl().getIdsp())) {
                                 Element pr = getPrElement("T_0600/05200", schet,
                                         zap, null, null, zap.getZsl().getIdsp(),
                                         "Ошибка соответствия записи c справочником V010");
@@ -274,7 +219,7 @@ public class ExamVMP {
                                         su.showMessagesEx("Ошибка T_0600/04102");
                                         resultTestExam = ResultTestExam.Failed;
                                     } else {
-                                        if (f003Service.CheckF003(f003s, zap.getZsl().getNprmo())) {
+                                        if (f003Service.Check(zap.getZsl().getNprmo())) {
                                             Element pr = getPrElement("T_0600/04102", schet,
                                                     zap, sl, null, zap.getZsl().getNprmo(),
                                                     "Ошибка соответствия записи c справочником F003");
@@ -302,7 +247,7 @@ public class ExamVMP {
                                     }
                                 }
                                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0700_05900)) {
-                                    if (v018Service.CheckV018(v018s, sl.getVidhmp())) {
+                                    if (v018Service.Check(sl.getVidhmp())) {
                                         Element pr = getPrElement("T_0700/05900", schet,
                                                 zap, sl, null, sl.getVidhmp(),
                                                 "Ошибка соответствия записи c справочником V018");
@@ -312,7 +257,7 @@ public class ExamVMP {
                                     }
                                 }
                                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0700_06000)) {
-                                    if (v019Service.CheckV019(v019s, sl.getVidhmp())) {
+                                    if (v019Service.Check(sl.getVidhmp())) {
                                         Element pr = getPrElement("T_0700/06000", schet,
                                                 zap, sl, null, sl.getMetodhmp(),
                                                 "Ошибка соответствия записи c справочником V019");
@@ -322,7 +267,7 @@ public class ExamVMP {
                                     }
                                 }
                                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0700_06300)) {
-                                    if (v002Service.CheckV002(v002s, sl.getProfil())) {
+                                    if (v002Service.Check(sl.getProfil())) {
                                         Element pr = getPrElement("T_0700/06300", schet,
                                                 zap, sl, null, sl.getProfil(),
                                                 "Ошибка соответствия записи c справочником V002");
@@ -332,7 +277,7 @@ public class ExamVMP {
                                     }
                                 }
                                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0700_06400)) {
-                                    if (v020Service.CheckV020(v020s, sl.getProfilk())) {
+                                    if (v020Service.Check(sl.getProfilk())) {
                                         Element pr = getPrElement("T_0700/06400", schet,
                                                 zap, sl, null, sl.getProfilk(),
                                                 "Ошибка соответствия записи c справочником V020");
@@ -353,7 +298,7 @@ public class ExamVMP {
                                         su.showMessagesEx("Ошибка T_0700/07602");
                                         resultTestExam = ResultTestExam.Failed;
                                     } else {
-                                        if (v027Service.CheckV027(v027s, sl.getCzab())) {
+                                        if (v027Service.Check(sl.getCzab())) {
                                             Element pr = getPrElement("T_0700/07602", schet,
                                                     zap, sl, null, sl.getCzab(),
                                                     "Ошибка соответствия записи c справочником V027");
@@ -388,7 +333,7 @@ public class ExamVMP {
                                     }
                                 }
                                 if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0700_08301)) {
-                                    if (v021Service.CheckV021(v021s, sl.getPrvs())) {
+                                    if (v021Service.Check(sl.getPrvs())) {
                                         Element pr = getPrElement("T_0700/08301", schet,
                                                 zap, sl, null, sl.getPrvs(),
                                                 "Ошибка соответствия записи c справочником V021");
@@ -429,7 +374,7 @@ public class ExamVMP {
                                 if (sl.getNapr() != null)
                                     for (Napr napr : sl.getNapr()) {
                                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0800_09200)) {
-                                            if (f003Service.CheckF003(f003s, napr.getNaprmo())) {
+                                            if (f003Service.Check(napr.getNaprmo())) {
                                                 Element pr = getPrElement("T_0800/09200", schet,
                                                         zap, sl, null, napr.getNaprmo(),
                                                         "Ошибка соответствия записи c справочником F003");
@@ -439,7 +384,7 @@ public class ExamVMP {
                                             }
                                         }
                                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0800_09300)) {
-                                            if (v028Service.CheckV028(v028s, napr.getNaprv())) {
+                                            if (v028Service.Check(napr.getNaprv())) {
                                                 Element pr = getPrElement("T_0800/09300", schet,
                                                         zap, sl, null, napr.getNaprv(),
                                                         "Ошибка соответствия записи c справочником V028");
@@ -449,7 +394,7 @@ public class ExamVMP {
                                             }
                                         }
                                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0800_09400)) {
-                                            if (napr.getNaprv().equals("3") && v029Service.CheckV029(v029s, napr.getMetissl())) {
+                                            if (napr.getNaprv().equals("3") && v029Service.Check(napr.getMetissl())) {
                                                 Element pr = getPrElement("T_0800/09400", schet,
                                                         zap, sl, null, napr.getMetissl(),
                                                         "Ошибка соответствия записи c справочником V029");
@@ -459,7 +404,7 @@ public class ExamVMP {
                                             }
                                         }
                                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0800_09500)) {
-                                            if (!napr.getMetissl().isEmpty() && v001Service.CheckV001(v001s, napr.getNaprusl())) {
+                                            if (!napr.getMetissl().isEmpty() && v001Service.Check(napr.getNaprusl())) {
                                                 Element pr = getPrElement("T_0800/09500", schet,
                                                         zap, sl, null, napr.getMetissl(),
                                                         "Ошибка соответствия записи c справочником V001");
@@ -473,7 +418,7 @@ public class ExamVMP {
                                 if (sl.getCons() != null) {
                                     for (Cons cons : sl.getCons()) {
                                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_0900_09600)) {
-                                            if (v019Service.CheckV019(v019s, cons.getPrcons())) {
+                                            if (v019Service.Check(cons.getPrcons())) {
                                                 Element pr = getPrElement("T_0900/09600", schet,
                                                         zap, sl, null, cons.getPrcons(),
                                                         "Ошибка соответствия записи c справочником V019");
@@ -497,7 +442,7 @@ public class ExamVMP {
                                 }
                                 if (sl.getOnksl() != null) {
                                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1000_09800)) {
-                                        if (n018Service.CheckN018(n018s, sl.getOnksl().getDs1t())) {
+                                        if (n018Service.Check(sl.getOnksl().getDs1t())) {
                                             Element pr = getPrElement("T_1000/09800", schet,
                                                     zap, sl, null, sl.getOnksl().getDs1t(),
                                                     "Ошибка соответствия записи c справочником V018");
@@ -517,7 +462,7 @@ public class ExamVMP {
                                             su.showMessagesEx("Ошибка T_1000/09900");
                                             resultTestExam = ResultTestExam.Failed;
                                         } else {
-                                            if (n002Service.CheckN002(n002s, sl.getOnksl().getStad())) {
+                                            if (n002Service.Check(sl.getOnksl().getStad())) {
                                                 Element pr = getPrElement("T_1000/09900", schet,
                                                         zap, sl, null, sl.getOnksl().getStad(),
                                                         "Ошибка соответствия записи c справочником N002");
@@ -538,7 +483,7 @@ public class ExamVMP {
                                             su.showMessagesEx("Ошибка T_1000/10000");
                                             resultTestExam = ResultTestExam.Failed;
                                         } else {
-                                            if (n003Service.CheckN003(n003s, sl.getOnksl().getOnkt())) {
+                                            if (n003Service.Check(sl.getOnksl().getOnkt())) {
                                                 Element pr = getPrElement("T_1000/10000", schet,
                                                         zap, sl, null, sl.getOnksl().getOnkt(),
                                                         "Ошибка соответствия записи c справочником N003");
@@ -559,7 +504,7 @@ public class ExamVMP {
                                             su.showMessagesEx("Ошибка T_1000/10100");
                                             resultTestExam = ResultTestExam.Failed;
                                         } else {
-                                            if (n004Service.CheckN004(n004s, sl.getOnksl().getOnkn())) {
+                                            if (n004Service.Check(sl.getOnksl().getOnkn())) {
                                                 Element pr = getPrElement("T_1000/10000", schet,
                                                         zap, sl, null, sl.getOnksl().getOnkn(),
                                                         "Ошибка соответствия записи c справочником N004");
@@ -580,7 +525,7 @@ public class ExamVMP {
                                             su.showMessagesEx("Ошибка T_1000/10000");
                                             resultTestExam = ResultTestExam.Failed;
                                         } else {
-                                            if (n005Service.CheckN005(n005s, sl.getOnksl().getOnkm())) {
+                                            if (n005Service.Check(sl.getOnksl().getOnkm())) {
                                                 Element pr = getPrElement("T_1000/10200", schet,
                                                         zap, sl, null, sl.getOnksl().getOnkm(),
                                                         "Ошибка соответствия записи c справочником N005");
@@ -617,7 +562,7 @@ public class ExamVMP {
                                                 }
                                             }
                                             if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1300_11900)) {
-                                                if (n013Service.CheckN013(n013s, onkusl.getUsltip())) {
+                                                if (n013Service.Check(onkusl.getUsltip())) {
                                                     Element pr = getPrElement("T_1300/11900", schet,
                                                             zap, sl, null, onkusl.getUsltip(),
                                                             "Ошибка соответствия записи c справочником N013");
@@ -635,7 +580,7 @@ public class ExamVMP {
                                                     su.showMessagesEx("Ошибка T_1300/12000");
                                                     resultTestExam = ResultTestExam.Failed;
                                                 } else {
-                                                    if (n014Service.CheckN014(n014s, onkusl.getHirtip())) {
+                                                    if (n014Service.Check(onkusl.getHirtip())) {
                                                         Element pr = getPrElement("T_1300/12000", schet,
                                                                 zap, sl, null, onkusl.getHirtip(),
                                                                 "Ошибка соответствия записи c справочником N014");
@@ -654,7 +599,7 @@ public class ExamVMP {
                                                     su.showMessagesEx("Ошибка T_1300/12100");
                                                     resultTestExam = ResultTestExam.Failed;
                                                 } else {
-                                                    if (n015Service.CheckN015(n015s, onkusl.getLektipl())) {
+                                                    if (n015Service.Check(onkusl.getLektipl())) {
                                                         Element pr = getPrElement("T_1300/12100", schet,
                                                                 zap, sl, null, onkusl.getLektipl(),
                                                                 "Ошибка соответствия записи c справочником N015");
@@ -673,7 +618,7 @@ public class ExamVMP {
                                                     su.showMessagesEx("Ошибка T_1300/12200");
                                                     resultTestExam = ResultTestExam.Failed;
                                                 } else {
-                                                    if (n016Service.CheckN016(n016s, onkusl.getLektipv())) {
+                                                    if (n016Service.Check(onkusl.getLektipv())) {
                                                         Element pr = getPrElement("T_1300/12200", schet,
                                                                 zap, sl, null, onkusl.getLektipv(),
                                                                 "Ошибка соответствия записи c справочником N016");
@@ -685,7 +630,7 @@ public class ExamVMP {
                                             }
                                             if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1300_12500)) {
                                                 if (onkusl.getUsltip().equals("3") || onkusl.getUsltip().equals("4")) {
-                                                    if (n017Service.CheckN017(n017s, onkusl.getLuchtip())) {
+                                                    if (n017Service.Check(onkusl.getLuchtip())) {
                                                         Element pr = getPrElement("T_1300/12500", schet,
                                                                 zap, sl, null, onkusl.getLuchtip(),
                                                                 "Ошибка соответствия записи c справочником N017");
@@ -705,7 +650,7 @@ public class ExamVMP {
                                             if (onkusl.getLekpr() != null) {
                                                 for (VMPLekpr lekpr : onkusl.getLekpr()){
                                                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1400_12600)) {
-                                                        if (n020Service.CheckN020(n020s, lekpr.getRegnum())) {
+                                                        if (n020Service.Check(lekpr.getRegnum())) {
                                                             Element pr = getPrElement("T_1400/12600", schet,
                                                                     zap, sl, null, lekpr.getRegnum(),
                                                                     "Ошибка соответствия записи c справочником N020");
@@ -716,7 +661,7 @@ public class ExamVMP {
                                                     }
                                                     if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1400_12700)) {
                                                         if (GetAge(pers.getDr(), sl.getDate1()) >= 18){
-                                                            if (v024Service.CheckV024(v024s, lekpr.getCodesh())) {
+                                                            if (v024Service.Check(lekpr.getCodesh())) {
                                                                 Element pr = getPrElement("T_1400/12700", schet,
                                                                         zap, sl, null, lekpr.getCodesh(),
                                                                         "Ошибка соответствия записи c справочником V024");
@@ -756,14 +701,14 @@ public class ExamVMP {
                                     if (sl.getOnksl().getBdiags() != null) {
                                         for (VMPBdiag bdiag : sl.getOnksl().getBdiags()) {
                                             if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1100_11400)) {
-                                                if (n007Service.CheckN007(n007s, bdiag.getDiagcode()) && bdiag.getDiagtip().equals("1")) {
+                                                if (n007Service.Check(bdiag.getDiagcode()) && bdiag.getDiagtip().equals("1")) {
                                                     Element pr = getPrElement("T_1100/11400", schet,
                                                             zap, sl, null, bdiag.getDiagcode(),
                                                             "Ошибка соответствия записи c справочником N007");
                                                     flk_p.appendChild(pr);
                                                     su.showMessagesEx("Ошибка соотвествия справочника T_1100/11400");
                                                     resultTestExam = ResultTestExam.Failed;
-                                                } else if (n010Service.CheckN010(n010s, bdiag.getDiagcode()) && bdiag.getDiagtip().equals("2")) {
+                                                } else if (n010Service.Check(bdiag.getDiagcode()) && bdiag.getDiagtip().equals("2")) {
                                                     Element pr = getPrElement("T_1100/11400", schet,
                                                             zap, sl, null, bdiag.getDiagcode(),
                                                             "Ошибка соответствия записи c справочником N010");
@@ -773,14 +718,14 @@ public class ExamVMP {
                                                 }
                                             }
                                             if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1100_11500)) {
-                                                if (n008Service.CheckN008(n008s, bdiag.getDiagrlst()) && bdiag.getDiagtip().equals("1")) {
+                                                if (n008Service.Check(bdiag.getDiagrlst()) && bdiag.getDiagtip().equals("1")) {
                                                     Element pr = getPrElement("T_1100/11500", schet,
                                                             zap, sl, null, bdiag.getDiagcode(),
                                                             "Ошибка соответствия записи c справочником N008");
                                                     flk_p.appendChild(pr);
                                                     su.showMessagesEx("Ошибка соотвествия справочника T_1100/11500");
                                                     resultTestExam = ResultTestExam.Failed;
-                                                } else if (n011Service.CheckN011(n011s, bdiag.getDiagcode()) && bdiag.getDiagtip().equals("2")) {
+                                                } else if (n011Service.Check(bdiag.getDiagcode()) && bdiag.getDiagtip().equals("2")) {
                                                     Element pr = getPrElement("T_1100/11500", schet,
                                                             zap, sl, null, bdiag.getDiagcode(),
                                                             "Ошибка соответствия записи c справочником N011");
@@ -794,7 +739,7 @@ public class ExamVMP {
                                     if (sl.getOnksl().getBprots() != null) {
                                         for (VMPBprot bprot : sl.getOnksl().getBprots()) {
                                             if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1200_11700)) {
-                                                if (n001Service.CheckN001(n001s, bprot.getProt())) {
+                                                if (n001Service.Check(bprot.getProt())) {
                                                     Element pr = getPrElement("T_1200/11700", schet,
                                                             zap, sl, null, bprot.getProt(),
                                                             "Ошибка соответствия записи c справочником N001");
@@ -808,7 +753,7 @@ public class ExamVMP {
                                     if (sl.getUsl() != null){
                                         for (VMPUsl usl : sl.getUsl()){
                                             if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1500_13000)) {
-                                                if (f003Service.CheckF003(f003s, usl.getLpu())) {
+                                                if (f003Service.Check(usl.getLpu())) {
                                                     Element pr = getPrElement("T_1500/13000", schet,
                                                             zap, sl, usl, usl.getLpu(),
                                                             "Ошибка соответствия записи c справочником F003");
@@ -818,7 +763,7 @@ public class ExamVMP {
                                                 }
                                             }
                                             if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1500_13300)) {
-                                                if (v002Service.CheckV002(v002s, usl.getProfil())) {
+                                                if (v002Service.Check(usl.getProfil())) {
                                                     Element pr = getPrElement("T_1500/13300", schet,
                                                             zap, sl, usl, usl.getProfil(),
                                                             "Ошибка соответствия записи c справочником V002");
@@ -827,19 +772,112 @@ public class ExamVMP {
                                                     resultTestExam = ResultTestExam.Failed;
                                                 }
                                             }
-                                            //есть вопрос по данному правилу
-//                                            if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1500_13403)) {
-//                                                if (CheckDS1(sl.getDs1()) && (sl.getOnksl().geton))
-//
-//                                                if (v019Service.CheckV019(v019s, usl.getVidvme())) {
-//                                                    Element pr = getPrElement("T_1500/13403", schet,
-//                                                            zap, sl, usl, usl.getVidvme(),
-//                                                            "Ошибка соответствия записи c справочником V019");
-//                                                    flk_p.appendChild(pr);
-//                                                    su.showMessagesEx("Ошибка соотвествия справочника T_1500/13403");
-//                                                    resultTestExam = ResultTestExam.Failed;
-//                                                }
-//                                            }
+
+                                            if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1500_13403)) {
+                                                if (sl.getOnksl().getOnkusls() != null){
+                                                    for (VMPOnkusl onkusl : sl.getOnksl().getOnkusls()){
+                                                        if ((onkusl.getUsltip().equals("1") || onkusl.getUsltip().equals("3")
+                                                                || onkusl.getUsltip().equals("4")) && CheckDS1(sl.getDs1())
+                                                                && usl.getVidvme().isEmpty()){
+                                                            Element pr = getPrElement("T_1500/13403", schet,
+                                                                    zap, sl, usl, usl.getVidvme(),
+                                                                    "VID_VME обязательно к заполнению при установленном " +
+                                                                            "основном диагнозе злокачественного новообразования " +
+                                                                            "(первый символ кода основного диагноза -" +
+                                                                            " «С» или код основного диагноза входит в " +
+                                                                            "диапазон D00-D09 или D45-D47) в случае " +
+                                                                            "проведения хирургического лечения, " +
+                                                                            "лучевой или химиолучевой терапии (USL_TIP={1,3,4})");
+                                                            flk_p.appendChild(pr);
+                                                            su.showMessagesEx("Ошибка T_1500/13403");
+                                                            resultTestExam = ResultTestExam.Failed;
+                                                        }
+                                                    }
+                                                } else {
+                                                    if (v019Service.Check(usl.getVidvme())) {
+                                                        Element pr = getPrElement("T_1500/13403", schet,
+                                                                zap, sl, usl, usl.getVidvme(),
+                                                                "Ошибка соответствия записи c справочником V019");
+                                                        flk_p.appendChild(pr);
+                                                        su.showMessagesEx("Ошибка соотвествия справочника T_1500/13403");
+                                                        resultTestExam = ResultTestExam.Failed;
+                                                    }
+                                                }
+                                            }
+                                            if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1500_14301)) {
+                                                if (v021Service.Check(usl.getPrvs())) {
+                                                    Element pr = getPrElement("T_1500/14301", schet,
+                                                            zap, sl, usl, usl.getPrvs(),
+                                                            "Ошибка соответствия записи c справочником V021");
+                                                    flk_p.appendChild(pr);
+                                                    su.showMessagesEx("Ошибка соотвествия справочника T_1500/14301");
+                                                    resultTestExam = ResultTestExam.Failed;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if (zap.getZsl().getSanks() != null){
+                            for (Sank sank : zap.getZsl().getSanks()){
+                                if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1600_14800)) {
+                                    if (f006Service.Check(sank.getStip())) {
+                                        Element pr = getPrElement("T_1500/14301", schet,
+                                                zap, null, null, sank.getStip(),
+                                                "Ошибка соответствия записи c справочником F006");
+                                        flk_p.appendChild(pr);
+                                        su.showMessagesEx("Ошибка соотвествия справочника T_1500/14301");
+                                        resultTestExam = ResultTestExam.Failed;
+                                    }
+                                }
+                                if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1600_14900)) {
+                                    if (Double.parseDouble(sank.getSsum()) > 0 && sank.getSlid().isEmpty()) {
+                                        Element pr = getPrElement("T_1600/14900", schet,
+                                                zap, null, null, sank.getStip(),
+                                                "SL_ID обязательно к заполнению, если S_SUM не равна 0");
+                                        flk_p.appendChild(pr);
+                                        su.showMessagesEx("Ошибка соотвествия справочника T_1600/14900");
+                                        resultTestExam = ResultTestExam.Failed;
+                                    }
+                                }
+                                if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1600_15000)) {
+                                    if (Double.parseDouble(sank.getSsum()) > 0 && sank.getSosn().isEmpty()) {
+                                        Element pr = getPrElement("T_1600/15000", schet,
+                                                zap, null, null, sank.getStip(),
+                                                "S_OSN обязательно к заполнению, если S_SUM не равна 0");
+                                        flk_p.appendChild(pr);
+                                        su.showMessagesEx("Ошибка T_1600/15000");
+                                        resultTestExam = ResultTestExam.Failed;
+                                    } else {
+                                        if (f014Service.Check(sank.getSosn())) {
+                                            Element pr = getPrElement("T_1600/15000", schet,
+                                                    zap, null, null, sank.getSosn(),
+                                                    "Ошибка соответствия записи c справочником F014");
+                                            flk_p.appendChild(pr);
+                                            su.showMessagesEx("Ошибка соотвествия справочника T_1600/15000");
+                                            resultTestExam = ResultTestExam.Failed;
+                                        }
+                                    }
+                                }
+                                if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.T_1600_15300)) {
+                                    if (Integer.parseInt(sank.getStip()) >= 30 && sank.getCodeexp() == null){
+                                        Element pr = getPrElement("T_1600/15300", schet,
+                                                zap, null, null, "", "CODE_EXP обязательно к заполнению " +
+                                                        "для экспертиз качества медицинской помощи (S_TIP>=30)");
+                                        flk_p.appendChild(pr);
+                                        su.showMessagesEx("Ошибка соотвествия справочника T_1600/15300");
+                                        resultTestExam = ResultTestExam.Failed;
+                                    } else {
+                                        for (String codeexp : sank.getCodeexp()) {
+                                            if (f004Service.Check(codeexp)) {
+                                                Element pr = getPrElement("T_1600/15300", schet,
+                                                        zap, null, null, codeexp,
+                                                        "Ошибка соответствия записи c справочником F004");
+                                                flk_p.appendChild(pr);
+                                                su.showMessagesEx("Ошибка соотвествия справочника T_1600/15300");
+                                                resultTestExam = ResultTestExam.Failed;
+                                            }
                                         }
                                     }
                                 }

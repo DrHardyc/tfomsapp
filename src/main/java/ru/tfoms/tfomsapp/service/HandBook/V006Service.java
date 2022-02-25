@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.tfoms.tfomsapp.domain.HandBook.F008;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
 import ru.tfoms.tfomsapp.domain.HandBook.V006;
+import ru.tfoms.tfomsapp.service.ServiceUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,8 +31,13 @@ public class V006Service {
         return listV006;
     }
 
-    public boolean CheckV006(List<V006> v006s, String par) {
+    public boolean Check(String par) throws IOException {
         if (par.isEmpty()) return false;
+        ServiceUtil su = new ServiceUtil();
+        V006Service v006Service = new V006Service();
+        List<V006> v006s = v006Service.getV006s(su
+                .getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V006&filters=IDUMP%7C" + par));
+
         for (V006 v006 : v006s){
             if (v006.getIdump().equals(par)) return false;
         }

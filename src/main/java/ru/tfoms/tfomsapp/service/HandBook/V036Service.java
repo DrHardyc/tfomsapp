@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.tfoms.tfomsapp.domain.HandBook.HandBookValues;
 import ru.tfoms.tfomsapp.domain.HandBook.V036;
 import ru.tfoms.tfomsapp.domain.MEK.MP.MPMeddev;
+import ru.tfoms.tfomsapp.service.ServiceUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,7 +33,13 @@ public class V036Service {
         return listV036;
     }
 
-    public boolean CheckV036(List<V036> v036s, MPMeddev par) {
+    public boolean Check(MPMeddev par) throws IOException {
+        if (par == null) return false;
+        ServiceUtil su = new ServiceUtil();
+        V036Service v036Service = new V036Service();
+        List<V036> v036s = v036Service.getV036s(su
+                .getHBBufferedReader("http://nsi.ffoms.ru/nsi-int/api/data?identifier=V036&filters=S_CODE%7C" + par));
+
         for (V036 v036 : v036s){
             if (v036.getS_code().equals(par.getCodemeddev())){
                 return false;

@@ -24,9 +24,11 @@ public class ONKExam {
     private final F004Service f004Service = new F004Service();
     private final F006Service f006Service = new F006Service();
     private final F008Service f008Service = new F008Service();
+    private final F011Service f011Service = new F011Service();
     private final F014Service f014Service = new F014Service();
     private final V001Service v001Service = new V001Service();
     private final V002Service v002Service = new V002Service();
+    private final V005Service v005Service = new V005Service();
     private final V006Service v006Service = new V006Service();
     private final V008Service v008Service = new V008Service();
     private final V009Service v009Service = new V009Service();
@@ -42,7 +44,6 @@ public class ONKExam {
     private final V028Service v028Service = new V028Service();
     private final V029Service v029Service = new V029Service();
     private final V032Service v032Service = new V032Service();
-    private final V036Service v036Service = new V036Service();
     private final N001Service n001Service = new N001Service();
     private final N002Service n002Service = new N002Service();
     private final N003Service n003Service = new N003Service();
@@ -97,8 +98,39 @@ public class ONKExam {
         }
         if (persList != null){
             for (PDPers pers : persList.getPers()){
+                if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.L_0300_01100)) {
+                    if (v005Service.Check(pers.getW())) {
+                        Element pr = getPrElement("L_0300/01100", null,
+                                null, null, null, pers.getW(),
+                                "Ошибка соответствия записи c справочником V005");
+                        flk_p.appendChild(pr);
+                        su.showMessagesEx("Ошибка соответствия записи в справочнике L_0300/01100");
+                        resultTestExam = ResultTestExam.Failed;
+                    }
+                }
+                if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.L_0300_02200)) {
+                    if (f011Service.Check(pers.getDoctype())) {
+                        Element pr = getPrElement("L_0300/02200", null,
+                                null, null, null, pers.getDoctype(),
+                                "Ошибка соответствия записи в справочнике F011");
+                        flk_p.appendChild(pr);
+                        su.showMessagesEx("Ошибка соответствия записи в справочнике L_0300/02200");
+                        resultTestExam = ResultTestExam.Failed;
+                    }
+                }
                 if (pers.getOnkZap() != null) {
                     for (ONKZap zap : pers.getOnkZap()) {
+                        if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.L_0300_01800)) {
+                            if (pers.getWp().isEmpty() && !zap.getPacient().getNovor().equals("0")) {
+                                Element pr = getPrElement("L_0300/01800", null,
+                                        null, null, null, pers.getW(),
+                                        "W_P Реквизит указывается обязательно, " +
+                                                "если значение поля NOVOR отлично от нуля.");
+                                flk_p.appendChild(pr);
+                                su.showMessagesEx("Ошибка соответствия записи в справочнике L_0300/01800");
+                                resultTestExam = ResultTestExam.Failed;
+                            }
+                        }
                         if (examParam.equals(ExamParam.All) || examParam.equals(ExamParam.C_0400_02402)) {
                             if (f008Service.Check(zap.getPacient().getVpolis())) {
                                 Element pr = getPrElement("C_0400/02402", schet,

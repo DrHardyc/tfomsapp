@@ -2,13 +2,13 @@ package ru.tfoms.tfomsapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.tfoms.tfomsapp.domain.Exam.ExamParam;
-import ru.tfoms.tfomsapp.domain.MEK.*;
-import ru.tfoms.tfomsapp.domain.MEK.MP.*;
-import ru.tfoms.tfomsapp.domain.MEK.PD.PDPers;
-import ru.tfoms.tfomsapp.domain.MEK.PD.PDPerslist;
-import ru.tfoms.tfomsapp.service.Examination.MEK.MPExam;
-import ru.tfoms.tfomsapp.service.Examination.MEK.ResultTestExam;
+import ru.tfoms.tfomsapp.domain.examination.ExamParam;
+import ru.tfoms.tfomsapp.domain.file.*;
+import ru.tfoms.tfomsapp.domain.file.mp.*;
+import ru.tfoms.tfomsapp.domain.file.pd.PDPers;
+import ru.tfoms.tfomsapp.domain.file.pd.PDPerslist;
+import ru.tfoms.tfomsapp.service.examination.flk.MPExam;
+import ru.tfoms.tfomsapp.service.examination.flk.ResultTestExam;
 
 import java.io.IOException;
 import java.util.ArrayList;

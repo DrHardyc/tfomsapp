@@ -18,7 +18,7 @@ import java.util.HashMap;
 
 @Configuration
 @EnableJpaRepositories(
-        basePackages = "ru.tfoms.tfomsapp.repo.PG",
+        basePackages = "ru.tfoms.tfomsapp.repo.pg",
         entityManagerFactoryRef = "PGEntityManager",
         transactionManagerRef = "PGTransactionManager")
 public class PGDBConfig {

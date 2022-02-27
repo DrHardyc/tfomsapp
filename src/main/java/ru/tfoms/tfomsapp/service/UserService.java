@@ -9,11 +9,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import ru.tfoms.tfomsapp.domain.PG.Role;
-import ru.tfoms.tfomsapp.domain.PG.User;
-import ru.tfoms.tfomsapp.repo.PG.UserRepo;
+import ru.tfoms.tfomsapp.domain.pg.Role;
+import ru.tfoms.tfomsapp.domain.pg.User;
+import ru.tfoms.tfomsapp.repo.pg.UserRepo;
 
-import javax.security.auth.message.AuthException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

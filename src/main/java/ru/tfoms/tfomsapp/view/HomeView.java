@@ -10,9 +10,9 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.tfoms.tfomsapp.domain.KMS.Platel;
+import ru.tfoms.tfomsapp.domain.kms.Platel;
 import ru.tfoms.tfomsapp.domain.TfomsMenu;
-import ru.tfoms.tfomsapp.repo.KMS.PlatelRepo;
+import ru.tfoms.tfomsapp.repo.kms.PlatelRepo;
 
 import javax.annotation.security.PermitAll;
 import java.sql.SQLException;

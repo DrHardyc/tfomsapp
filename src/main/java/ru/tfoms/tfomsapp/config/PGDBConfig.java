@@ -18,7 +18,7 @@ import java.util.HashMap;
 
 @Configuration
 @EnableJpaRepositories(
-        basePackages = "ru.tfoms.tfomsapp.repo.PG",
+        basePackages = "ru.tfoms.tfomsapp.repo.pg",
         entityManagerFactoryRef = "PGEntityManager",
         transactionManagerRef = "PGTransactionManager")
 public class PGDBConfig {
@@ -65,12 +65,11 @@ public class PGDBConfig {
 
     private DataSource ConnectDB() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setDriverClassName("org.postgresql.Driver");
 //        dataSource.setUrl("jdbc:postgresql://localhost/ukizi");
 //        dataSource.setUsername("hardy");
 //        dataSource.setPassword("Zaq1@wsx");
 
-        dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUrl("jdbc:postgresql://192.168.2.157/pg_tfomsapp");
         dataSource.setUsername("mcherchesov");
         dataSource.setPassword("123");

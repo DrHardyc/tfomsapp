@@ -1,7 +1,7 @@
 package ru.tfoms.tfomsapp.service;
 
 import org.springframework.jdbc.core.RowMapper;
-import ru.tfoms.tfomsapp.domain.KMS.Platel;
+import ru.tfoms.tfomsapp.domain.kms.Platel;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

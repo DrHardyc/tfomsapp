@@ -15,6 +15,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Properties;
 
 @Configuration
 @EnableJpaRepositories(
@@ -39,16 +40,15 @@ public class PGDBConfig {
                 = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(PGDataSource());
         em.setPackagesToScan(
-                new String[]{"ru.tfoms.tfomsapp.domain.PG"});
+                "ru.tfoms.tfomsapp.domain.pg", "ru.tfoms.tfomsapp.repo.pg");
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
-        HashMap<String, Object> properties = new HashMap<>();
-        properties.put("hibernate.hbm2ddl.auto",
-                env.getProperty("hibernate.hbm2ddl.auto"));
-        properties.put("hibernate.dialect",
-                env.getProperty("hibernate.dialect"));
-        em.setJpaPropertyMap(properties);
+        Properties properties = new Properties();
+        properties.setProperty("spring.jpa.database-platform", "org.hibernate.dialect.PostgreSQLDialect");
+        properties.setProperty("spring.jpa.hibernate.ddl-auto", "update");
+
+        em.setJpaProperties(properties);
 
         return em;
     }
@@ -66,9 +66,10 @@ public class PGDBConfig {
     private DataSource ConnectDB() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-//        dataSource.setUrl("jdbc:postgresql://localhost/ukizi");
-//        dataSource.setUsername("hardy");
-//        dataSource.setPassword("Zaq1@wsx");
+
+        //        dataSource.setUrl("jdbc:postgresql://localhost/ukizi");
+        //        dataSource.setUsername("hardy");
+        //        dataSource.setPassword("Zaq1@wsx");
 
         dataSource.setUrl("jdbc:postgresql://192.168.2.157/pg_tfomsapp");
         dataSource.setUsername("mcherchesov");

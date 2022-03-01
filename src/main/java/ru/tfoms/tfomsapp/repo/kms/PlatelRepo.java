@@ -5,4 +5,5 @@ import ru.tfoms.tfomsapp.domain.kms.Platel;
 
 
 public interface PlatelRepo extends JpaRepository<Platel, Long> {
+
 }

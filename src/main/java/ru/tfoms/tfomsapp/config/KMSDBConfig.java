@@ -13,12 +13,13 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
+import java.util.Properties;
 
-//@Configuration
-//@EnableJpaRepositories(
-//        basePackages = "ru.tfoms.tfomsapp.repo.KMS",
-//        entityManagerFactoryRef = "KMSEntityManager",
-//        transactionManagerRef = "KMSTransactionManager")
+@Configuration
+@EnableJpaRepositories(
+        basePackages = "ru.tfoms.tfomsapp.repo.kms",
+        entityManagerFactoryRef = "KMSEntityManager",
+        transactionManagerRef = "KMSTransactionManager")
 public class KMSDBConfig {
 
     @Autowired
@@ -29,44 +30,43 @@ public class KMSDBConfig {
         return ConnectDB();
     }
 
-//    @Bean
-//    public LocalContainerEntityManagerFactoryBean KMSEntityManager()  {
-//        LocalContainerEntityManagerFactoryBean em
-//                = new LocalContainerEntityManagerFactoryBean();
-//        em.setDataSource(KMSDataSource());
-//        em.setPackagesToScan(
-//                new String[] { "ru.tfoms.tfomsapp.domain.KMS" });
-//
-//        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-//        em.setJpaVendorAdapter(vendorAdapter);
-//        HashMap<String, Object> properties = new HashMap<>();
-//        properties.put("hibernate.hbm2ddl.auto",
-//                env.getProperty("hibernate.hbm2ddl.auto"));
-//        properties.put("hibernate.dialect",
-//                env.getProperty("hibernate.dialect"));
-//        em.setJpaPropertyMap(properties);
-//
-//        return em;
-//    }
+    @Bean
+    public LocalContainerEntityManagerFactoryBean KMSEntityManager()  {
+        LocalContainerEntityManagerFactoryBean em
+                = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(KMSDataSource());
+        em.setPackagesToScan(
+                new String[] { "ru.tfoms.tfomsapp.domain.kms" });
 
-//    @Bean
-//    public PlatformTransactionManager KMSTransactionManager() {
-//        JpaTransactionManager transactionManager
-//                = new JpaTransactionManager();
-//        transactionManager.setEntityManagerFactory(
-//                KMSEntityManager().getObject());
-//        return transactionManager;
-//    }
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        em.setJpaVendorAdapter(vendorAdapter);
+        HashMap<String, Object> properties = new HashMap<>();
+        properties.put("hibernate.hbm2ddl.auto",
+                env.getProperty("hibernate.hbm2ddl.auto"));
+        properties.put("hibernate.dialect",
+                env.getProperty("hibernate.dialect"));
+        em.setJpaPropertyMap(properties);
+        return em;
+    }
+
+    @Bean
+    public PlatformTransactionManager KMSTransactionManager() {
+        JpaTransactionManager transactionManager
+                = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(
+                KMSEntityManager().getObject());
+        return transactionManager;
+    }
 
     private DataSource ConnectDB() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-//        dataSource.setUrl("jdbc:sqlserver://srz\\srz;databaseName=FMS_new");
-//        dataSource.setUsername("expert");
-//        dataSource.setPassword("123");
-        dataSource.setUrl("jdbc:sqlserver://localhost;databaseName=ukizi");
-        dataSource.setUsername("hardy");
-        dataSource.setPassword("Zaq1@wsx");
+        dataSource.setUrl("jdbc:sqlserver://srz\\srz;databaseName=FMS_new");
+        dataSource.setUsername("expert");
+        dataSource.setPassword("123");
+//        dataSource.setUrl("jdbc:sqlserver://localhost;databaseName=ukizi");
+//        dataSource.setUsername("hardy");
+//        dataSource.setPassword("Zaq1@wsx");
 
 
         return dataSource;
